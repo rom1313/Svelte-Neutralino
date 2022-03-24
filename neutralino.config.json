@@ -2,7 +2,7 @@
 	"applicationId": "js.neutralino.svelte",
 	"version": "1.0.0",
 	"defaultMode": "window",
-	"port": 13000,
+	"port": 5000,
 	"documentRoot": "/www/",
 	"url": "/",
 	"tokenSecurity": "one-time",
