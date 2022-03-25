@@ -2,6 +2,8 @@
     import { Allier, Personnage, Objet, chatouvert } from "./Class.js";
     import { socket, sauvegarde } from "./Variables.js";
     import Chat from "./Chat.svelte";
+    import Hud from "./Hud.svelte";
+    import Options from "./Options.svelte";
     import { getContext, setContext } from "svelte";
     //----------------------------------------------------------------------------------- Variables
     let windowwidth = window.screen.availWidth;
@@ -12,14 +14,25 @@
     let menucache = false;
     let titrecache = false;
     let hudcache = true;
+
     let joueur = new Personnage("invité", 0, 1);
     setContext("joueur", joueur);
+    let chatfocus = false;
     let toucheclavier;
     let classbouttonquitter = "bouttoncaché";
     let classbouttonconnexion = "";
     let connexionerror = false;
     let joueurenligne = [];
     let nbjoueurenligne;
+    let effetfond;
+    let faceimg = new Image(100, 200);
+    faceimg.src = joueur.img;
+    $: placeinventaire = joueur.inventaire.length;
+
+    let camera;
+
+    let volume = 1;
+    let difficulte = "normal";
 
     //---------------------------------------------------------------------
     let message = [
@@ -40,6 +53,15 @@
         new Audio("son/effet/ildaacybershop.mp3"),
         new Audio("son/effet/ildaastrategie.mp3")
     ];
+    let dopant = new Objet(
+        "Stimulant",
+        90,
+        "img/potion.png",
+        "consommable",
+        "Un cocktail chimique stimulant",
+        "+3 force"
+    );
+
     //----------------------------------------------------------------------- Socket
     function testsocket() {
         let infos = {
@@ -86,7 +108,14 @@
         score,
         puce,
         amelioration,
-        relique
+        relique,
+        coffres,
+        classe,
+        partenaire,
+        progression,
+        skin,
+        personnage,
+        img
     ) {
         fetch("https://apiildaa.herokuapp.com/connectionjoueur", {
             method: "post",
@@ -109,7 +138,14 @@
                 score: score,
                 puce: puce,
                 amelioration: amelioration,
-                relique: relique
+                relique: relique,
+                coffres: coffres,
+                classe: classe,
+                partenaire: partenaire,
+                progression: progression,
+                skin: skin,
+                personnage: personnage,
+                img: img
             })
         })
             .then((res) => res.json())
@@ -139,11 +175,20 @@
                     joueur.puce = res.puce;
                     joueur.amelioration = res.amelioration;
                     joueur.relique = res.relique;
+                    joueur.coffres = res.coffres;
+                    joueur.classe = res.classe;
+                    joueur.partenaire = res.partenaire;
+                    joueur.progression = res.progresson;
+                    joueur.skin = res.skin;
+                    joueur.personnage = res.personnage;
+                    joueur.img = res.img;
                     chargementindicateur = false;
                     connecte = true;
                     menucache = true;
                     titrecache = true;
                     effet[0].volume = 0.3;
+                    joueur.inventaire.push(dopant);
+                    console.log(joueur.inventaire);
                 }
                 /* console.log(res); */
 
@@ -210,7 +255,7 @@
             if (connecte === true) {
                 /* console.log("jeu commencé"); */
                 hudcache = false;
-                joueur.sante += 0;
+
                 this.scene.start("Menuprincipal", "Acceuil");
             }
         }
@@ -237,9 +282,16 @@
                 frameWidth: 1000,
                 frameHeight: 500
             });
+            this.load.image("fondmenu2", "img/session2.png", {
+                frameWidth: 1000,
+                frameHeight: 500
+            });
         }
+
         //------------------------------------------------------ CREATE
         create() {
+            camera = this.cameras.main;
+            camera.fadeIn(1500, 1);
             // CREATION MAP
             this.background = this.add
                 .image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, "fondmenu")
@@ -248,17 +300,41 @@
             this.background.displayHeight = this.sys.canvas.height;
             // CREATION JOUEUR
             // HITBOX
-            // this.background.setPipeline("Light2D");
+            this.background.setPipeline("Light2D");
             this.lights.enable();
-            // this.lights.setAmbientColor(55, 55, 255);
-            var spotlight = this.lights.addLight(300, 300, 1600).setIntensity(3);
+            this.lights.setAmbientColor(0x808080);
+            var spotlight = this.lights.addLight(300, 200, 1600).setIntensity(3);
             var spotlight2 = this.lights.addLight(1400, 200, 800).setIntensity(3);
             var spotlight3 = this.lights.addLight(690, 200, 800).setIntensity(3);
             var spotlight4 = this.lights.addLight(950, 300, 800).setIntensity(2);
             // // CREATION PARTICULE
             this.input.on("pointermove", function (pointer) {});
             toucheclavier = this.input.keyboard.createCursorKeys();
+            effetfond = this.add
+                .image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, "fondmenu2")
+                .setOrigin(0.5, 0.5);
+            effetfond.displayWidth = this.sys.canvas.width;
+            effetfond.displayHeight = this.sys.canvas.height;
+            this.tweens.add({
+                targets: effetfond,
+                alpha: { from: 0.3, to: 1 },
+                ease: "Sine.InOut",
+                duration: 3000,
+                repeat: -1,
+                yoyo: true
+            });
+
             // -----------------------------CREATION ANIMATION
+            /* let opacite = 0;
+            setInterval(() => {
+                if (opacite >= 1) {
+                    opacite = 0;
+                    effetfond.setAlpha(opacite);
+                } else {
+                    opacite += 0.03;
+                    effetfond.setAlpha(opacite);
+                }
+            }, 250); */
         }
         //-----------------------------------------------------------------------------------UPDATE
         update() {}
@@ -284,6 +360,8 @@
     };
     var game = new Phaser.Game(config);
 </script>
+
+<!------------------------------------------------------------------------------------------ HTML------------------------------->
 
 <svelte:window
     on:keydown={(event) => {
@@ -336,7 +414,14 @@
                 joueur.score,
                 joueur.puce,
                 joueur.amelioration,
-                joueur.relique
+                joueur.relique,
+                joueur.coffres,
+                joueur.classe,
+                joueur.partenaire,
+                joueur.progression,
+                joueur.skin,
+                joueur.personnage,
+                joueur.img
             );
 
             {
@@ -374,12 +459,27 @@
     />
 </div>
 {#if !titrecache}<img id="titre" src="img/titre2.png" alt="" />{/if}
+{#if connecte}<Hud
+        bind:pseudo={joueur.pseudo}
+        bind:cyberz={joueur.cyberz}
+        bind:niv={joueur.niveau}
+        bind:barredevie={joueur.sante}
+        bind:sante={joueur.sante}
+        bind:xp={joueur.xp}
+        bind:srcface={faceimg}
+        bind:kill={joueur.kill}
+        bind:score={joueur.score}
+        bind:inventaire={joueur.inventaire}
+        bind:placeinventaire
+    />{/if}
 <div class={connecte === true ? "chatvisible" : "chatinvisible"}>
     <Chat />
+    <Options />
 </div>
 
 <div id="jeu" />
 
+<!------------------------------------------------------------------------------CSS-------------------------------------------->
 <style>
     @keyframes briller {
         from {

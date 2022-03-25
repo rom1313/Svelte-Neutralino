@@ -28,19 +28,20 @@ export class Personnage {
         this.sprite;
         this.score = [0, 0, 0, 0];
         this.kill = [0, 0, 0, 0];
-        this.inventaire = [];
+        this.inventaire = [{ img: 'img/carteagent.png', nom: "Carte d'agent", prix: 0 }];
         this.puce = ["", "", ""];
         this.relique = [""];
         this.amelioration = ["", "", ""];
         this.ventes = [];
         this.messages = [];
-        this.coffres = [];
-        this.classe;
-        this.partenaire;
-        this.skills = ["test", "test2", "", "", "", "", ""];
-        this.progression;
-        this.skin;
-        this.personnage;
+        this.coffres = [""];
+        this.classe = '';
+        this.partenaire = '';
+        this.skills = ["", "", "", "", "", "", ""];
+        this.progression = '';
+        this.skin = '';
+        this.personnage = '';
+        this.img = "img/inviteface.png"
 
 
     }

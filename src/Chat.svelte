@@ -4,6 +4,8 @@
     import { getContext, setContext, onMount } from "svelte";
     //-------------------------------------------------------------------------------- variables
     export let chatcacher = true;
+    export let focuschat = false;
+    setContext("focuschat", focuschat);
     let contenuchat = [];
     let joueur = getContext("joueur");
     let effet = [
@@ -39,6 +41,19 @@
     });
 </script>
 
+<svelte:window
+    on:keydown={(event) => {
+        if (event.key === "Escape") {
+            console.log("echap appuyé");
+
+            if (chatcacher === false) {
+                chatcacher = true;
+            }
+        }
+    }}
+    on:mousemoove={() => {}}
+/>
+
 <div id="chat" class={chatcacher ? "menucache" : ""}>
     <input
         type="text"
@@ -61,11 +76,21 @@
         on:focus={(e) => {
             console.log("focus");
             console.log(contenuchat);
+            focuschat = true;
+            console.log(focuschat);
         }}
         on:blur={(e) => {
             console.log("focus perdu");
+            focuschat = false;
+            console.log(focuschat);
         }}
     />
+    <span
+        id="fermer"
+        on:click={() => {
+            chatcacher = true;
+        }}>X</span
+    >
     <div id="containermessagechat">
         {#each contenuchat as contenuchat}
             <p class="messagedechat">{contenuchat}</p>
@@ -135,9 +160,10 @@
     .messagedechat {
         color: rgb(255, 255, 255);
         font-size: 13;
+        line-height: 18px;
     }
     #containermessagechat {
-        padding-top: 35px;
+        padding-top: 10px;
     }
     p {
         font-size: 12px;
@@ -155,5 +181,18 @@
     }
     input::placeholder {
         color: #000000;
+    }
+    #fermer {
+        color: red;
+        cursor: url("/img/mouse2.png"), pointer;
+        margin-left: 20px;
+        width: 30px;
+        background-color: rgb(0, 0, 0);
+        position: fixed;
+        border-radius: 5px;
+    }
+    #fermer:hover {
+        box-shadow: 0px 0px 10px rgb(255, 0, 0), 0px 0px 10px #000000;
+        cursor: url("/img/mouse2.png"), pointer;
     }
 </style>
