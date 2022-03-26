@@ -102,3 +102,5 @@ export class Ennemi {
 
 //TODO ----------------------------------------------- Scenes -------------------------
 export let chatouvert = true
+export let focuschat = writable()
+export let volume = writable(1)

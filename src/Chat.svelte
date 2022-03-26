@@ -2,10 +2,10 @@
     //--------------------------------------------------------------------imports
     import { socket } from "./Variables.js";
     import { getContext, setContext, onMount } from "svelte";
+    import { focuschat } from "./Class.js";
     //-------------------------------------------------------------------------------- variables
     export let chatcacher = true;
-    export let focuschat = false;
-    setContext("focuschat", focuschat);
+
     let contenuchat = [];
     let joueur = getContext("joueur");
     let effet = [
@@ -76,13 +76,13 @@
         on:focus={(e) => {
             console.log("focus");
             console.log(contenuchat);
-            focuschat = true;
-            console.log(focuschat);
+            $focuschat = true;
+            console.log($focuschat);
         }}
         on:blur={(e) => {
             console.log("focus perdu");
-            focuschat = false;
-            console.log(focuschat);
+            $focuschat = false;
+            console.log($focuschat);
         }}
     />
     <span

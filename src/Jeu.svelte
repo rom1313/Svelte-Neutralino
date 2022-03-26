@@ -5,6 +5,7 @@
     import Hud from "./Hud.svelte";
     import Options from "./Options.svelte";
     import { getContext, setContext } from "svelte";
+    import { focuschat, volume } from "./Class.js";
     //----------------------------------------------------------------------------------- Variables
     let windowwidth = window.screen.availWidth;
     let windowheight = window.screen.availHeight;
@@ -17,7 +18,7 @@
 
     let joueur = new Personnage("invité", 0, 1);
     setContext("joueur", joueur);
-    let chatfocus = false;
+
     let toucheclavier;
     let classbouttonquitter = "bouttoncaché";
     let classbouttonconnexion = "";
@@ -31,7 +32,6 @@
 
     let camera;
 
-    let volume = 1;
     let difficulte = "normal";
 
     //---------------------------------------------------------------------
@@ -186,7 +186,7 @@
                     connecte = true;
                     menucache = true;
                     titrecache = true;
-                    effet[0].volume = 0.3;
+                    effet[0].volume = $volume;
                     joueur.inventaire.push(dopant);
                     console.log(joueur.inventaire);
                 }
@@ -199,7 +199,7 @@
                     effet[0].play();
                 }, 1000);
                 setTimeout(() => {
-                    ildaa[0].volume = 0.5;
+                    ildaa[0].volume = $volume;
                     ildaa[0].play();
                 }, 2000);
             });
@@ -366,6 +366,11 @@
 <svelte:window
     on:keydown={(event) => {
         if (event.key === "p") {
+            if ($focuschat === true) {
+                console.log($focuschat + "est true");
+            } else {
+                console.log($focuschat + "est false");
+            }
             console.log("touche p !");
             console.log(joueur);
         }
@@ -373,6 +378,12 @@
     }}
     on:mousemove={() => {}}
 />
+<button
+    on:click={(event) => {
+        ildaa[0].volume = $volume;
+        ildaa[0].play();
+    }}>TEST</button
+>
 <div id="menu" class={menucache ? "menucache" : ""}>
     <div class="info">
         <p>{message[0]}</p>

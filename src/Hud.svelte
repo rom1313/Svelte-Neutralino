@@ -3,7 +3,7 @@
     import { getContext, setContext } from "svelte";
     import { Allier, Personnage, Objet } from "./Class.js";
     import { onMount } from "svelte";
-
+    import { focuschat } from "./Class.js";
     export let pseudo;
     export let cyberz;
     export let niv;
@@ -15,7 +15,6 @@
     export let inventaire;
     export let menucacher;
     export let placeinventaire;
-    export let focuschat;
 
     onMount(async () => {});
 
@@ -32,12 +31,14 @@
 
 <svelte:window
     on:keydown={(event) => {
-        if (event.key === "Escape") {
-            console.log("echap appuyé");
-
-            if (menucacher === false) {
+        if (event.key === "p" || event.key === "P") {
+            if (!$focuschat === true && menucacher === true) {
+                menucacher = false;
+            } else if (!$focuschat === true && menucacher === false) {
                 menucacher = true;
             }
+        } else if (event.key === "Escape" && menucacher === false) {
+            menucacher = true;
         }
     }}
     on:mousemoove={() => {}}

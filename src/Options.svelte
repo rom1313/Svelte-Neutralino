@@ -2,9 +2,10 @@
     //--------------------------------------------------------------------imports
     import { socket } from "./Variables.js";
     import { getContext, setContext, onMount } from "svelte";
+    import { volume } from "./Class.js";
     //-------------------------------------------------------------------------------- variables
     export let optioncacher = true;
-    export let volume = 1;
+
     //------------------------------------------------------------------------------------
 
     onMount(async () => {});
@@ -39,8 +40,8 @@
         <p>Volume :</p>
         <button
             on:click={() => {
-                if (volume > 0) {
-                    volume -= 0.25;
+                if ($volume > 0) {
+                    $volume -= 0.25;
                 } else {
                 }
             }}>-</button
@@ -48,16 +49,16 @@
 
         <button
             on:click={() => {
-                if (volume < 2) {
-                    volume += 0.25;
+                if ($volume < 1) {
+                    $volume += 0.25;
                 } else {
                 }
             }}>+</button
         >
     </div>
     :
-    <p id="volume">{volume}</p>
-    <div id="volumebarre" style="width:{volume * 20}px" />
+    <p id="volume">{$volume}</p>
+    <div id="volumebarre" style="width:{$volume * 20}px" />
     <p>Difficulté</p>
     :
 
