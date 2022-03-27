@@ -33,7 +33,8 @@
     let camera;
 
     let difficulte = "normal";
-
+    let acceuil;
+    let spriteildaa;
     //---------------------------------------------------------------------
     let message = [
         "Onixyum ",
@@ -211,7 +212,9 @@
             super("Acceuil");
         }
         //--------------------------------------------------------------------------------------- PRELOAD
+
         preload() {
+            acceuil = this;
             // JOUEUR
             // joueur.inventaire.push(objet);
             // joueur.inventaire.push(objet2);
@@ -286,10 +289,17 @@
                 frameWidth: 1000,
                 frameHeight: 500
             });
+            this.load.spritesheet("ildaa", "/img/ildaa.png", {
+                frameWidth: 528,
+                frameHeight: 842
+            });
         }
 
         //------------------------------------------------------ CREATE
         create() {
+            spriteildaa = this.physics.add.sprite(windowwidth - 350, windowheight - 180, "ildaa");
+            spriteildaa.setSize(30, 80, true);
+            spriteildaa.setDepth(2);
             camera = this.cameras.main;
             camera.fadeIn(1500, 1);
             // CREATION MAP
@@ -324,6 +334,18 @@
                 yoyo: true
             });
 
+            this.anims.create({
+                key: "ildaayeux",
+                frames: this.anims.generateFrameNumbers("ildaa", {
+                    frames: [
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                    ]
+                }),
+                frameRate: 8,
+                repeat: -1
+            });
+            spriteildaa.play("ildaayeux");
             // -----------------------------CREATION ANIMATION
             /* let opacite = 0;
             setInterval(() => {
@@ -378,12 +400,7 @@
     }}
     on:mousemove={() => {}}
 />
-<button
-    on:click={(event) => {
-        ildaa[0].volume = $volume;
-        ildaa[0].play();
-    }}>TEST</button
->
+
 <div id="menu" class={menucache ? "menucache" : ""}>
     <div class="info">
         <p>{message[0]}</p>
@@ -470,7 +487,19 @@
     />
 </div>
 {#if !titrecache}<img id="titre" src="img/titre2.png" alt="" />{/if}
-{#if connecte}<Hud
+{#if connecte}
+    <button
+        id="storymode"
+        on:click={(event) => {
+            acceuil.scene.start("Acceuil", "Menuprincipal");
+        }}>Mode Histoire</button
+    >
+    <button
+        id="jcjmode"
+        on:click={(event) => {
+            acceuil.scene.start("Acceuil", "Menuprincipal");
+        }}>Mode JcJ</button
+    ><Hud
         bind:pseudo={joueur.pseudo}
         bind:cyberz={joueur.cyberz}
         bind:niv={joueur.niveau}
@@ -486,6 +515,7 @@
 <div class={connecte === true ? "chatvisible" : "chatinvisible"}>
     <Chat />
     <Options />
+    <p id="version">version 1.0</p>
 </div>
 
 <div id="jeu" />
@@ -629,5 +659,31 @@
     }
     .chatinvisible {
         display: none;
+    }
+    #storymode {
+        position: fixed;
+        top: 155px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 35px;
+    }
+    #storymode:hover {
+        color: #ffcc00;
+    }
+    #jcjmode {
+        position: fixed;
+        top: 255px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 35px;
+        color: #6a6a6a;
+    }
+    #jcjmode:hover {
+        color: #ee0000;
+    }
+    #version {
+        position: fixed;
+        right: 25px;
+        bottom: 20px;
     }
 </style>

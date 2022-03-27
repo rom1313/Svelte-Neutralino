@@ -132,16 +132,17 @@
         <span id="sante" />
         <p>Exp : {xp}</p> -->
         <p id="cyberz">Crédits: <span>{cyberz}</span></p>
-        <button
+        <p
+            id="croixfermer"
             on:click={(event) => {
-                joueur.progression = "chapitre1";
-                joueur.kill[0] = 2000;
-                sauvegarde(joueur);
-            }}>IMGGG</button
+                menucacher = true;
+            }}
         >
+            X
+        </p>
     </div>
 {/if}
-<span
+<button
     id="fermer"
     on:click={(e) => {
         if (menucacher === true) {
@@ -154,8 +155,8 @@
         }
     }}
 >
-    Profil
-</span>
+    Carrière
+</button>
 
 <!-- <button
     on:click={(e) => {
@@ -315,23 +316,22 @@
     }
     #fermer {
         z-index: 3;
-        position: absolute;
-        top: 45px;
-        left: 325px;
-        width: 100px;
+        transform: translate(-50%, -50%);
+        position: fixed;
+        top: 355px;
+        left: 50%;
         display: initial;
         cursor: url("/img/mouse2.png"), pointer;
-        color: rgb(0, 205, 246);
-        border-radius: 9px;
-        padding: 5px;
-        font-size: 30px;
+        color: rgb(92, 255, 247);
+        border-radius: 12px;
+        font-size: 35px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.193), 0px 0px 10px #000000;
         font-weight: 1900px;
         background-color: #000000;
+        font-family: "scifi";
     }
     #fermer:hover {
-        box-shadow: 0px 0px 10px rgb(255, 0, 0), 0px 0px 10px #970000;
-        color: aqua;
+        color: #ffcc00;
     }
     .menucache {
         display: none;
@@ -344,6 +344,23 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+    #croixfermer {
+        color: red;
+        position: fixed;
+        right: 15px;
+        top: -7px;
+        font-size: 15px;
+
+        cursor: url("/img/mouse2.png"), pointer;
+
+        width: 30px;
+
+        border-radius: 5px;
+    }
+    #croixfermer:hover {
+        text-shadow: 1px 1px 16px rgb(0, 0, 0);
+        color: #ffcc00;
     }
 
     @media only screen and (min-width: 1920px) {

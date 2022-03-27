@@ -79,13 +79,13 @@
     }
     #optionlogo {
         position: fixed;
-        bottom: 45px;
+        bottom: 75px;
         left: 30px;
     }
     #optionlogo:hover {
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
         cursor: url("/img/mouse2.png"), pointer;
-        background-color: rgb(0, 243, 178);
+
         border-radius: 45%;
     }
     #blockoption {
@@ -95,9 +95,10 @@
         position: fixed;
         bottom: 60px;
         left: 100px;
-
+        box-shadow: 0px 0px 3px rgb(0, 0, 0), 0px 0px 10px #000000;
         margin: auto;
         border-radius: 15px;
+        border: solid 1px black;
     }
     #volumebarre {
         height: 13px;

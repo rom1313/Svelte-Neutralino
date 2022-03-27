@@ -99,7 +99,7 @@
 </div>
 <div>
     <img
-        alt="chat"
+        alt=""
         src="img/chat.png"
         on:click={() => {
             if (chatcacher === true) {
@@ -144,8 +144,8 @@
         z-index: 5;
         position: absolute;
         size: 100%;
-        top: 35px;
-        left: 25px;
+        bottom: 125px;
+        left: 30px;
         font-family: "scifi";
         display: initial;
         cursor: url("/img/mouse2.png"), pointer;
@@ -156,6 +156,9 @@
         font-size: 30px;
         text-shadow: 1px 1px 16px rgb(128, 0, 0);
         font-weight: 1900px;
+    }
+    img:hover {
+        box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
     }
     .messagedechat {
         color: rgb(255, 255, 255);
