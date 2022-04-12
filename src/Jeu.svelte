@@ -399,6 +399,9 @@
         /* console.log(event); */
     }}
     on:mousemove={() => {}}
+    on:contextmenu={(e) => {
+        e.preventDefault();
+    }}
 />
 
 <div id="menu" class={menucache ? "menucache" : ""}>
@@ -534,6 +537,14 @@
     <Chat />
     <Options />
     <p id="version">version 1.0</p>
+    <img
+        id="quitter"
+        src="img/quitter.png"
+        alt=""
+        on:click={async () => {
+            await window.Neutralino.app.exit();
+        }}
+    />
 </div>
 
 <div id="jeu" />
@@ -556,6 +567,17 @@
         to {
             transform: rotate(360deg);
         }
+    }
+    #quitter {
+        position: fixed;
+        top: 35px;
+        right: 40px;
+    }
+    #quitter:hover {
+        box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
+        cursor: url("/img/mouse2.png"), pointer;
+
+        border-radius: 45%;
     }
 
     #titre {

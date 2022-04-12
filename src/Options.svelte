@@ -80,7 +80,7 @@
     #optionlogo {
         position: fixed;
         bottom: 75px;
-        left: 30px;
+        left: 32px;
     }
     #optionlogo:hover {
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;

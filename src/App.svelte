@@ -2,7 +2,7 @@
     import Jeu from "./Jeu.svelte";
 </script>
 
-<div>
+<div oncontextmenu="return false;">
     <Jeu />
 </div>
 

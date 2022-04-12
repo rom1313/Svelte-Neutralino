@@ -11,7 +11,7 @@
     let effet = [
         new Audio("son/effet/ambiance.mp3"),
         new Audio(""),
-        new Audio("son/effet/chat.mp3")
+        new Audio("son/effet/chat2.mp3")
     ];
     //------------------------------------------------------------------------------------
 
@@ -26,6 +26,8 @@
         };
         socket.emit("message", data);
         e.target.value = "";
+        effet[2].volume = 0.1;
+        effet[2].play();
     }
 
     socket.on("nouvelleconnexion", (data) => {
@@ -34,6 +36,7 @@
     });
     socket.on("chatmaj", (data) => {
         if (data.id != joueur.pseudo) {
+            effet[2].volume = 0.1;
             effet[2].play();
         }
 
@@ -143,16 +146,16 @@
     img {
         z-index: 5;
         position: absolute;
-        size: 100%;
+
         bottom: 125px;
         left: 30px;
         font-family: "scifi";
         display: initial;
         cursor: url("/img/mouse2.png"), pointer;
         color: rgb(246, 90, 0);
-
+        width: 35px;
         border-radius: 9px;
-        padding: 5px;
+        padding: 2px;
         font-size: 30px;
         text-shadow: 1px 1px 16px rgb(128, 0, 0);
         font-weight: 1900px;
@@ -186,16 +189,17 @@
         color: #000000;
     }
     #fermer {
-        color: red;
+        color: rgb(64, 64, 64);
         cursor: url("/img/mouse2.png"), pointer;
         margin-left: 20px;
-        width: 30px;
+        width: 20px;
         background-color: rgb(0, 0, 0);
         position: fixed;
         border-radius: 5px;
     }
     #fermer:hover {
-        box-shadow: 0px 0px 10px rgb(255, 0, 0), 0px 0px 10px #000000;
+        box-shadow: 0px 0px 6px rgb(255, 0, 0), 0px 0px 10px #000000;
         cursor: url("/img/mouse2.png"), pointer;
+        color: red;
     }
 </style>
