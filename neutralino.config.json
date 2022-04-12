@@ -15,20 +15,20 @@
 	"nativeBlockList": [],
 	"modes": {
 		"window": {
-			"title": "Svelte Neutralino App",
-			"width": 800,
-			"height": 500,
-			"minWidth": 400,
-			"minHeight": 200,
-			"fullScreen": true,
+			"title": "Onixyum",
+			"width": 1366,
+			"height": 768,
+			"minWidth": 1366,
+			"minHeight": 768,
+			"fullScreen": false,
 			"alwaysOnTop": false,
-			"icon": "/www/icons/appIcon.png",
-			"enableInspector": true,
-			"borderless": false,
+			"icon": "/www/img/glitter3.png",
+			"enableInspector": false,
+			"borderless": true,
 			"maximize": false,
 			"hidden": false,
-			"resizable": true,
-			"exitProcessOnClose": false
+			"resizable": false,
+			"exitProcessOnClose": true
 		},
 		"browser": {
 			"globalVariables": {},

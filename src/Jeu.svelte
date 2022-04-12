@@ -496,8 +496,26 @@
     >
     <button
         id="jcjmode"
-        on:click={(event) => {
-            acceuil.scene.start("Acceuil", "Menuprincipal");
+        on:click={async (event) => {
+            /*    await window.Neutralino.app.exit();
+            await window.Neutralino.app.killProcess(); */
+            await window.Neutralino.window.setDraggableRegion("jcjmode");
+            await window.Neutralino.storage.setData(
+                "userDetails",
+                JSON.stringify({ username: "TestValue" })
+            );
+            window.Neutralino.os.open("https://apiildaa.herokuapp.com/");
+            await window.Neutralino.os.showMessageBox("Hello", "Welcome");
+            await window.Neutralino.os.showNotification(
+                "Hello world",
+                "It works!. Have a nice day"
+            );
+
+            /*  await window.Neutralino.filesystem.writeFile("./myFile.txt", "Sample content");
+            await window.Neutralino.clipboard.writeText("hehe");
+            await window.Neutralino.app.restartProcess({ args: "--restarted" }); */
+
+            /* acceuil.scene.start("Acceuil", "Menuprincipal"); */
         }}>Mode JcJ</button
     ><Hud
         bind:pseudo={joueur.pseudo}
