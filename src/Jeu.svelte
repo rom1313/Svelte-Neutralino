@@ -570,14 +570,15 @@
     }
     #quitter {
         position: fixed;
-        top: 35px;
-        right: 40px;
+        bottom: 35px;
+        right: 145px;
+        margin: 1px;
     }
     #quitter:hover {
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
         cursor: url("/img/mouse2.png"), pointer;
-
-        border-radius: 45%;
+        background-color: rgb(217, 0, 0);
+        border-radius: 50%;
     }
 
     #titre {
