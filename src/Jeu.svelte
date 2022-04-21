@@ -35,6 +35,8 @@
     let difficulte = "normal";
     let acceuil;
     let spriteildaa;
+    let spritesonde;
+    let sondefinal = false;
     //---------------------------------------------------------------------
     let message = [
         "Onixyum ",
@@ -293,10 +295,17 @@
                 frameWidth: 528,
                 frameHeight: 842
             });
+            this.load.spritesheet("sonde", "/img/sonde.png", {
+                frameWidth: 120,
+                frameHeight: 120
+            });
         }
 
         //------------------------------------------------------ CREATE
         create() {
+            spritesonde = this.physics.add.sprite(windowwidth - 650, windowheight - 380, "sonde");
+            spritesonde.setSize(89, 92, true);
+            spritesonde.setDepth(2);
             spriteildaa = this.physics.add.sprite(windowwidth - 350, windowheight - 180, "ildaa");
             spriteildaa.setSize(30, 80, true);
             spriteildaa.setDepth(2);
@@ -346,6 +355,9 @@
                 repeat: -1
             });
             spriteildaa.play("ildaayeux");
+            /* spritesonde.setVelocity(100, 200); */
+            spritesonde.setBounce(1, 1);
+            spritesonde.setCollideWorldBounds(true);
             // -----------------------------CREATION ANIMATION
             /* let opacite = 0;
             setInterval(() => {
@@ -359,7 +371,24 @@
             }, 250); */
         }
         //-----------------------------------------------------------------------------------UPDATE
-        update() {}
+        update() {
+            function mouvementsonde(x) {
+                if (sondefinal) {
+                    spritesonde.x--;
+                } else {
+                    spritesonde.x++;
+                }
+            }
+
+            /*  this.physics.moveToObject(spritesonde, spriteildaa, 120); */
+            mouvementsonde();
+            if (spritesonde.x === 1200) {
+                sondefinal = true;
+            }
+            if (spritesonde.x === 600) {
+                sondefinal = false;
+            }
+        }
     }
     const config = {
         width: windowwidth,
