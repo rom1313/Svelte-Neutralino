@@ -303,7 +303,7 @@
 
         //------------------------------------------------------ CREATE
         create() {
-            spritesonde = this.physics.add.sprite(windowwidth - 650, windowheight - 380, "sonde");
+            spritesonde = this.physics.add.sprite(windowwidth - 250, windowheight - 450, "sonde");
             spritesonde.setSize(89, 92, true);
             spritesonde.setDepth(2);
             spriteildaa = this.physics.add.sprite(windowwidth - 350, windowheight - 180, "ildaa");
@@ -336,7 +336,7 @@
             effetfond.displayHeight = this.sys.canvas.height;
             this.tweens.add({
                 targets: effetfond,
-                alpha: { from: 0.3, to: 1 },
+                alpha: { from: 0, to: 1 },
                 ease: "Sine.InOut",
                 duration: 3000,
                 repeat: -1,
@@ -374,18 +374,21 @@
         update() {
             function mouvementsonde(x) {
                 if (sondefinal) {
-                    spritesonde.x--;
+                    spritesonde.y += 0.1;
+                    spritesonde.x += 0.1;
                 } else {
-                    spritesonde.x++;
+                    spritesonde.y -= 0.2;
+                    console.log(spritesonde.y);
+                    spritesonde.x -= 0.2;
                 }
             }
 
             /*  this.physics.moveToObject(spritesonde, spriteildaa, 120); */
             mouvementsonde();
-            if (spritesonde.x === 1200) {
+            if (spritesonde.y <= 270) {
                 sondefinal = true;
             }
-            if (spritesonde.x === 600) {
+            if (spritesonde.y >= 310) {
                 sondefinal = false;
             }
         }
@@ -435,7 +438,7 @@
 
 <div id="menu" class={menucache ? "menucache" : ""}>
     <div class="info">
-        <p>{message[0]}</p>
+        <p id="titrejeu">{message[0]}</p>
     </div>
 
     <input
@@ -597,6 +600,10 @@
             transform: rotate(360deg);
         }
     }
+    #titrejeu {
+        margin-top: 0px;
+        padding: 0;
+    }
     #quitter {
         position: fixed;
         bottom: 35px;
@@ -608,6 +615,9 @@
         cursor: url("/img/mouse2.png"), pointer;
         background-color: rgb(217, 0, 0);
         border-radius: 50%;
+    }
+    #input3 {
+        margin-bottom: 5px;
     }
 
     #titre {
@@ -626,7 +636,7 @@
         opacity: 0;
     }
     .indicateur {
-        margin-top: 12px;
+        margin-top: 8px;
     }
     .indicateurtourne {
         animation: tourner infinite 0.2s linear;
@@ -637,7 +647,7 @@
         padding-top: 15px;
         row-gap: 20px;
         width: 180px;
-        height: 350px;
+        height: 300px;
         margin: 5px;
         background-color: rgba(71, 71, 71, 0.26);
         z-index: 3;
@@ -674,6 +684,7 @@
     }
     .textinfoerror {
         font-size: 11px;
+        color: red;
     }
     #recommencer:hover {
         color: rgb(255, 0, 0);
@@ -681,7 +692,7 @@
     }
     #recommencer {
         position: absolute;
-        top: 340px;
+        top: 300px;
         left: 50%;
         transform: translate(-50%, -50%);
     }
@@ -702,7 +713,7 @@
         font-size: 15px;
         color: rgb(255, 255, 255);
         text-shadow: 6px 5px 4px black;
-        margin-top: 15px;
+        margin-top: 5px;
         line-height: 19px;
     }
     .info2 {

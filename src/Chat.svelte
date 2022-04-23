@@ -133,6 +133,7 @@
         padding: 6px;
         border: solid 1px rgb(0, 167, 179);
         box-sizing: border-box;
+        border-radius: 5px;
     }
     #chat > input {
         font-family: "Franklin Gothic Medium", Courier, monospace;
