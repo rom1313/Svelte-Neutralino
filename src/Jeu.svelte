@@ -378,7 +378,7 @@
                     spritesonde.x += 0.1;
                 } else {
                     spritesonde.y -= 0.2;
-                    console.log(spritesonde.y);
+
                     spritesonde.x -= 0.2;
                 }
             }

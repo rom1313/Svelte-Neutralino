@@ -26,8 +26,6 @@
         };
         socket.emit("message", data);
         e.target.value = "";
-        effet[2].volume = 0.1;
-        effet[2].play();
     }
 
     socket.on("nouvelleconnexion", (data) => {

@@ -73,6 +73,7 @@
                     <img src={cat.img} alt="" />
                     <p id="nomobjet">{cat.nom}</p>
                     <div id="blockimgobjet">
+                        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
                         <img
                             src="img/vendre.png"
                             alt=""
@@ -111,6 +112,12 @@
                                         menucacher = false;
                                     }, 0);
                                 }
+                            }}
+                            on:mouseover={(e) => {
+                                e.target.src = "img/vendre2.png";
+                            }}
+                            on:mouseout={(e) => {
+                                e.target.src = "img/vendre.png";
                             }}
                         />
                         <img id="retroconfection" alt="" src="img/infoobjet.png" />
@@ -178,6 +185,9 @@
     }
     #vendre {
         cursor: url("/img/mouse2.png"), pointer;
+    }
+    #vendre:hover {
+        transform: scale(1.1);
     }
     #blockimgobjet {
         width: 60px;

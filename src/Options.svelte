@@ -36,8 +36,14 @@
     }}
 />
 <div id="blockoption" class={optioncacher ? "menucache" : ""}>
+    <span
+        id="fermer"
+        on:click={() => {
+            optioncacher = true;
+        }}>X</span
+    >
+    <p>Musique :</p>
     <div id="blockvolume">
-        <p>Volume :</p>
         <button
             on:click={() => {
                 if ($volume > 0) {
@@ -55,14 +61,12 @@
                 }
             }}>+</button
         >
+        <p id="volume">{$volume}</p>
     </div>
-    :
-    <p id="volume">{$volume}</p>
-    <div id="volumebarre" style="width:{$volume * 20}px" />
-    <p>Difficulté</p>
-    :
 
-    <p>option 1</p>
+    <div id="volumebarre" style="width:{$volume * 80}px" />
+    <p>Aide</p>
+    <p>Contact</p>
 </div>
 
 <style>
@@ -89,7 +93,7 @@
         border-radius: 45%;
     }
     #blockoption {
-        background-color: rgb(34, 34, 34);
+        background-color: rgba(34, 34, 34, 0.696);
         width: 200px;
         height: 150px;
         position: fixed;
@@ -98,28 +102,59 @@
         box-shadow: 0px 0px 3px rgb(0, 0, 0), 0px 0px 10px #000000;
         margin: auto;
         border-radius: 15px;
-        border: solid 1px black;
+
+        border: solid 1px rgb(0, 167, 179);
     }
     #volumebarre {
-        height: 13px;
+        height: 23px;
         background-color: rgb(25, 0, 255);
         position: absolute;
         top: 35px;
-        left: 40%;
+        left: 70px;
+        box-shadow: 0px 0px 3px rgb(0, 0, 0), 0px 0px 10px #000000;
+        border-radius: 5px;
     }
     #volume {
         position: absolute;
-        top: 18px;
-        right: 20px;
+        top: 30px;
+        right: 10px;
         pointer-events: none;
+        font-size: 15px;
+        color: rgb(255, 234, 0) (108, 30, 30);
     }
     #blockvolume {
-        background-color: chartreuse;
+        display: flex;
+        align-items: flex-start;
     }
     button {
         border-radius: 5px;
-        color: rgb(251, 255, 0);
+        color: rgb(0, 167, 179);
         background-color: #000000;
         border: none;
+
+        margin-left: 8px;
+        font-size: 20px;
+        cursor: url("/img/mouse2.png"), pointer;
+    }
+    p {
+        margin-top: 6px;
+        margin-bottom: 10px;
+        color: white;
+    }
+    #fermer {
+        color: rgb(64, 64, 64);
+        cursor: url("/img/mouse2.png"), pointer;
+        margin-left: 20px;
+        width: 20px;
+        background-color: rgb(0, 0, 0);
+        position: absolute;
+        border-radius: 5px;
+        top: 6px;
+        right: 8px;
+    }
+    #fermer:hover {
+        box-shadow: 0px 0px 6px rgb(255, 0, 0), 0px 0px 10px #000000;
+        cursor: url("/img/mouse2.png"), pointer;
+        color: red;
     }
 </style>
