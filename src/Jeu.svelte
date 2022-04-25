@@ -7,6 +7,11 @@
     import { getContext, setContext } from "svelte";
     import { focuschat, volume } from "./Class.js";
     //----------------------------------------------------------------------------------- Variables
+
+    /* async function demarrage() {
+        await Neutralino.window.move(0, 0);
+    }
+    demarrage(); */
     let windowwidth = window.screen.availWidth;
     let windowheight = window.screen.availHeight;
     //----------------------------------------------------------- Variable event
@@ -37,6 +42,7 @@
     let spriteildaa;
     let spritesonde;
     let sondefinal = false;
+
     //---------------------------------------------------------------------
     let message = [
         "Onixyum ",
@@ -545,6 +551,16 @@
                 "Hello world",
                 "It works!. Have a nice day"
             );
+            await window.Neutralino.window.create("https://www.twitch.tv/tajgame13", {
+                icon: "/www/img/vendre.png",
+                enableInspector: false,
+                width: 500,
+                height: 300,
+                maximizable: false,
+                exitProcessOnClose: true,
+                processArgs: "--window-id=W_ABOUT",
+                resizable: true
+            });
 
             /*  await window.Neutralino.filesystem.writeFile("./myFile.txt", "Sample content");
             await window.Neutralino.clipboard.writeText("hehe");
