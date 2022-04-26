@@ -3,6 +3,7 @@
     import { socket, sauvegarde } from "./Variables.js";
     import Chat from "./Chat.svelte";
     import Hud from "./Hud.svelte";
+    import Inventairejeu from "./Inventairejeu.svelte";
     import Options from "./Options.svelte";
     import { getContext, setContext } from "svelte";
     import { focuschat, volume } from "./Class.js";
@@ -38,11 +39,12 @@
     let camera;
 
     let difficulte = "normal";
-    let acceuil;
+
     let spriteildaa;
     let spritesonde;
     let sondefinal = false;
-
+    let acceuil;
+    let bureau;
     //---------------------------------------------------------------------
     let message = [
         "Onixyum ",
@@ -399,11 +401,61 @@
             }
         }
     }
+
+    class Bureau extends Phaser.Scene {
+        constructor() {
+            super("Bureau");
+        }
+        //--------------------------------------------------------------------------------------- PRELOAD
+
+        preload() {
+            bureau = this;
+            // JOUEUR
+            // joueur.inventaire.push(objet);
+            // joueur.inventaire.push(objet2);
+            // PNJ
+            /*  this.load.image("dude", "/img/boy.png", { frameWidth: 48, frameHeight: 48 });
+            // PARTICULE
+            this.load.image("particule", "/img/glitter2.png", {
+                frameWidth: 21,
+                frameHeight: 21
+            }); */
+            // MAP
+            this.load.image("bureau", "img/testniveau.png", {
+                frameWidth: 1000,
+                frameHeight: 500
+            });
+        }
+        //------------------------------------------------------ CREATE
+        create() {
+            // CREATION MAP
+            this.background = this.add
+                .image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, "bureau")
+                .setOrigin(0.5, 0.5);
+            this.background.displayWidth = this.sys.canvas.width;
+            this.background.displayHeight = this.sys.canvas.height;
+            // CREATION JOUEUR
+            // HITBOX
+            // this.background.setPipeline("Light2D");
+            this.lights.enable();
+            // this.lights.setAmbientColor(55, 55, 255);
+            var spotlight = this.lights.addLight(300, 300, 1600).setIntensity(3);
+            var spotlight2 = this.lights.addLight(1400, 200, 800).setIntensity(3);
+            var spotlight3 = this.lights.addLight(690, 200, 800).setIntensity(3);
+            var spotlight4 = this.lights.addLight(950, 300, 800).setIntensity(2);
+            // // CREATION PARTICULE
+            this.input.on("pointermove", function (pointer) {});
+            toucheclavier = this.input.keyboard.createCursorKeys();
+            // -----------------------------CREATION ANIMATION
+        }
+        //-----------------------------------------------------------------------------------UPDATE
+        update() {}
+    }
     const config = {
         width: windowwidth,
         height: windowheight,
         pixelArt: false,
-        scene: [Acceuil, Menuprincipal],
+        scene: [Acceuil, Menuprincipal, Bureau],
         type: Phaser.AUTO,
         parent: "jeu",
         physics: {
@@ -532,7 +584,8 @@
     <button
         id="storymode"
         on:click={(event) => {
-            acceuil.scene.start("Acceuil", "Menuprincipal");
+            acceuil.scene.start("Bureau", "Menuprincipal");
+            connecte = false;
         }}>Mode Histoire</button
     >
     <button
@@ -594,7 +647,14 @@
         }}
     />
 </div>
-
+<div>
+    <Inventairejeu bind:inventairejoueur={joueur.inventaire} bind:placeinventaire />
+</div>
+<button
+    on:click={() => {
+        joueur.inventaire.push(dopant);
+    }}
+/>
 <div id="jeu" />
 
 <!------------------------------------------------------------------------------CSS-------------------------------------------->
