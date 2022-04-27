@@ -7,6 +7,7 @@
     import Options from "./Options.svelte";
     import { getContext, setContext } from "svelte";
     import { focuschat, volume } from "./Class.js";
+
     //----------------------------------------------------------------------------------- Variables
 
     /* async function demarrage() {
@@ -39,7 +40,7 @@
     let camera;
 
     let difficulte = "normal";
-
+    let enjeu = false;
     let spriteildaa;
     let spritesonde;
     let sondefinal = false;
@@ -586,6 +587,7 @@
         on:click={(event) => {
             acceuil.scene.start("Bureau", "Menuprincipal");
             connecte = false;
+            enjeu = true;
         }}>Mode Histoire</button
     >
     <button
@@ -647,14 +649,21 @@
         }}
     />
 </div>
-<div>
-    <Inventairejeu bind:inventairejoueur={joueur.inventaire} bind:placeinventaire />
-</div>
-<button
-    on:click={() => {
-        joueur.inventaire.push(dopant);
-    }}
-/>
+{#if enjeu}
+    <div>
+        <Inventairejeu
+            bind:inventairejoueur={joueur.inventaire}
+            bind:placeinventaire
+            bind:cyberz={joueur.cyberz}
+        /><button
+            on:click={() => {
+                joueur.cyberz += 100;
+                joueur.inventaire.push(dopant);
+                console.log(joueur.inventaire.length);
+            }}>CREDITS</button
+        >
+    </div>{/if}
+
 <div id="jeu" />
 
 <!------------------------------------------------------------------------------CSS-------------------------------------------->
