@@ -47,6 +47,8 @@
     let sondefinal = false;
     let acceuil;
     let bureau;
+    let cursors;
+
     //---------------------------------------------------------------------
     let message = [
         "Onixyum ",
@@ -60,6 +62,9 @@
         new Audio("son/effet/chat.mp3"),
         new Audio("son/effet/validation3.mp3")
     ];
+    let fondacceuil = setInterval(() => {
+        effet[0].play();
+    }, 1000);
     let ildaa = [
         new Audio("son/effet/ildaabonjour.mp3"),
         new Audio("son/effet/ildaastrategie.mp3"),
@@ -208,9 +213,7 @@
                 /* console.log(res.pseudo); */
 
                 /* console.log(joueur.inventaire.length); */
-                setInterval(() => {
-                    effet[0].play();
-                }, 1000);
+
                 setTimeout(() => {
                     ildaa[0].volume = $volume;
                     ildaa[0].play();
@@ -227,6 +230,7 @@
 
         preload() {
             acceuil = this;
+
             // JOUEUR
             // joueur.inventaire.push(objet);
             // joueur.inventaire.push(objet2);
@@ -411,9 +415,14 @@
         //--------------------------------------------------------------------------------------- PRELOAD
 
         preload() {
+            this.load.spritesheet("ildaa2", "/img/ildaa.png", {
+                frameWidth: 528,
+                frameHeight: 842
+            });
             bureau = this;
             enjeu = true;
             connecte = false;
+            cursors = this.input.keyboard.createCursorKeys();
             // JOUEUR
             // joueur.inventaire.push(objet);
             // joueur.inventaire.push(objet2);
@@ -425,13 +434,17 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/testniveau2.png", {
+            this.load.image("bureau", "img/testniveau3.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });
         }
         //------------------------------------------------------ CREATE
         create() {
+            spriteildaa = this.physics.add.sprite(windowwidth - 150, windowheight - 380, "ildaa2");
+            spriteildaa.setSize(30, 80, true);
+            spriteildaa.setDepth(2);
+            spriteildaa.setScale(0.5, 0.5);
             // CREATION MAP
             camera = this.cameras.main;
             camera.fadeIn(3000, 1);
@@ -456,7 +469,44 @@
             // -----------------------------CREATION ANIMATION
         }
         //-----------------------------------------------------------------------------------UPDATE
-        update() {}
+        update() {
+            //TOUCHE BAS
+            cursors.down.on("down", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 300);
+            });
+            cursors.down.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+            //TOUCHE HAUT
+            cursors.up.on("down", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, -300);
+            });
+            cursors.up.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+            //TOUCHE GAUCHE
+            cursors.left.on("down", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(-300, 0);
+            });
+            cursors.left.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+            //TOUCHE DROITE
+            cursors.right.on("down", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(300, 0);
+            });
+            cursors.right.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+        }
     }
     const config = {
         width: 1380,
@@ -593,6 +643,8 @@
         on:click={(event) => {
             acceuil.scene.start("Bureau", "Menuprincipal");
             camera.fadeOut(3000, 1);
+            effet[0].pause();
+            clearInterval(fondacceuil);
         }}>Mode Histoire</button
     >
     <button
