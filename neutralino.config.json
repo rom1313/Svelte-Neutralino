@@ -18,8 +18,6 @@
 			"title": "Onixyum",
 			"width": 1366,
 			"height": 768,
-			"minWidth": 1366,
-			"minHeight": 768,
 			"fullScreen": false,
 			"alwaysOnTop": false,
 			"icon": "/www/img/glitter3.png",

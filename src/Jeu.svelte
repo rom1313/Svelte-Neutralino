@@ -412,6 +412,8 @@
 
         preload() {
             bureau = this;
+            enjeu = true;
+            connecte = false;
             // JOUEUR
             // joueur.inventaire.push(objet);
             // joueur.inventaire.push(objet2);
@@ -423,7 +425,7 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/testniveau.png", {
+            this.load.image("bureau", "img/testniveau2.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });
@@ -431,6 +433,9 @@
         //------------------------------------------------------ CREATE
         create() {
             // CREATION MAP
+            camera = this.cameras.main;
+            camera.fadeIn(3000, 1);
+
             this.background = this.add
                 .image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, "bureau")
                 .setOrigin(0.5, 0.5);
@@ -454,7 +459,7 @@
         update() {}
     }
     const config = {
-        width: windowwidth,
+        width: 1380,
         height: windowheight,
         pixelArt: false,
         scene: [Acceuil, Menuprincipal, Bureau],
@@ -587,8 +592,7 @@
         id="storymode"
         on:click={(event) => {
             acceuil.scene.start("Bureau", "Menuprincipal");
-            connecte = false;
-            enjeu = true;
+            camera.fadeOut(3000, 1);
         }}>Mode Histoire</button
     >
     <button
@@ -596,7 +600,8 @@
         on:click={async (event) => {
             await window.Neutralino.window.setDraggableRegion("jcjmode");
         }}>Mode JcJ</button
-    ><!-- <Hud
+    >
+    <!-- <Hud
         bind:pseudo={joueur.pseudo}
         bind:cyberz={joueur.cyberz}
         bind:niv={joueur.niveau}
@@ -608,7 +613,8 @@
         bind:score={joueur.score}
         bind:inventaire={joueur.inventaire}
         bind:placeinventaire
-    /> -->{/if}
+    /> -->
+{/if}
 <div class={connecte === true ? "chatvisible" : "chatinvisible"}>
     <Chat />
     <Options />
@@ -629,13 +635,7 @@
             bind:inventairejoueur={joueur.inventaire}
             bind:placeinventaire
             bind:cyberz={joueur.cyberz}
-        /><button
-            on:click={() => {
-                joueur.cyberz += 100;
-                joueur.inventaire.push(dopant);
-                console.log(joueur.inventaire.length);
-            }}>CREDITS</button
-        >
+        />
     </div>{/if}
 
 <div id="jeu" />
