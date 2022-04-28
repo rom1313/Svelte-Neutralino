@@ -3,6 +3,7 @@
     import { socket } from "./Variables.js";
     import { getContext, setContext, onMount } from "svelte";
     import { volume } from "./Class.js";
+    import Contact from "./Contact.svelte";
     //-------------------------------------------------------------------------------- variables
     export let optioncacher = true;
 
@@ -14,8 +15,6 @@
 <svelte:window
     on:keydown={(event) => {
         if (event.key === "Escape") {
-            console.log("echap appuyé");
-
             if (optioncacher === false) {
                 optioncacher = true;
             }
@@ -36,15 +35,18 @@
     }}
 />
 <div id="blockoption" class={optioncacher ? "menucache" : ""}>
+    <Contact />
+    <p>Aide</p>
     <span
         id="fermer"
         on:click={() => {
             optioncacher = true;
         }}>X</span
     >
-    <p>Musique :</p>
+
     <div id="blockvolume">
         <button
+            id="bouttonmoins"
             on:click={() => {
                 if ($volume > 0) {
                     $volume -= 0.25;
@@ -54,6 +56,7 @@
         >
 
         <button
+            id="bouttonplus"
             on:click={() => {
                 if ($volume < 1) {
                     $volume += 0.25;
@@ -61,12 +64,11 @@
                 }
             }}>+</button
         >
+        <p id="vol">Vol. musique :</p>
         <p id="volume">{$volume}</p>
     </div>
 
-    <div id="volumebarre" style="width:{$volume * 80}px" />
-    <p>Aide</p>
-    <p>Contact</p>
+    <div id="volumebarre" style="width:{$volume * 120}px" />
 </div>
 
 <style>
@@ -93,9 +95,9 @@
         border-radius: 45%;
     }
     #blockoption {
-        background-color: rgba(34, 34, 34, 0.696);
-        width: 200px;
-        height: 150px;
+        background-color: rgb(34, 34, 34);
+        width: 250px;
+        height: 155px;
         position: fixed;
         bottom: 60px;
         left: 100px;
@@ -106,20 +108,21 @@
         border: solid 1px rgb(0, 167, 179);
     }
     #volumebarre {
-        height: 23px;
+        height: 10px;
         background-color: rgb(25, 0, 255);
         position: absolute;
-        top: 35px;
+        bottom: 18px;
         left: 70px;
         box-shadow: 0px 0px 3px rgb(0, 0, 0), 0px 0px 10px #000000;
         border-radius: 5px;
+        border: solid 1px black;
     }
     #volume {
         position: absolute;
-        top: 30px;
-        right: 10px;
+        bottom: 5px;
+        right: 18px;
         pointer-events: none;
-        font-size: 15px;
+        font-size: 18px;
         color: rgb(255, 234, 0) (108, 30, 30);
     }
     #blockvolume {
@@ -132,7 +135,7 @@
         background-color: #000000;
         border: none;
 
-        margin-left: 8px;
+        margin-left: 6px;
         font-size: 20px;
         cursor: url("/img/mouse2.png"), pointer;
     }
@@ -156,5 +159,25 @@
         box-shadow: 0px 0px 6px rgb(255, 0, 0), 0px 0px 10px #000000;
         cursor: url("/img/mouse2.png"), pointer;
         color: red;
+    }
+    #bouttonmoins {
+        top: 75%;
+        position: absolute;
+        left: 5px;
+    }
+    #bouttonmoins:hover {
+        color: rgb(255, 191, 0);
+    }
+    #bouttonplus {
+        position: absolute;
+        top: 75%;
+        left: 30px;
+    }
+    #bouttonplus:hover {
+        color: rgb(255, 191, 0);
+    }
+    #vol {
+        left: 55px;
+        position: absolute;
     }
 </style>

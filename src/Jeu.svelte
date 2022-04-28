@@ -5,6 +5,7 @@
     import Hud from "./Hud.svelte";
     import Inventairejeu from "./Inventairejeu.svelte";
     import Options from "./Options.svelte";
+    import Contact from "./Contact.svelte";
     import { getContext, setContext } from "svelte";
     import { focuschat, volume } from "./Class.js";
 
@@ -593,37 +594,9 @@
     <button
         id="jcjmode"
         on:click={async (event) => {
-            /*    await window.Neutralino.app.exit();
-            await window.Neutralino.app.killProcess(); */
             await window.Neutralino.window.setDraggableRegion("jcjmode");
-            await window.Neutralino.storage.setData(
-                "userDetails",
-                JSON.stringify({ username: "TestValue" })
-            );
-            window.Neutralino.os.open("https://apiildaa.herokuapp.com/");
-            await window.Neutralino.os.showMessageBox("Hello", "Welcome");
-            await window.Neutralino.os.showNotification(
-                "Hello world",
-                "It works!. Have a nice day"
-            );
-            await window.Neutralino.window.create("https://www.twitch.tv/tajgame13", {
-                icon: "/www/img/vendre.png",
-                enableInspector: false,
-                width: 500,
-                height: 300,
-                maximizable: false,
-                exitProcessOnClose: true,
-                processArgs: "--window-id=W_ABOUT",
-                resizable: true
-            });
-
-            /*  await window.Neutralino.filesystem.writeFile("./myFile.txt", "Sample content");
-            await window.Neutralino.clipboard.writeText("hehe");
-            await window.Neutralino.app.restartProcess({ args: "--restarted" }); */
-
-            /* acceuil.scene.start("Acceuil", "Menuprincipal"); */
         }}>Mode JcJ</button
-    ><Hud
+    ><!-- <Hud
         bind:pseudo={joueur.pseudo}
         bind:cyberz={joueur.cyberz}
         bind:niv={joueur.niveau}
@@ -635,7 +608,7 @@
         bind:score={joueur.score}
         bind:inventaire={joueur.inventaire}
         bind:placeinventaire
-    />{/if}
+    /> -->{/if}
 <div class={connecte === true ? "chatvisible" : "chatinvisible"}>
     <Chat />
     <Options />
@@ -649,6 +622,7 @@
         }}
     />
 </div>
+
 {#if enjeu}
     <div>
         <Inventairejeu

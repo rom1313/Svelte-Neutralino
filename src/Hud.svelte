@@ -325,7 +325,7 @@
         font-size: 30px;
     }
     #fermer {
-        z-index: 3;
+        z-index: 1;
         transform: translate(-50%, -50%);
         position: fixed;
         top: 355px;

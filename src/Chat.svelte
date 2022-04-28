@@ -45,8 +45,6 @@
 <svelte:window
     on:keydown={(event) => {
         if (event.key === "Escape") {
-            console.log("echap appuyé");
-
             if (chatcacher === false) {
                 chatcacher = true;
             }
@@ -75,15 +73,10 @@
             }
         }}
         on:focus={(e) => {
-            console.log("focus");
-            console.log(contenuchat);
             $focuschat = true;
-            console.log($focuschat);
         }}
         on:blur={(e) => {
-            console.log("focus perdu");
             $focuschat = false;
-            console.log($focuschat);
         }}
     />
     <span
