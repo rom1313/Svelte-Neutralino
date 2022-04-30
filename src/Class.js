@@ -104,3 +104,21 @@ export class Ennemi {
 export let chatouvert = true
 export let focuschat = writable()
 export let volume = writable(1)
+
+//TODO ----------------------------------------------- Scenes -------------------------
+export class Etats {
+    constructor() {
+
+    }
+
+    stun(personnage) {
+        console.log("le personnage est stun !");
+        personnage.vitesse = 0
+        setTimeout(() => {
+            personnage.vitesse = 1
+            console.log("le personnage n'est plus stun!");
+        }, 2000);
+    }
+
+
+}
