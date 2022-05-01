@@ -77,7 +77,6 @@
                         infomateriauxchimique = cat.materiauxchimique;
                         infomateriauxonix = cat.materiauxonix;
                         infoeffet = cat.effet;
-                        console.log(cat);
 
                         pointerx = event.x;
                         pointery = event.y;
