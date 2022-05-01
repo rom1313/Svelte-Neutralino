@@ -1,12 +1,26 @@
 <script>
+    import Infobulleinventaire from "./Infobulleinventaire.svelte";
     import { socket, sauvegarde } from "./Variables.js";
     import { getContext, setContext } from "svelte";
     import { Allier, Personnage, Objet, chatouvert } from "./Class.js";
     import { focuschat } from "./Class.js";
+    let infobulleouvert;
     export let inventairejoueur;
     export let placeinventaire;
     export let menucacher;
     export let cyberz;
+    let infonom,
+        infoimg,
+        infoprix,
+        infoeffet,
+        infodescription,
+        infotype,
+        infocreateur,
+        infoqualite,
+        infomateriauxchimique,
+        infomateriauxonix;
+    let pointerx, pointery;
+    export let materiauxchimique, materiauxonix;
     $: placeinventaire = joueur.inventaire.length;
     $: inventairejoueur = joueur.inventaire;
     let joueur = getContext("joueur");
@@ -18,6 +32,7 @@
         "Un cocktail chimique stimulant",
         "+3 force"
     );
+    let effet = [new Audio("son/effet/hover.mp3")];
     let ildaa = [new Audio("son/effet/ildaaok.mp3"), new Audio("")];
     menucacher = true;
 </script>
@@ -39,10 +54,40 @@
 {#if !menucacher}
     <div id="inventaire">
         <p id="nomfenetre">Inventaire (i)</p>
+        <p id="metal"><img src="img/metal.png" alt="" /> {materiauxonix}</p>
+        <p id="chimi"><img src="img/chimi.png" alt="" /> {materiauxchimique}</p>
         <img src="img/inventaire.png" alt="" id="fondinventaire" />
         {#each inventairejoueur as cat, i}
             <div id="blockobjets">
-                <img src={cat.img} alt="" id="imgobjets" />
+                <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+                <img
+                    src={cat.img}
+                    alt=""
+                    id="imgobjets"
+                    on:mouseover={(event) => {
+                        infobulleouvert = true;
+
+                        infonom = cat.nom;
+                        infoimg = cat.img;
+                        infoprix = cat.prix;
+                        infodescription = cat.description;
+                        infotype = cat.type;
+                        infocreateur = cat.createur;
+                        infoqualite = cat.qualite;
+                        infomateriauxchimique = cat.materiauxchimique;
+                        infomateriauxonix = cat.materiauxonix;
+                        infoeffet = cat.effet;
+                        console.log(cat);
+
+                        pointerx = event.x;
+                        pointery = event.y;
+                        effet[0].volume = 0.05;
+                        effet[0].play();
+                    }}
+                    on:mouseout={(event) => {
+                        infobulleouvert = false;
+                    }}
+                />
                 <p id="nomobjet">{cat.nom}</p>
                 <div id="blockimgobjet">
                     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -51,7 +96,7 @@
                         alt=""
                         id="vendre"
                         on:click={(event) => {
-                            if (cat.nom === "Carte d'agent") {
+                            if (cat.type === "Personnel") {
                                 return;
                             } else {
                                 let data = {
@@ -80,9 +125,6 @@
                                 ildaa[0].play();
                                 /* menucacher = true; */
                                 placeinventaire = joueur.inventaire.length;
-                                setTimeout(() => {
-                                    menucacher = false;
-                                }, 0);
                             }
                         }}
                         on:mouseover={(e) => {
@@ -92,7 +134,32 @@
                             e.target.src = "img/vendre.png";
                         }}
                     />
-                    <img id="retroconfection" alt="" src="img/infoobjet.png" />
+                    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+                    <img
+                        id="retroconfection"
+                        alt=""
+                        src="img/recycler.png"
+                        on:click={(event) => {
+                            if (cat.materiauxchimique === 0 && cat.materiauxonix === 0) {
+                                return;
+                            } else {
+                                joueur.materiauxchimique += cat.materiauxchimique;
+                                joueur.materiauxonix += cat.materiauxonix;
+                                joueur.inventaire.splice(i, 1);
+
+                                sauvegarde(joueur);
+                                ildaa[0].play();
+                                /* menucacher = true; */
+                                placeinventaire = joueur.inventaire.length;
+                            }
+                        }}
+                        on:mouseover={(e) => {
+                            e.target.src = "img/recycler2.png";
+                        }}
+                        on:mouseout={(e) => {
+                            e.target.src = "img/recycler.png";
+                        }}
+                    />
                 </div>
             </div>
         {/each}
@@ -108,6 +175,22 @@
             }}>X</span
         >
     </div>
+    {#if infobulleouvert}
+        <Infobulleinventaire
+            {infonom}
+            {infoprix}
+            {infodescription}
+            {infotype}
+            {infocreateur}
+            {infoqualite}
+            {infomateriauxonix}
+            {infomateriauxchimique}
+            {infoimg}
+            {infoeffet}
+            x={pointerx}
+            y={pointery}
+        />
+    {/if}
 {/if}
 <img
     src="img/inventairelogo.png"
@@ -208,7 +291,6 @@
         cursor: url("/img/mouse2.png"), pointer;
     }
     #vendre:hover {
-        transform: scale(1.1);
     }
     #fondinventaire {
         position: absolute;
@@ -252,5 +334,19 @@
         top: -5px;
         left: 10px;
         font-size: 12px;
+    }
+    #metal {
+        color: #b2b2b2;
+        position: absolute;
+        bottom: 0px;
+        left: 250px;
+        font-size: 10px;
+    }
+    #chimi {
+        color: #33ca00;
+        position: absolute;
+        bottom: 0px;
+        left: 300px;
+        font-size: 10px;
     }
 </style>

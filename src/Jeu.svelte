@@ -58,7 +58,7 @@
     let projectile;
     //---------------------------------------------------------------------
     let message = [
-        "Onixyum ",
+        "Onixyum v 1.0 ",
         "Nouveau sur Onixyum ?",
         "Mauvais pass ou pseudo déjà pris",
         "Un Pseudo*, un Pass* et c'est parti !"
@@ -82,9 +82,13 @@
         "Stimulant",
         90,
         "img/potion.png",
-        "consommable",
-        "Un cocktail chimique stimulant",
-        "+3 force"
+        "Consommable",
+        "Un cocktail chimique stimulant de force",
+        "+3 force (20sec)",
+        "Onix Corp.",
+        "Basique",
+        0,
+        20
     );
     let effetarme = [
         new Audio("son/effet/tirsimple.mp3"),
@@ -220,6 +224,7 @@
                     effet[0].volume = $volume;
                     joueur.inventaire.push(dopant);
                     console.log(joueur.inventaire);
+                    console.log(joueur.coffres);
                 }
                 /* console.log(res); */
 
@@ -455,7 +460,7 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/testniveau4.png", {
+            this.load.image("bureau", "img/testniveau3.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });
@@ -554,14 +559,14 @@
                 frameRate: 3,
                 repeat: -1
             });
-            var style = {
-                font: "10px scifi",
-                fill: "chartreuse",
-                wordWrap: true,
-                wordWrapWidth: spriteildaa.width,
-                align: "center"
-            };
-            pseudoingame = this.add.text(spriteildaa.x, spriteildaa.y, joueur.pseudo, style);
+            // var style = {
+            //     font: "10px scifi",
+            //     fill: "chartreuse",
+            //     wordWrap: true,
+            //     wordWrapWidth: spriteildaa.width,
+            //     align: "center"
+            // };
+            // pseudoingame = this.add.text(spriteildaa.x, spriteildaa.y, joueur.pseudo, style);
             console.log(cursors);
             let scenebureau = this;
             //TOUCHE ESPACE
@@ -618,8 +623,10 @@
                             function colision(persosprite, collisionsprite) {
                                 projectile2.destroy();
                                 if (effetarme[2].paused) {
+                                    effetarme[2].volume = 0.1;
                                     effetarme[2].play();
                                 } else {
+                                    effetarme[3].volume = 0.1;
                                     effetarme[3].play();
                                 }
                                 collisionsprite.destroy();
@@ -741,6 +748,7 @@
 />
 
 <div id="menu" class={menucache ? "menucache" : ""}>
+    <img id="fondmenu" src="img/menu.png" alt="" />
     <div class="info">
         <p id="titrejeu">{message[0]}</p>
     </div>
@@ -876,6 +884,8 @@
             bind:inventairejoueur={joueur.inventaire}
             bind:placeinventaire
             bind:cyberz={joueur.cyberz}
+            bind:materiauxonix={joueur.materiauxonix}
+            bind:materiauxchimique={joueur.materiauxchimique}
         />
     </div>{/if}
 
@@ -901,9 +911,11 @@
         }
     }
     #titrejeu {
-        margin-top: 0px;
+        margin-top: 25px;
         padding: 0;
+        font-size: 10px;
     }
+
     #quitter {
         position: fixed;
         bottom: 35px;
@@ -917,12 +929,12 @@
         border-radius: 50%;
     }
     #input3 {
-        margin-bottom: 5px;
+        margin-bottom: 15px;
     }
 
     #titre {
         position: absolute;
-        top: 150px;
+        top: 260px;
         left: 50%;
         transform: translate(-50%, -50%);
         animation: briller 2s infinite alternate;
@@ -936,15 +948,16 @@
         opacity: 0;
     }
     .indicateur {
-        margin-top: 8px;
+        margin-top: 4px;
     }
     .indicateurtourne {
         animation: tourner infinite 0.2s linear;
     }
     #menu {
-        left: 70px;
-        top: 195px;
-        padding-top: 15px;
+        left: 50%;
+        top: 75%;
+        transform: translate(-50%, -50%);
+
         row-gap: 20px;
         width: 180px;
         height: 300px;
@@ -956,10 +969,19 @@
         flex-direction: column;
         align-items: center;
         font-family: "scifi";
-        border: solid 1px rgb(179, 0, 0);
-        border-radius: 12px;
+        border: solid 2px rgb(0, 0, 0);
+        border-radius: 15px;
         font-family: "scifi";
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
+    }
+    #fondmenu {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        border-radius: 14px;
+        border: solid 2px black;
     }
     input {
         width: 70%;
@@ -992,13 +1014,13 @@
     }
     #recommencer {
         position: absolute;
-        top: 300px;
+        top: 270px;
         left: 50%;
         transform: translate(-50%, -50%);
     }
     #connexionboutton {
-        margin-top: 15px;
-        margin-bottom: 20px;
+        margin-top: 25px;
+        margin-bottom: 10px;
     }
     #connexionboutton:hover {
         color: rgb(255, 0, 0);
@@ -1013,8 +1035,8 @@
         font-size: 15px;
         color: rgb(255, 255, 255);
         text-shadow: 6px 5px 4px black;
-        margin-top: 5px;
-        line-height: 19px;
+        margin-top: 17px;
+        line-height: 17px;
     }
     .info2 {
         position: relative;

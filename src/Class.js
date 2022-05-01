@@ -25,23 +25,28 @@ export class Personnage {
         this.niveau = niveau;
         this.xp = 0;
         this.pass = "0000";
-        this.sprite;
         this.score = [0, 0, 0, 0];
         this.kill = [0, 0, 0, 0];
-        this.inventaire = [{ img: 'img/carteagent.png', nom: "Carte d'agent", prix: 0 }];
+        this.inventaire = [{ img: 'img/carteagent.png', nom: "Carte d'agent", prix: 0, effet: "Auncun", type: "Personnel", description: "Carte professionelle d'agent d'Onix Corp.", createur: "Onix Corp.", qualite: "Basique", materiauxonix: 0, materiauxchimique: 0 }];
         this.puce = ["", "", ""];
         this.relique = [""];
         this.amelioration = ["", "", ""];
-        this.ventes = [];
-        this.messages = [];
         this.coffres = [""];
-        this.classe = '';
-        this.partenaire = '';
+        this.classe = "";
+        this.partenaire = "";
         this.skills = ["", "", "", "", "", "", ""];
-        this.progression = '';
-        this.skin = '';
-        this.personnage = '';
-        this.img = "img/inviteface.png"
+        this.progression = "";
+        this.skin = "";
+        this.personnage = "";
+        this.img = "img/inviteface.png";
+        this.alignement = 0;
+        this.materiauxonix = 0;
+        this.materiauxchimique = 0;
+        this.ventes = 0;
+        this.messages = [""];
+        this.gemmes = 0;
+        this.mail = "";
+        this.amis = ""
 
 
     }
@@ -70,7 +75,7 @@ export class Personnage {
 }
 
 export class Objet {
-    constructor(nom, prix, img, type, description, effet, createur, qualite) {
+    constructor(nom, prix, img, type, description, effet, createur, qualite, materiauxonix, materiauxchimique) {
         this.nom = nom;
         this.prix = prix;
         this.effet = effet
@@ -79,6 +84,8 @@ export class Objet {
         this.description = description
         this.createur = createur
         this.qualite = qualite
+        this.materiauxonix = materiauxonix;
+        this.materiauxchimique = materiauxchimique
 
     }
 }
