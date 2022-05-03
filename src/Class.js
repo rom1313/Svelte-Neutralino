@@ -111,7 +111,7 @@ export class Ennemi {
 export let chatouvert = true
 export let focuschat = writable()
 export let volume = writable(1)
-
+export let pause = writable(false)
 //TODO ----------------------------------------------- Scenes -------------------------
 export class Etats {
     constructor() {

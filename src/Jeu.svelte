@@ -7,7 +7,7 @@
     import Options from "./Options.svelte";
     import Contact from "./Contact.svelte";
     import { getContext, setContext } from "svelte";
-    import { focuschat, volume } from "./Class.js";
+    import { focuschat, volume, pause } from "./Class.js";
 
     //----------------------------------------------------------------------------------- Variables
 
@@ -276,12 +276,12 @@
             // CREATION JOUEUR
             // HITBOX
             // this.background.setPipeline("Light2D");
-            this.lights.enable();
+            /* this.lights.enable(); */
             // this.lights.setAmbientColor(55, 55, 255);
-            var spotlight = this.lights.addLight(300, 300, 1600).setIntensity(3);
+            /* var spotlight = this.lights.addLight(300, 300, 1600).setIntensity(3);
             var spotlight2 = this.lights.addLight(1400, 200, 800).setIntensity(3);
             var spotlight3 = this.lights.addLight(690, 200, 800).setIntensity(3);
-            var spotlight4 = this.lights.addLight(950, 300, 800).setIntensity(2);
+            var spotlight4 = this.lights.addLight(950, 300, 800).setIntensity(2); */
             // // CREATION PARTICULE
             this.input.on("pointermove", function (pointer) {});
             toucheclavier = this.input.keyboard.createCursorKeys();
@@ -351,13 +351,13 @@
             this.background.displayHeight = this.sys.canvas.height;
             // CREATION JOUEUR
             // HITBOX
-            this.background.setPipeline("Light2D");
+            /*    this.background.setPipeline("Light2D");
             this.lights.enable();
             this.lights.setAmbientColor(0x808080);
             var spotlight = this.lights.addLight(300, 200, 1600).setIntensity(3);
             var spotlight2 = this.lights.addLight(1400, 200, 800).setIntensity(3);
             var spotlight3 = this.lights.addLight(690, 200, 800).setIntensity(3);
-            var spotlight4 = this.lights.addLight(950, 300, 800).setIntensity(2);
+            var spotlight4 = this.lights.addLight(950, 300, 800).setIntensity(2); */
             // // CREATION PARTICULE
             this.input.on("pointermove", function (pointer) {});
             toucheclavier = this.input.keyboard.createCursorKeys();
@@ -446,7 +446,10 @@
                 frameHeight: 388
             });
             bureau = this;
-            enjeu = true;
+            setTimeout(() => {
+                enjeu = true;
+            }, 3000);
+
             connecte = false;
             cursors = this.input.keyboard.createCursorKeys();
             // JOUEUR
@@ -467,6 +470,7 @@
         }
         //------------------------------------------------------ CREATE
         create() {
+            let scenebureau = this;
             //------------------------------------------------------
             spriteildaa = this.physics.add.sprite(windowwidth - 900, windowheight - 380, "ildaa2");
             spriteildaa.setSize(228, 757, true);
@@ -494,13 +498,12 @@
             this.background.displayHeight = this.sys.canvas.height;
             // CREATION JOUEUR
             // HITBOX
-            // this.background.setPipeline("Light2D");
-            this.lights.enable();
-            // this.lights.setAmbientColor(55, 55, 255);
-            var spotlight = this.lights.addLight(300, 300, 1600).setIntensity(3);
-            var spotlight2 = this.lights.addLight(1400, 200, 800).setIntensity(3);
-            var spotlight3 = this.lights.addLight(690, 200, 800).setIntensity(3);
-            var spotlight4 = this.lights.addLight(950, 300, 800).setIntensity(2);
+            /* this.background.setPipeline("Light2D"); */
+            /*  this.lights.enable(); */
+            /* this.lights.setAmbientColor(55, 55, 255); */
+            // var spotlight = this.lights.addLight(300, 300, 1600).setIntensity(3);
+            /*  var light = this.lights.addLight(500, 0, 1600).setIntensity(10); */
+
             // // CREATION PARTICULE
             this.input.on("pointermove", function (pointer) {});
             toucheclavier = this.input.keyboard.createCursorKeys();
@@ -526,39 +529,41 @@
                     camera.shake(1000, 0.025);
                 }
             );
+            //ANIMATIONS --------------------------------------------------------------
 
             this.anims.create({
                 key: "dos",
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [3, 6, 3, 7]
                 }),
-                frameRate: 3,
+                frameRate: 4,
                 repeat: -1
             });
             this.anims.create({
                 key: "gauche",
                 frames: this.anims.generateFrameNumbers("ildaa2", {
-                    frames: [4, 4, 4, 4]
+                    frames: [4, 12, 4, 13]
                 }),
-                frameRate: 3,
+                frameRate: 4,
                 repeat: -1
             });
             this.anims.create({
                 key: "droite",
                 frames: this.anims.generateFrameNumbers("ildaa2", {
-                    frames: [5, 10, 5, 10]
+                    frames: [5, 10, 5, 11]
                 }),
-                frameRate: 3,
+                frameRate: 4,
                 repeat: -1
             });
             this.anims.create({
                 key: "bas",
                 frames: this.anims.generateFrameNumbers("ildaa2", {
-                    frames: [0, 0, 0, 0]
+                    frames: [0, 0, 0, 14]
                 }),
-                frameRate: 3,
+                frameRate: 4,
                 repeat: -1
             });
+            // TEXT EN JEU ---------------------------------------------------------------
             // var style = {
             //     font: "10px scifi",
             //     fill: "chartreuse",
@@ -567,80 +572,83 @@
             //     align: "center"
             // };
             // pseudoingame = this.add.text(spriteildaa.x, spriteildaa.y, joueur.pseudo, style);
-            console.log(cursors);
-            let scenebureau = this;
+
             //TOUCHE ESPACE
             cursors.space.on("down", function (event) {
-                if (joueur.vitesse != 0 && joueur.vitesse === 1) {
-                    if (effetarme[0].paused) {
-                        effetarme[0].volume = 0.1;
-                        effetarme[0].play();
-                    } else {
-                        effetarme[1].volume = 0.1;
-                        effetarme[1].play();
-                    }
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        if (effetarme[0].paused) {
+                            effetarme[0].volume = 0.1;
+                            effetarme[0].play();
+                        } else {
+                            effetarme[1].volume = 0.1;
+                            effetarme[1].play();
+                        }
 
-                    if (projectile === undefined) {
-                        projectile = scenebureau.physics.add.sprite(
-                            spriteildaa.x,
-                            spriteildaa.y - 90,
-                            "projectile"
-                        );
-                        projectile.setSize(409, 388, true);
-                        projectile.setDepth(2);
-                        projectile.setScale(0.25, 0.25);
-                        projectile.setVelocity(2000, 0);
+                        if (projectile === undefined) {
+                            projectile = scenebureau.physics.add.sprite(
+                                spriteildaa.x,
+                                spriteildaa.y - 90,
+                                "projectile"
+                            );
+                            projectile.setSize(409, 388, true);
+                            projectile.setDepth(2);
+                            projectile.setScale(0.25, 0.25);
+                            projectile.setVelocity(2000, 0);
 
-                        scenebureau.physics.add.collider(
-                            projectile,
-                            [spriteennemi, spriteennemi2],
-                            function colision(persosprite, collisionsprite) {
+                            scenebureau.physics.add.collider(
+                                projectile,
+                                [spriteennemi, spriteennemi2],
+                                function colision(persosprite, collisionsprite) {
+                                    projectile.destroy();
+                                    if (effetarme[2].paused) {
+                                        effetarme[2].volume = 0.1;
+                                        effetarme[2].play();
+                                    } else {
+                                        effetarme[3].volume = 0.1;
+                                        effetarme[3].play();
+                                    }
+
+                                    collisionsprite.destroy();
+                                }
+                            );
+                            setTimeout(() => {
                                 projectile.destroy();
-                                if (effetarme[2].paused) {
-                                    effetarme[2].volume = 0.1;
-                                    effetarme[2].play();
-                                } else {
-                                    effetarme[3].volume = 0.1;
-                                    effetarme[3].play();
+                                projectile = undefined;
+                            }, 5000);
+                        } else {
+                            let projectile2 = scenebureau.physics.add.sprite(
+                                spriteildaa.x,
+                                spriteildaa.y - 90,
+                                "projectile"
+                            );
+                            scenebureau.physics.add.collider(
+                                projectile2,
+                                [spriteennemi, spriteennemi2],
+                                function colision(persosprite, collisionsprite) {
+                                    projectile2.destroy();
+                                    if (effetarme[2].paused) {
+                                        effetarme[2].volume = 0.1;
+                                        effetarme[2].play();
+                                    } else {
+                                        effetarme[3].volume = 0.1;
+                                        effetarme[3].play();
+                                    }
+                                    collisionsprite.destroy();
                                 }
+                            );
+                            projectile2.setSize(409, 388, true);
+                            projectile2.setDepth(2);
+                            projectile2.setScale(0.25, 0.25);
+                            projectile2.setVelocity(2000, 0);
 
-                                collisionsprite.destroy();
-                            }
-                        );
-                        setTimeout(() => {
-                            projectile.destroy();
-                            projectile = undefined;
-                        }, 5000);
-                    } else {
-                        let projectile2 = scenebureau.physics.add.sprite(
-                            spriteildaa.x,
-                            spriteildaa.y - 90,
-                            "projectile"
-                        );
-                        scenebureau.physics.add.collider(
-                            projectile2,
-                            [spriteennemi, spriteennemi2],
-                            function colision(persosprite, collisionsprite) {
+                            setTimeout(() => {
                                 projectile2.destroy();
-                                if (effetarme[2].paused) {
-                                    effetarme[2].volume = 0.1;
-                                    effetarme[2].play();
-                                } else {
-                                    effetarme[3].volume = 0.1;
-                                    effetarme[3].play();
-                                }
-                                collisionsprite.destroy();
-                            }
-                        );
-                        projectile2.setSize(409, 388, true);
-                        projectile2.setDepth(2);
-                        projectile2.setScale(0.25, 0.25);
-                        projectile2.setVelocity(2000, 0);
-
-                        setTimeout(() => {
-                            projectile2.destroy();
-                            projectile2 = undefined;
-                        }, 5000);
+                                projectile2 = undefined;
+                            }, 5000);
+                        }
+                    } else {
+                        return;
                     }
                 }
 
@@ -649,31 +657,48 @@
 
             // TOUCHE HAUT
             cursors.up.on("down", function (event) {
-                if (joueur.vitesse != 0 && joueur.vitesse === 1) {
-                    spriteildaa.play("dos");
-                    //  perso.play("walk");
-                    spriteildaa.setVelocity(0, -300);
+                /* scenebureau.scene.switch("Menuprincipal"); */
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.play("dos");
+                        //  perso.play("walk");
+                        spriteildaa.setVelocity(0, -230);
+                    }
+                } else {
+                    return;
                 }
             });
             // TOUCHE BAS
             cursors.down.on("down", function (event) {
-                if (joueur.vitesse != 0 && joueur.vitesse === 1) {
-                    spriteildaa.setVelocity(0, 300);
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.setVelocity(0, 230);
+                    }
+                    spriteildaa.play("bas");
+                } else {
+                    return;
                 }
-                spriteildaa.play("bas");
             });
             // TOUCHE GAUCHE
             cursors.left.on("down", function (event) {
-                if (joueur.vitesse != 0 && joueur.vitesse === 1) {
-                    spriteildaa.play("gauche");
-                    spriteildaa.setVelocity(-300, 0);
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.play("gauche");
+                        spriteildaa.setVelocity(-230, 0);
+                    }
+                } else {
+                    return;
                 }
             });
             //TOUCHE DROITE
             cursors.right.on("down", function (event) {
-                if (joueur.vitesse != 0 && joueur.vitesse === 1) {
-                    spriteildaa.play("droite");
-                    spriteildaa.setVelocity(300, 0);
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.play("droite");
+                        spriteildaa.setVelocity(230, 0);
+                    }
+                } else {
+                    return;
                 }
             });
         }
@@ -839,7 +864,8 @@
         id="storymode"
         on:click={(event) => {
             acceuil.scene.start("Bureau", "Menuprincipal");
-            camera.fadeOut(3000, 1);
+
+            /* camera.fadeOut(1000, 1); */
             effet[0].pause();
             clearInterval(fondacceuil);
         }}>Mode Histoire</button
