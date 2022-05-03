@@ -60,15 +60,16 @@
         {infoeffet}
     </p>
     <p>
-        <span>Récup' Onixyum : </span>
+        <span>Métal : </span>
         {infomateriauxonix}
     </p>
+
     <p>
-        <span>Prix vente Cybershop : </span>
-        {infoprix * 4}
+        <span>Chimie : </span>{infomateriauxchimique}
     </p>
     <p>
-        <span>Récup' Chimique : </span>{infomateriauxchimique}
+        <span>Prix Cybershop : </span>
+        {infoprix * 4}
     </p>
 </div>
 
@@ -84,11 +85,11 @@
     div {
         background-color: rgba(37, 37, 37, 0.935);
         width: 225px;
-        height: 290px;
+        height: 294px;
         position: fixed;
         border-radius: 15px;
         box-shadow: 0px 0px 10px rgb(0, 0, 0) inset;
-        border: solid 1px red;
+        border: solid 1px rgb(0, 0, 0);
         box-shadow: 0px 0px 10px rgb(0, 0, 0);
         z-index: 6;
         color: rgb(255, 255, 255);
@@ -102,24 +103,29 @@
         z-index: 6;
     }
     p {
-        font-size: 10px;
+        font-size: 11px;
         text-shadow: 1px 1px 6px rgb(0, 0, 0);
         z-index: 6;
     }
     #nom {
         font-size: 11px;
-        color: yellow;
+        color: rgb(255, 170, 0);
         margin-top: 6px;
         margin-bottom: 3px;
         z-index: 6;
     }
     span {
-        color: rgb(198, 0, 247);
-
+        color: rgb(255, 8, 197);
+        background-color: rgb(0, 0, 0);
+        border: solid 1px black;
+        border-radius: 15px;
         text-shadow: 1px 1px 16px rgb(85, 0, 102);
         font-size: 10px;
         margin-left: 2px;
+        margin-right: 3px;
         z-index: 6;
+        padding: 2px;
+        box-shadow: 0px 0px 3px rgb(0, 0, 0) inset;
     }
     #rare {
         color: red;

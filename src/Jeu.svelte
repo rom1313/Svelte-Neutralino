@@ -465,7 +465,7 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/testniveau3.png", {
+            this.load.image("bureau", "img/testniveau.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });
@@ -477,7 +477,7 @@
             spriteildaa = this.physics.add.sprite(windowwidth - 900, windowheight - 380, "ildaa2");
             spriteildaa.setSize(228, 757, true);
             spriteildaa.setDepth(2);
-            spriteildaa.setScale(0.5, 0.5);
+            spriteildaa.setScale(0.9, 0.9);
 
             //-----------------------------------------
             spriteennemi = this.physics.add.sprite(windowwidth - 100, windowheight - 380, "dude");
@@ -1356,7 +1356,7 @@
         cursor: initial;
     }
     .menucache {
-        opacity: 0;
+        display: none;
     }
     .indicateur {
         margin-top: 4px;
@@ -1365,8 +1365,8 @@
         animation: tourner infinite 0.2s linear;
     }
     #menu {
-        left: 50%;
-        top: 75%;
+        left: 15%;
+        top: 55%;
         transform: translate(-50%, -50%);
 
         row-gap: 20px;
@@ -1374,7 +1374,7 @@
         height: 300px;
         margin: 5px;
         background-color: rgba(71, 71, 71, 0.26);
-        z-index: 3;
+        z-index: 1;
         position: fixed;
 
         flex-direction: column;

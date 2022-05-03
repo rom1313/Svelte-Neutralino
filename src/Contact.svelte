@@ -150,9 +150,10 @@ Pour être contacté, laissez votre e-mail en fin de message. "
         width: 120px;
         height: 20px;
         border-radius: 15px;
+        z-index: 3;
     }
     #button:hover {
-        color: yellow;
+        color: rgb(255, 170, 0);
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #ffc400;
     }
     p {
@@ -182,8 +183,9 @@ Pour être contacté, laissez votre e-mail en fin de message. "
         text-shadow: 1px 1px 16px rgb(0, 0, 0);
     }
     #contactboutton:hover {
-        color: rgb(255, 191, 0);
+        color: rgb(255, 170, 0);
         transform: scale(1.1);
+        text-shadow: 1px 1px 16px rgb(0, 0, 0);
     }
     #resultat {
         position: absolute;

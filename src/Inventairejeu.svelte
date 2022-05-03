@@ -208,10 +208,10 @@
 <style>
     #cyberz {
         color: rgb(198, 0, 247);
-        font-size: larger;
+        font-size: 15px;
         text-shadow: 1px 1px 16px rgb(85, 0, 102);
-        font-size: 25px;
-        bottom: -27px;
+        font-size: 24px;
+        bottom: -26px;
         left: 110px;
         position: absolute;
     }
@@ -233,7 +233,7 @@
     }
     #inventaire {
         position: absolute;
-        border: solid 1px aqua;
+        border: solid 0.5px aqua;
         border-radius: 2%;
         display: grid;
         grid-template-rows: 80px 80px 80px 80px 80px 80px 80px;
@@ -328,11 +328,12 @@
         box-shadow: 0px 0px 5px rgb(255, 187, 0), 0px 0px 10px #000000 inset;
     }
     #nomfenetre {
-        color: yellow;
+        color: rgb(255, 170, 0);
+        text-shadow: 1px 1px 6px rgb(0, 0, 0);
         position: absolute;
-        top: -5px;
+        top: -4px;
         left: 10px;
-        font-size: 12px;
+        font-size: 11px;
     }
     #metal {
         color: #b2b2b2;
@@ -340,6 +341,7 @@
         bottom: 0px;
         left: 250px;
         font-size: 10px;
+        text-shadow: 1px 1px 6px rgb(0, 0, 0);
     }
     #chimi {
         color: #33ca00;
@@ -347,5 +349,6 @@
         bottom: 0px;
         left: 300px;
         font-size: 10px;
+        text-shadow: 1px 1px 6px rgb(0, 0, 0);
     }
 </style>

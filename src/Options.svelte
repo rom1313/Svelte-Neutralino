@@ -35,6 +35,7 @@
     }}
 />
 <div id="blockoption" class={optioncacher ? "menucache" : ""}>
+    <img id="fondoption" src="img/fondoption.png" alt="" />
     <Contact />
     <p>Aide</p>
     <span
@@ -105,7 +106,7 @@
         margin: auto;
         border-radius: 15px;
 
-        border: solid 1px rgb(0, 167, 179);
+        border: solid 1px rgb(0, 0, 0);
     }
     #volumebarre {
         height: 10px;
@@ -152,7 +153,7 @@
         background-color: rgb(0, 0, 0);
         position: absolute;
         border-radius: 5px;
-        top: 6px;
+        top: 12px;
         right: 8px;
     }
     #fermer:hover {
@@ -179,5 +180,13 @@
     #vol {
         left: 55px;
         position: absolute;
+    }
+    #fondoption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -2;
+        border-radius: 15px;
     }
 </style>
