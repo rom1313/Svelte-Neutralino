@@ -67,7 +67,9 @@
         new Audio("son/effet/ambiance.mp3"),
         new Audio(""),
         new Audio("son/effet/chat.mp3"),
-        new Audio("son/effet/validation3.mp3")
+        new Audio("son/effet/validation3.mp3"),
+        new Audio("son/effet/pas.mp3"),
+        new Audio("son/effet/pas.mp3")
     ];
     let fondacceuil = setInterval(() => {
         effet[0].play();
@@ -591,7 +593,7 @@
                                 spriteildaa.y - 90,
                                 "projectile"
                             );
-                            projectile.setSize(409, 388, true);
+                            projectile.setSize(406, 50, true);
                             projectile.setDepth(2);
                             projectile.setScale(0.25, 0.25);
                             projectile.setVelocity(2000, 0);
@@ -637,7 +639,7 @@
                                     collisionsprite.destroy();
                                 }
                             );
-                            projectile2.setSize(409, 388, true);
+                            projectile2.setSize(406, 50, true);
                             projectile2.setDepth(2);
                             projectile2.setScale(0.25, 0.25);
                             projectile2.setVelocity(2000, 0);
@@ -727,13 +729,395 @@
                 //  perso.play("walk");
                 spriteildaa.setVelocity(0, 0);
             });
+            if (cursors.up.isDown) {
+                if ($pause != true) {
+                    effet[4].volume = 0.1;
+                    effet[5].volume = 0.1;
+                    effet[4].playbackRate = 2.3;
+                    if (effet[4].paused) {
+                        effet[4].play();
+                    }
+                } else {
+                    return;
+                }
+            }
+            if (cursors.down.isDown) {
+                effet[4].volume = 0.1;
+                effet[5].volume = 0.1;
+                effet[4].playbackRate = 2.3;
+                if (effet[4].paused) {
+                    effet[4].play();
+                }
+            }
+            if (cursors.left.isDown) {
+                effet[4].volume = 0.1;
+                effet[5].volume = 0.1;
+                effet[4].playbackRate = 2.3;
+                if (effet[4].paused) {
+                    effet[4].play();
+                }
+            }
+            if (cursors.right.isDown) {
+                effet[4].volume = 0.1;
+                effet[5].volume = 0.1;
+                effet[4].playbackRate = 2.3;
+                if (effet[4].paused) {
+                    effet[4].play();
+                }
+            }
+        }
+    }
+    class Zone extends Phaser.Scene {
+        constructor() {
+            super("Zone");
+        }
+        //--------------------------------------------------------------------------------------- PRELOAD
+
+        preload() {
+            this.load.spritesheet("ildaa2", "/img/ildaa.png", {
+                frameWidth: 528,
+                frameHeight: 757
+            });
+            this.load.spritesheet("dude", "/img/ildaa.png", {
+                frameWidth: 528,
+                frameHeight: 757
+            });
+            this.load.spritesheet("projectile", "/img/boule.png", {
+                frameWidth: 409,
+                frameHeight: 388
+            });
+            bureau = this;
+            setTimeout(() => {
+                enjeu = true;
+            }, 3000);
+
+            connecte = false;
+            cursors = this.input.keyboard.createCursorKeys();
+            // JOUEUR
+            // joueur.inventaire.push(objet);
+            // joueur.inventaire.push(objet2);
+            // PNJ
+            /*  this.load.image("dude", "/img/boy.png", { frameWidth: 48, frameHeight: 48 });
+            // PARTICULE
+            this.load.image("particule", "/img/glitter2.png", {
+                frameWidth: 21,
+                frameHeight: 21
+            }); */
+            // MAP
+            this.load.image("bureau", "img/testniveau3.png", {
+                frameWidth: 1920,
+                frameHeight: 1080
+            });
+            this.load.image("ciel", "img/ciel.png", {
+                frameWidth: 1920,
+                frameHeight: 1080
+            });
+            this.load.image("sol", "img/sol.png", {
+                frameWidth: 1920,
+                frameHeight: 1080
+            });
+            this.load.image("montagne", "img/montagne.png", {
+                frameWidth: 1920,
+                frameHeight: 1080
+            });
+        }
+        //------------------------------------------------------ CREATE
+        create() {
+            let zone = this;
+            //------------------------------------------------------
+            spriteildaa = this.physics.add.sprite(windowwidth - 900, windowheight - 380, "ildaa2");
+            spriteildaa.setSize(210, 757, true);
+            spriteildaa.setDepth(2);
+            spriteildaa.setScale(0.5, 0.5);
+            console.log(this);
+
+            //-----------------------------------------
+            spriteennemi = this.physics.add.sprite(windowwidth * 2, windowheight - 2, "dude");
+            spriteennemi.setSize(210, 757, true);
+            spriteennemi.setDepth(2);
+            spriteennemi.setScale(0.5, 0.5);
+            //------------------------------------------------
+            spriteennemi2 = this.physics.add.sprite(windowwidth - 1200, windowheight - 760, "dude");
+            spriteennemi2.setSize(210, 757, true);
+            spriteennemi2.setDepth(2);
+            spriteennemi2.setScale(0.5, 0.5);
+            // CREATION MAP
+            camera = this.cameras.main;
+            camera.fadeIn(3000, 1);
+            let width = this.scale.width;
+            let heigth = this.scale.heigth;
+
+            // camera.setZoom(2);
+            this.background = this.add
+                .image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, "ciel")
+                .setScrollFactor(0);
+            this.add
+                .image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, "sol")
+                .setScrollFactor(0.25);
+
+            camera.setBounds(0, 0, width + 1000, heigth);
+            console.log(width);
+            this.background.displayWidth = this.sys.canvas.width;
+            this.background.displayHeight = this.sys.canvas.height;
+            console.log(this.background);
+            // CREATION JOUEUR
+            // HITBOX
+            /* this.background.setPipeline("Light2D"); */
+            /*  this.lights.enable(); */
+            /* this.lights.setAmbientColor(55, 55, 255); */
+            // var spotlight = this.lights.addLight(300, 300, 1600).setIntensity(3);
+            /*  var light = this.lights.addLight(500, 0, 1600).setIntensity(10); */
+
+            // // CREATION PARTICULE
+            this.input.on("pointermove", function (pointer) {});
+            toucheclavier = this.input.keyboard.createCursorKeys();
+            // -----------------------------CREATION ANIMATION
+            spriteildaa.body.collideWorldBounds = true;
+            spriteennemi.body.collideWorldBounds = true;
+            spriteennemi2.body.collideWorldBounds = true;
+            /*   this.physics.add.collider(
+                spriteildaa,
+                [spriteennemi, spriteennemi2],
+                function colision(persosprite, collisionsprite) {
+                    etat.stun(joueur);
+
+                    camera.shake(1000, 0.025);
+                }
+            );
+            this.physics.add.collider(
+                spriteennemi,
+                [spriteennemi2],
+                function colision(persosprite, collisionsprite) {
+                    etat.stun(joueur);
+
+                    camera.shake(1000, 0.025);
+                }
+            ); */
+            //ANIMATIONS --------------------------------------------------------------
+
+            this.anims.create({
+                key: "dos",
+                frames: this.anims.generateFrameNumbers("ildaa2", {
+                    frames: [3, 6, 3, 7]
+                }),
+                frameRate: 4,
+                repeat: -1
+            });
+            this.anims.create({
+                key: "gauche",
+                frames: this.anims.generateFrameNumbers("ildaa2", {
+                    frames: [4, 12, 4, 13]
+                }),
+                frameRate: 4,
+                repeat: -1
+            });
+            this.anims.create({
+                key: "droite",
+                frames: this.anims.generateFrameNumbers("ildaa2", {
+                    frames: [5, 10, 5, 11]
+                }),
+                frameRate: 4,
+                repeat: -1
+            });
+            this.anims.create({
+                key: "bas",
+                frames: this.anims.generateFrameNumbers("ildaa2", {
+                    frames: [0, 0, 0, 14]
+                }),
+                frameRate: 4,
+                repeat: -1
+            });
+            //ANIMATION PROJECTILE
+            this.anims.create({
+                key: "projectiletouche",
+                frames: this.anims.generateFrameNumbers("projectile", {
+                    frames: [0, 1]
+                }),
+                frameRate: 4,
+                repeat: -1
+            });
+            // TEXT EN JEU ---------------------------------------------------------------
+            // var style = {
+            //     font: "10px scifi",
+            //     fill: "chartreuse",
+            //     wordWrap: true,
+            //     wordWrapWidth: spriteildaa.width,
+            //     align: "center"
+            // };
+            // pseudoingame = this.add.text(spriteildaa.x, spriteildaa.y, joueur.pseudo, style);
+
+            //TOUCHE ESPACE
+            cursors.space.on("down", function (event) {
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        if (effetarme[0].paused) {
+                            effetarme[0].volume = 0.1;
+                            effetarme[0].play();
+                        } else {
+                            effetarme[1].volume = 0.1;
+                            effetarme[1].play();
+                        }
+
+                        if (projectile === undefined) {
+                            projectile = zone.physics.add.sprite(
+                                spriteildaa.x,
+                                spriteildaa.y - 90,
+                                "projectile"
+                            );
+                            projectile.setSize(406, 50, true);
+                            projectile.setDepth(2);
+                            projectile.setScale(0.25, 0.25);
+                            projectile.setVelocity(2000, 0);
+
+                            zone.physics.add.collider(
+                                projectile,
+                                [spriteennemi, spriteennemi2],
+                                function colision(persosprite, collisionsprite) {
+                                    projectile.destroy();
+                                    if (effetarme[2].paused) {
+                                        effetarme[2].volume = 0.1;
+                                        effetarme[2].play();
+                                    } else {
+                                        effetarme[3].volume = 0.1;
+                                        effetarme[3].play();
+                                    }
+
+                                    collisionsprite.destroy();
+                                }
+                            );
+                            setTimeout(() => {
+                                projectile.destroy();
+                                projectile = undefined;
+                            }, 5000);
+                        } else {
+                            let projectile2 = zone.physics.add.sprite(
+                                spriteildaa.x,
+                                spriteildaa.y - 90,
+                                "projectile"
+                            );
+                            zone.physics.add.collider(
+                                projectile2,
+                                [spriteennemi, spriteennemi2],
+                                function colision(persosprite, collisionsprite) {
+                                    projectile.play("projectiletouche");
+                                    projectile2.destroy();
+                                    if (effetarme[2].paused) {
+                                        effetarme[2].volume = 0.1;
+                                        effetarme[2].play();
+                                    } else {
+                                        effetarme[3].volume = 0.1;
+                                        effetarme[3].play();
+                                    }
+                                    collisionsprite.destroy();
+                                }
+                            );
+                            projectile2.setSize(406, 50, true);
+                            projectile2.setDepth(2);
+                            projectile2.setScale(0.25, 0.25);
+                            projectile2.setVelocity(2000, 0);
+
+                            setTimeout(() => {
+                                projectile2.destroy();
+                                projectile2 = undefined;
+                            }, 5000);
+                        }
+                    } else {
+                        return;
+                    }
+                }
+
+                //  perso.play("walk");
+            });
+
+            // TOUCHE HAUT
+            cursors.up.on("down", function (event) {
+                /* scenebureau.scene.switch("Menuprincipal"); */
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.play("dos");
+                        //  perso.play("walk");
+                        spriteildaa.setVelocity(0, -230);
+                    }
+                } else {
+                    return;
+                }
+            });
+            // TOUCHE BAS
+            cursors.down.on("down", function (event) {
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.setVelocity(0, 230);
+                    }
+                    spriteildaa.play("bas");
+                } else {
+                    return;
+                }
+            });
+            // TOUCHE GAUCHE
+            cursors.left.on("down", function (event) {
+                camera.scrollX -= 3;
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.play("gauche");
+                        spriteildaa.setVelocity(-230, 0);
+                    }
+                } else {
+                    return;
+                }
+            });
+            //TOUCHE DROITE
+            cursors.right.on("down", function (event) {
+                if ($pause != true) {
+                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                        spriteildaa.play("droite");
+                        spriteildaa.setVelocity(230, 0);
+                    }
+                } else {
+                    return;
+                }
+            });
+        }
+        //-----------------------------------------------------------------------------------UPDATE
+        update() {
+            //TOUCHE BAS
+
+            cursors.down.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+            //TOUCHE HAUT
+
+            cursors.up.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+            //TOUCHE GAUCHE
+
+            cursors.left.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+
+            cursors.right.on("up", function (event) {
+                //  perso.play("walk");
+                spriteildaa.setVelocity(0, 0);
+            });
+
+            cursors.right.on("down", function (event) {});
+
+            if (cursors.right.isDown) {
+                camera.scrollX += 2;
+            }
+            if (cursors.left.isDown) {
+                camera.scrollX -= 2;
+            }
         }
     }
     const config = {
         width: 1380,
         height: windowheight,
         pixelArt: false,
-        scene: [Acceuil, Menuprincipal, Bureau],
+        scene: [Acceuil, Menuprincipal, Bureau, Zone],
         type: Phaser.AUTO,
         parent: "jeu",
         physics: {
@@ -864,6 +1248,7 @@
         id="storymode"
         on:click={(event) => {
             acceuil.scene.start("Bureau", "Menuprincipal");
+            acceuil.scene.remove("Menuprincipal");
 
             /* camera.fadeOut(1000, 1); */
             effet[0].pause();
