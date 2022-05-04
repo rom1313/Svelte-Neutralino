@@ -2,7 +2,17 @@
     //--------------------------------------------------------------------imports
     import { socket } from "./Variables.js";
     import { getContext, setContext, onMount } from "svelte";
-    import { volume } from "./Class.js";
+    import {
+        Allier,
+        Personnage,
+        Objet,
+        chatouvert,
+        Etats,
+        focuschat,
+        volume,
+        pause,
+        effetui
+    } from "./Class.js";
     import Contact from "./Contact.svelte";
     //-------------------------------------------------------------------------------- variables
     export let optioncacher = true;
@@ -16,53 +26,85 @@
     on:keydown={(event) => {
         if (event.key === "Escape") {
             if (optioncacher === false) {
+                effetui.fermer.volume = 0.1;
+                effetui.fermer.play();
                 optioncacher = true;
             }
         }
     }}
     on:mousemoove={() => {}}
 />
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <img
     id="optionlogo"
     src="img/option.png"
     alt=""
     on:click={() => {
         if (optioncacher === true) {
+            effetui.selection.volume = 0.1;
+            effetui.selection.play();
             optioncacher = false;
         } else {
+            effetui.fermer.volume = 0.1;
+            effetui.fermer.play();
             optioncacher = true;
         }
+    }}
+    on:mouseover={() => {
+        effetui.hover.volume = 0.1;
+        effetui.hover.play();
     }}
 />
 <div id="blockoption" class={optioncacher ? "menucache" : ""}>
     <img id="fondoption" src="img/fondoption.png" alt="" />
     <Contact />
     <p>Aide</p>
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <span
         id="fermer"
         on:click={() => {
+            effetui.fermer.volume = 0.1;
+            effetui.fermer.play();
             optioncacher = true;
+        }}
+        on:mouseover={() => {
+            effetui.hover.volume = 0.1;
+            effetui.hover.play();
         }}>X</span
     >
 
     <div id="blockvolume">
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <button
             id="bouttonmoins"
             on:click={() => {
+                effetui.selection.volume = 0.1;
+                effetui.selection.play();
                 if ($volume > 0) {
                     $volume -= 0.25;
                 } else {
                 }
+            }}
+            on:mouseover={() => {
+                effetui.hover.volume = 0.1;
+                effetui.hover.play();
             }}>-</button
         >
 
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <button
             id="bouttonplus"
             on:click={() => {
+                effetui.selection.volume = 0.1;
+                effetui.selection.play();
                 if ($volume < 1) {
                     $volume += 0.25;
                 } else {
                 }
+            }}
+            on:mouseover={() => {
+                effetui.hover.volume = 0.1;
+                effetui.hover.play();
             }}>+</button
         >
         <p id="vol">Vol. musique :</p>
@@ -86,8 +128,8 @@
     }
     #optionlogo {
         position: fixed;
-        bottom: 75px;
-        left: 32px;
+        bottom: 45px;
+        left: 22px;
     }
     #optionlogo:hover {
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
@@ -100,7 +142,7 @@
         width: 250px;
         height: 155px;
         position: fixed;
-        bottom: 60px;
+        bottom: 50px;
         left: 100px;
         box-shadow: 0px 0px 3px rgb(0, 0, 0), 0px 0px 10px #000000;
         margin: auto;

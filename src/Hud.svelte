@@ -1,9 +1,20 @@
 <script>
     import { socket, sauvegarde } from "./Variables.js";
     import { getContext, setContext } from "svelte";
-    import { Allier, Personnage, Objet } from "./Class.js";
+
     import { onMount } from "svelte";
-    import { focuschat } from "./Class.js";
+    import {
+        Allier,
+        Personnage,
+        Objet,
+        chatouvert,
+        Etats,
+        focuschat,
+        volume,
+        pause,
+        effetui,
+        effetarme
+    } from "./Class.js";
     export let pseudo;
     export let cyberz;
     export let niv;
@@ -20,8 +31,6 @@
 
     $: placeinventaire = joueur.inventaire.length;
 
-    let effets = [new Audio(""), new Audio("son/effet/valider.mp3")];
-    let ildaa = [new Audio("son/effet/ildaaok.mp3"), new Audio("")];
     kill.forEach((element) => {});
     let joueur = getContext("joueur");
 

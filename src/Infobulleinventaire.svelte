@@ -1,4 +1,16 @@
 <script>
+    import {
+        Allier,
+        Personnage,
+        Objet,
+        chatouvert,
+        Etats,
+        focuschat,
+        volume,
+        pause,
+        effetui,
+        effetarme
+    } from "./Class.js";
     export let infonom,
         infoprix,
         infodescription,

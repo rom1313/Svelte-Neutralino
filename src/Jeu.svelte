@@ -1,13 +1,30 @@
 <script>
-    import { Allier, Personnage, Objet, chatouvert, Etats } from "./Class.js";
+    import {
+        Allier,
+        Personnage,
+        Objet,
+        chatouvert,
+        Etats,
+        focuschat,
+        volume,
+        pause,
+        effetui,
+        effetarme,
+        effetambiance,
+        effetsprite,
+        directionsprite,
+        nbjoueursenligne,
+        joueursenligne,
+        contenuchat
+    } from "./Class.js";
     import { socket, sauvegarde } from "./Variables.js";
     import Chat from "./Chat.svelte";
     import Hud from "./Hud.svelte";
     import Inventairejeu from "./Inventairejeu.svelte";
+    import Social from "./Social.svelte";
     import Options from "./Options.svelte";
     import Contact from "./Contact.svelte";
     import { getContext, setContext } from "svelte";
-    import { focuschat, volume, pause } from "./Class.js";
 
     //----------------------------------------------------------------------------------- Variables
 
@@ -31,8 +48,7 @@
     let classbouttonquitter = "bouttoncaché";
     let classbouttonconnexion = "";
     let connexionerror = false;
-    let joueurenligne = [];
-    let nbjoueurenligne;
+
     let effetfond;
     let faceimg = new Image(100, 200);
     faceimg.src = joueur.img;
@@ -63,23 +79,12 @@
         "Mauvais pass ou pseudo déjà pris",
         "Un Pseudo*, un Pass* et c'est parti !"
     ];
-    let effet = [
-        new Audio("son/effet/ambiance.mp3"),
-        new Audio(""),
-        new Audio("son/effet/chat.mp3"),
-        new Audio("son/effet/validation3.mp3"),
-        new Audio("son/effet/pas.mp3"),
-        new Audio("son/effet/pas.mp3")
-    ];
+
     let fondacceuil = setInterval(() => {
-        effet[0].play();
+        effetambiance.acceuil.volume = 0.5;
+        effetambiance.acceuil.play();
     }, 1000);
-    let ildaa = [
-        new Audio("son/effet/ildaabonjour.mp3"),
-        new Audio("son/effet/ildaastrategie.mp3"),
-        new Audio("son/effet/ildaacybershop.mp3"),
-        new Audio("son/effet/ildaastrategie.mp3")
-    ];
+
     let dopant = new Objet(
         "Stimulant",
         90,
@@ -92,37 +97,36 @@
         0,
         20
     );
-    let effetarme = [
-        new Audio("son/effet/tirsimple.mp3"),
-        new Audio("son/effet/tirsimple.mp3"),
-        new Audio("son/effet/impact1.mp3"),
-        new Audio("son/effet/impact1.mp3")
-    ];
 
     //----------------------------------------------------------------------- Socket
     function testsocket() {
         let infos = {
             nom: joueur.pseudo,
-            nb: nbjoueurenligne,
+            nb: nbjoueursenligne,
             id: joueur.pseudo
         };
         socket.on("disconnect", () => {
+            $joueursenligne = data.joueurs;
             socket.emit("deco", joueur.pseudo);
         });
 
         socket.emit("connexionenjeu", infos);
     }
+    socket.on("nouvelleconnexion", (data) => {
+        $joueursenligne = data.joueurs;
+        $contenuchat = data.contenuchat;
+    });
 
     socket.on("alerteconnexion", (data) => {
         // console.log(data.nb);
         console.log(data.joueurs);
 
-        joueurenligne = data.joueurs;
-        nbjoueurenligne = data.nb--;
+        $joueursenligne.push(joueur.pseudo);
+        $nbjoueursenligne = data.nb--;
     });
     socket.on("alertedeconnexion", (data) => {
-        nbjoueurenligne--;
-        joueurenligne = data.joueurs;
+        $nbjoueursenligne--;
+        $joueursenligne = data.joueurs;
     });
     socket.on("chatmaj", (data) => {
         console.log("mess chat");
@@ -223,21 +227,14 @@
                     connecte = true;
                     menucache = true;
                     titrecache = true;
-                    effet[0].volume = $volume;
+
                     joueur.inventaire.push(dopant);
-                    console.log(joueur.inventaire);
-                    console.log(joueur.coffres);
                 }
                 /* console.log(res); */
 
                 /* console.log(res.pseudo); */
 
                 /* console.log(joueur.inventaire.length); */
-
-                setTimeout(() => {
-                    ildaa[0].volume = $volume;
-                    ildaa[0].play();
-                }, 2000);
             });
     }
 
@@ -428,6 +425,8 @@
         }
     }
 
+    // NIVEAU 1 --------------------------------------------------------------------------------------------------------------------------------------------
+
     class Bureau extends Phaser.Scene {
         constructor() {
             super("Bureau");
@@ -465,7 +464,7 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/testniveau.png", {
+            this.load.image("bureau", "img/testniveau3.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });
@@ -477,7 +476,7 @@
             spriteildaa = this.physics.add.sprite(windowwidth - 900, windowheight - 380, "ildaa2");
             spriteildaa.setSize(228, 757, true);
             spriteildaa.setDepth(2);
-            spriteildaa.setScale(0.9, 0.9);
+            spriteildaa.setScale(0.5, 0.5);
 
             //-----------------------------------------
             spriteennemi = this.physics.add.sprite(windowwidth - 100, windowheight - 380, "dude");
@@ -579,12 +578,12 @@
             cursors.space.on("down", function (event) {
                 if ($pause != true) {
                     if (joueur.vitesse != 0 && joueur.vitesse === 1) {
-                        if (effetarme[0].paused) {
-                            effetarme[0].volume = 0.1;
-                            effetarme[0].play();
+                        if (effetarme.tir.paused) {
+                            effetarme.tir.volume = 0.1;
+                            effetarme.tir.play();
                         } else {
-                            effetarme[1].volume = 0.1;
-                            effetarme[1].play();
+                            effetarme.tirbis.volume = 0.1;
+                            effetarme.tirbis.play();
                         }
 
                         if (projectile === undefined) {
@@ -603,12 +602,12 @@
                                 [spriteennemi, spriteennemi2],
                                 function colision(persosprite, collisionsprite) {
                                     projectile.destroy();
-                                    if (effetarme[2].paused) {
-                                        effetarme[2].volume = 0.1;
-                                        effetarme[2].play();
+                                    if (effetarme.impact.paused) {
+                                        effetarme.impact.volume = 0.1;
+                                        effetarme.impact.play();
                                     } else {
-                                        effetarme[3].volume = 0.1;
-                                        effetarme[3].play();
+                                        effetarme.impactbis.volume = 0.1;
+                                        effetarme.impactbis.play();
                                     }
 
                                     collisionsprite.destroy();
@@ -629,12 +628,12 @@
                                 [spriteennemi, spriteennemi2],
                                 function colision(persosprite, collisionsprite) {
                                     projectile2.destroy();
-                                    if (effetarme[2].paused) {
-                                        effetarme[2].volume = 0.1;
-                                        effetarme[2].play();
+                                    if (effetarme.impact.paused) {
+                                        effetarme.impact.volume = 0.1;
+                                        effetarme.impact.play();
                                     } else {
-                                        effetarme[3].volume = 0.1;
-                                        effetarme[3].play();
+                                        effetarme.impactbis.volume = 0.1;
+                                        effetarme.impactbis.play();
                                     }
                                     collisionsprite.destroy();
                                 }
@@ -731,38 +730,38 @@
             });
             if (cursors.up.isDown) {
                 if ($pause != true) {
-                    effet[4].volume = 0.1;
-                    effet[5].volume = 0.1;
-                    effet[4].playbackRate = 2.3;
-                    if (effet[4].paused) {
-                        effet[4].play();
+                    effetsprite.pas.volume = 0.1;
+
+                    effetsprite.pas.playbackRate = 2.3;
+                    if (effetsprite.pas.paused) {
+                        effetsprite.pas.play();
                     }
                 } else {
                     return;
                 }
             }
             if (cursors.down.isDown) {
-                effet[4].volume = 0.1;
-                effet[5].volume = 0.1;
-                effet[4].playbackRate = 2.3;
-                if (effet[4].paused) {
-                    effet[4].play();
+                effetsprite.pas.volume = 0.1;
+
+                effetsprite.pas.playbackRate = 2.3;
+                if (effetsprite.pas.paused) {
+                    effetsprite.pas.play();
                 }
             }
             if (cursors.left.isDown) {
-                effet[4].volume = 0.1;
-                effet[5].volume = 0.1;
-                effet[4].playbackRate = 2.3;
-                if (effet[4].paused) {
-                    effet[4].play();
+                effetsprite.pas.volume = 0.1;
+
+                effetsprite.pas.playbackRate = 2.3;
+                if (effetsprite.pas.paused) {
+                    effetsprite.pas.play();
                 }
             }
             if (cursors.right.isDown) {
-                effet[4].volume = 0.1;
-                effet[5].volume = 0.1;
-                effet[4].playbackRate = 2.3;
-                if (effet[4].paused) {
-                    effet[4].play();
+                effetsprite.pas.volume = 0.1;
+
+                effetsprite.pas.playbackRate = 2.3;
+                if (effetsprite.pas.paused) {
+                    effetsprite.pas.play();
                 }
             }
         }
@@ -1168,7 +1167,11 @@
         id="input3"
         maxlength="9"
         autocomplete="off"
-        onfocus="this.value=''"
+        on:focus={(e) => {
+            effetui.selection.volume = 0.1;
+            effetui.selection.play();
+            e.target.value = "";
+        }}
     />
     <input
         placeholder="Pass*"
@@ -1176,14 +1179,19 @@
         id="input"
         maxlength="9"
         autocomplete="off"
-        onfocus="this.value=''"
+        on:focus={(e) => {
+            effetui.selection.volume = 0.1;
+            effetui.selection.play();
+            e.target.value = "";
+        }}
     />
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <button
         class={classbouttonconnexion}
         id="connexionboutton"
         on:click={() => {
-            effet[3].volume = 0.5;
-            effet[3].play();
+            effetui.valider.volume = 0.1;
+            effetui.valider.play();
             enregistrementjoueur(
                 joueur.pseudo,
                 joueur.cyberz,
@@ -1219,6 +1227,10 @@
                 classbouttonconnexion = "bouttoncaché";
             }
             testsocket();
+        }}
+        on:mouseover={() => {
+            effetui.hover.volume = 0.1;
+            effetui.hover.play();
         }}>Connexion</button
     >
 
@@ -1244,6 +1256,7 @@
 </div>
 {#if !titrecache}<img id="titre" src="img/titre2.png" alt="" />{/if}
 {#if connecte}
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <button
         id="storymode"
         on:click={(event) => {
@@ -1251,14 +1264,29 @@
             acceuil.scene.remove("Menuprincipal");
 
             /* camera.fadeOut(1000, 1); */
-            effet[0].pause();
+            effetambiance.acceuil.pause();
             clearInterval(fondacceuil);
+            let fondcomplexe = setInterval(() => {
+                effetambiance.complexe.volume = 0.5;
+                effetambiance.complexe.play();
+            }, 1000);
+        }}
+        on:mouseover={() => {
+            effetui.hover.volume = 0.1;
+            effetui.hover.play();
         }}>Mode Histoire</button
     >
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <button
         id="jcjmode"
         on:click={async (event) => {
-            await window.Neutralino.window.setDraggableRegion("jcjmode");
+            effetui.error.volume = 0.1;
+            effetui.error.play();
+            /* await window.Neutralino.window.setDraggableRegion("jcjmode"); */
+        }}
+        on:mouseover={() => {
+            effetui.hover.volume = 0.1;
+            effetui.hover.play();
         }}>Mode JcJ</button
     >
     <!-- <Hud
@@ -1276,15 +1304,22 @@
     /> -->
 {/if}
 <div class={connecte === true ? "chatvisible" : "chatinvisible"}>
-    <Chat />
+    <!-- <Chat /> -->
     <Options />
     <p id="version">version 1.0</p>
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <img
         id="quitter"
         src="img/quitter.png"
         alt=""
         on:click={async () => {
+            effetui.valider.volume = 0.1;
+            effetui.valider.play();
             await window.Neutralino.app.exit();
+        }}
+        on:mouseover={() => {
+            effetui.hover.volume = 0.1;
+            effetui.hover.play();
         }}
     />
 </div>
@@ -1298,6 +1333,7 @@
             bind:materiauxonix={joueur.materiauxonix}
             bind:materiauxchimique={joueur.materiauxchimique}
         />
+        <Social />
     </div>{/if}
 
 <div id="jeu" />
@@ -1365,8 +1401,8 @@
         animation: tourner infinite 0.2s linear;
     }
     #menu {
-        left: 15%;
-        top: 55%;
+        left: 50%;
+        top: 75%;
         transform: translate(-50%, -50%);
 
         row-gap: 20px;
@@ -1399,19 +1435,19 @@
         font-size: 15px;
         font-family: "scifi";
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
-        background-color: rgb(39, 39, 39);
+        background-color: rgb(0, 0, 0);
         outline: none;
-        color: rgb(255, 255, 255);
+        color: rgb(198, 0, 247);
         text-shadow: 0.4px 0.4px rgb(0, 0, 0);
     }
     input::placeholder {
-        color: #000000;
+        color: #2d2d2d;
     }
     button {
         font-family: "scifi";
-        box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
+        box-shadow: 0px 0px 10px rgb(0, 0, 0);
         background-color: black;
-        border-radius: 12px;
+        border-radius: 5px;
         cursor: url("/img/mouse2.png"), pointer;
         color: rgb(92, 255, 247);
     }
@@ -1434,18 +1470,18 @@
         margin-bottom: 10px;
     }
     #connexionboutton:hover {
-        color: rgb(255, 0, 0);
-        box-shadow: 0px 0px 10px rgb(255, 0, 0), 0px 0px 10px #000000;
+        box-shadow: 0px 0px 5px rgb(255, 0, 251), 0px 0px 6px #000000;
     }
     .textinfo {
         color: white;
         font-size: 13px;
+        text-shadow: 4px 5px 6px black;
     }
     .info {
         text-align: center;
         font-size: 15px;
         color: rgb(255, 255, 255);
-        text-shadow: 6px 5px 4px black;
+        text-shadow: 4px 5px 6px black;
         margin-top: 17px;
         line-height: 17px;
     }
@@ -1475,14 +1511,15 @@
         display: none;
     }
     #storymode {
-        position: fixed;
+        position: absolute;
         top: 155px;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 35px;
     }
     #storymode:hover {
-        color: #ffcc00;
+        color: rgb(255, 0, 251);
+        box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
     }
     #jcjmode {
         position: fixed;

@@ -107,12 +107,17 @@ export class Ennemi {
     }
 }
 
-//TODO ----------------------------------------------- Scenes -------------------------
+//TODO ----------------------------------------------- Writable -------------------------
 export let chatouvert = true
 export let focuschat = writable()
 export let volume = writable(1)
 export let pause = writable(false)
-//TODO ----------------------------------------------- Scenes -------------------------
+export let directionsprite = writable("droite")
+export let nbjoueursenligne = writable()
+export let joueursenligne = writable([])
+export let contenuchat = writable([""])
+//TODO ----------------------------------------------- Etats -------------------------
+
 export class Etats {
     constructor() {
 
@@ -134,6 +139,59 @@ export class Etats {
         }, 2000);
 
     }
+
+
+}
+//TODO ----------------------------------------------- Effets Sonores -------------------------
+
+export let effetui =
+{
+    fermer: new Audio("son/effet/ui/fermer2.mp3"),
+    chat: new Audio("son/effet/ui/message2.mp3"),
+    message: new Audio("son/effet/ui/message.mp3"),
+    up: new Audio("son/effet/ui/nouveau.mp3"),
+    hover: new Audio("son/effet/ui/selection4.mp3"),
+    valider: new Audio("son/effet/ui/valider.mp3"),
+    recompense: new Audio("son/effet/ui/coffre.mp3"),
+    selection: new Audio("son/effet/ui/enclenchement.mp3"),
+    notif: new Audio("son/effet/ui/info.mp3"),
+    up2: new Audio("son/effet/ui/potion.mp3"),
+    retroconfection: new Audio("son/effet/ui/retroconfection.mp3"),
+    vendre: new Audio("son/effet/ui/vendre.mp3"),
+    error: new Audio("son/effet/ui/error.mp3"),
+
+
+
+}
+export let effetarme =
+{
+    tir: new Audio("son/effet/sprite/tir3.mp3"),
+    tirbis: new Audio("son/effet/sprite/tir3.mp3"),
+    tir2: new Audio("son/effet/sprite/tir2.mp3"),
+    tir3: new Audio("son/effet/sprite/projectile2.mp3"),
+    impact: new Audio("son/effet/sprite/tir2.mp3"),
+    impactbis: new Audio("son/effet/sprite/tir2.mp3"),
+    tirlourd: new Audio("son/effet/sprite/tirchargé.mp3"),
+    rafale: new Audio("son/effet/sprite/tir5.mp3"),
+    projectile: new Audio("son/effet/sprite/projectile.mp3"),
+    bomb: new Audio("son/effet/sprite/bombplasma.mp3"),
+    bombtoxik: new Audio("son/effet/sprite/bombtoxik.mp3")
+
+
+
+}
+export let effetambiance =
+{
+    acceuil: new Audio("son/effet/ambiance/ambiance.mp3"),
+    complexe: new Audio("son/effet/ambiance/ambiance2.mp3")
+}
+
+
+export let effetsprite =
+{
+    pas: new Audio("son/effet/sprite/pas.mp3"),
+    pasbis: new Audio("son/effet/sprite/pas.mp3")
+
 
 
 }

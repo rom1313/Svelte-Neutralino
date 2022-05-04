@@ -2,7 +2,18 @@
     import { socket } from "./Variables.js";
     import { getContext, setContext } from "svelte";
     let joueur = getContext("joueur");
-    import { focuschat } from "./Class.js";
+    import {
+        Allier,
+        Personnage,
+        Objet,
+        chatouvert,
+        Etats,
+        focuschat,
+        volume,
+        pause,
+        effetui,
+        effetarme
+    } from "./Class.js";
 
     let menucacher = true;
     let message;
@@ -14,29 +25,47 @@
     on:keydown={(event) => {
         if (event.key === "Escape") {
             if (menucacher === false) {
+                effetui.fermer.volume = 0.1;
+                effetui.fermer.play();
                 menucacher = true;
             }
         }
     }}
 />
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <p
     id="contactboutton"
     on:click={(e) => {
         if (menucacher) {
+            effetui.selection.volume = 0.1;
+            effetui.selection.play();
             menucacher = false;
         } else {
+            effetui.fermer.volume = 0.1;
+            effetui.fermer.play();
             menucacher = true;
         }
+    }}
+    on:mouseover={() => {
+        effetui.hover.volume = 0.1;
+        effetui.hover.play();
     }}
 >
     Contact
 </p>
 {#if !menucacher}
     <div id="blockformulaire">
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <span
             id="fermer"
             on:click={(e) => {
+                effetui.fermer.volume = 0.1;
+                effetui.fermer.play();
                 menucacher = true;
+            }}
+            on:mouseover={() => {
+                effetui.hover.volume = 0.1;
+                effetui.hover.play();
             }}>X</span
         >
         <p>Un soucis avec votre compte ?</p>
@@ -56,6 +85,8 @@
                 console.log(message);
             }}
             on:focus={(e) => {
+                effetui.selection.volume = 0.1;
+                effetui.selection.play();
                 $focuschat = true;
                 e.target.placeholder = "";
             }}
@@ -69,9 +100,12 @@ Rédigez un roman si vous le souhaitez, exprimez-vous ! 🙊
 Pour être contacté, laissez votre e-mail en fin de message. "
             cols="30"
         />
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <p
             id="button"
             on:click={(e) => {
+                effetui.valider.volume = 0.1;
+                effetui.valider.play();
                 e.target.style.visibility = "hidden";
 
                 let data = {
@@ -83,6 +117,8 @@ Pour être contacté, laissez votre e-mail en fin de message. "
                     if (data === "ok") {
                         resultatenvoi = "Mail envoyé avec succès !";
                         envoyer = true;
+                        effetui.notif.volume = 0.1;
+                        effetui.notif.play();
                         setTimeout(() => {
                             envoyer = false;
                             menucacher = true;
@@ -90,12 +126,18 @@ Pour être contacté, laissez votre e-mail en fin de message. "
                     } else if (data === "error") {
                         resultatenvoi = "Il y a eu une erreur..";
                         envoyer = true;
+                        effetui.error.volume = 0.1;
+                        effetui.error.play();
                         setTimeout(() => {
                             envoyer = false;
                             menucacher = true;
                         }, 3000);
                     }
                 });
+            }}
+            on:mouseover={() => {
+                effetui.hover.volume = 0.1;
+                effetui.hover.play();
             }}
         >
             Envoyer
@@ -145,7 +187,7 @@ Pour être contacté, laissez votre e-mail en fin de message. "
         transform: translate(-50%, -50%);
         cursor: url("/img/mouse2.png"), pointer;
         background-color: #000000;
-        font-size: large;
+        font-size: 15px;
         color: white;
         width: 120px;
         height: 20px;
@@ -153,12 +195,12 @@ Pour être contacté, laissez votre e-mail en fin de message. "
         z-index: 3;
     }
     #button:hover {
-        color: rgb(255, 170, 0);
-        box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #ffc400;
+        color: rgb(255, 0, 251);
+        box-shadow: 0px 0px 10px rgb(0, 0, 0), rgb(255, 0, 251);
     }
     p {
         color: white;
-        font-size: 17px;
+        font-size: 15px;
         text-shadow: 1px 1px 16px rgb(0, 0, 0);
         font-weight: 600;
     }
@@ -183,7 +225,7 @@ Pour être contacté, laissez votre e-mail en fin de message. "
         text-shadow: 1px 1px 16px rgb(0, 0, 0);
     }
     #contactboutton:hover {
-        color: rgb(255, 170, 0);
+        color: rgb(255, 0, 251);
         transform: scale(1.1);
         text-shadow: 1px 1px 16px rgb(0, 0, 0);
     }

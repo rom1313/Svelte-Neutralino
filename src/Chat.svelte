@@ -2,17 +2,24 @@
     //--------------------------------------------------------------------imports
     import { socket } from "./Variables.js";
     import { getContext, setContext, onMount } from "svelte";
-    import { focuschat } from "./Class.js";
+    import {
+        Allier,
+        Personnage,
+        Objet,
+        chatouvert,
+        Etats,
+        focuschat,
+        volume,
+        pause,
+        effetui,
+        effetarme,
+        contenuchat
+    } from "./Class.js";
     //-------------------------------------------------------------------------------- variables
     export let chatcacher = true;
 
-    let contenuchat = [];
     let joueur = getContext("joueur");
-    let effet = [
-        new Audio("son/effet/ambiance.mp3"),
-        new Audio(""),
-        new Audio("son/effet/chat2.mp3")
-    ];
+
     //------------------------------------------------------------------------------------
 
     onMount(async () => {});
@@ -29,16 +36,16 @@
     }
 
     socket.on("nouvelleconnexion", (data) => {
-        contenuchat = data.contenuchat;
+        $contenuchat = data.contenuchat;
         console.log("un joueur s'est connecté");
     });
     socket.on("chatmaj", (data) => {
         if (data.id != joueur.pseudo) {
-            effet[2].volume = 0.1;
-            effet[2].play();
+            effetui.chat.volume = 0.1;
+            effetui.chat.play();
         }
 
-        contenuchat = data.text;
+        $contenuchat = data.text;
     });
 </script>
 
@@ -46,6 +53,8 @@
     on:keydown={(event) => {
         if (event.key === "Escape") {
             if (chatcacher === false) {
+                effetui.fermer.volume = 0.1;
+                effetui.fermer.play();
                 chatcacher = true;
             }
         }
@@ -73,34 +82,52 @@
             }
         }}
         on:focus={(e) => {
+            effetui.selection.volume = 0.1;
+            effetui.selection.play();
             $focuschat = true;
         }}
         on:blur={(e) => {
             $focuschat = false;
         }}
     />
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <span
         id="fermer"
         on:click={() => {
+            effetui.fermer.volume = 0.1;
+            effetui.fermer.play();
             chatcacher = true;
+        }}
+        on:mouseover={() => {
+            effetui.hover.volume = 0.1;
+            effetui.hover.play();
         }}>X</span
     >
     <div id="containermessagechat">
-        {#each contenuchat as contenuchat}
+        {#each $contenuchat as contenuchat}
             <p class="messagedechat">{contenuchat}</p>
         {/each}
     </div>
 </div>
 <div>
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <img
         alt=""
         src="img/chat.png"
         on:click={() => {
             if (chatcacher === true) {
+                effetui.selection.volume = 0.1;
+                effetui.selection.play();
                 chatcacher = false;
             } else {
+                effetui.fermer.volume = 0.1;
+                effetui.fermer.play();
                 chatcacher = true;
             }
+        }}
+        on:mouseover={() => {
+            effetui.hover.volume = 0.1;
+            effetui.hover.play();
         }}
     />
 </div>

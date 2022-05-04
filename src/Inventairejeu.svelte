@@ -2,8 +2,19 @@
     import Infobulleinventaire from "./Infobulleinventaire.svelte";
     import { socket, sauvegarde } from "./Variables.js";
     import { getContext, setContext } from "svelte";
-    import { Allier, Personnage, Objet, chatouvert } from "./Class.js";
-    import { focuschat } from "./Class.js";
+
+    import {
+        Allier,
+        Personnage,
+        Objet,
+        chatouvert,
+        Etats,
+        focuschat,
+        volume,
+        pause,
+        effetui,
+        effetarme
+    } from "./Class.js";
     let infobulleouvert;
     export let inventairejoueur;
     export let placeinventaire;
@@ -32,8 +43,7 @@
         "Un cocktail chimique stimulant",
         "+3 force"
     );
-    let effet = [new Audio("son/effet/hover.mp3")];
-    let ildaa = [new Audio("son/effet/ildaaok.mp3"), new Audio("")];
+
     menucacher = true;
 </script>
 
@@ -41,11 +51,17 @@
     on:keydown={(event) => {
         if (event.key === "i" || event.key === "I") {
             if (!$focuschat === true && menucacher === true) {
+                effetui.selection.volume = 0.1;
+                effetui.selection.play();
                 menucacher = false;
             } else if (!$focuschat === true && menucacher === false) {
+                effetui.fermer.volume = 0.1;
+                effetui.fermer.play();
                 menucacher = true;
             }
         } else if (event.key === "Escape" && menucacher === false) {
+            effetui.fermer.volume = 0.1;
+            effetui.fermer.play();
             menucacher = true;
         }
     }}
@@ -80,8 +96,8 @@
 
                         pointerx = event.x;
                         pointery = event.y;
-                        effet[0].volume = 0.05;
-                        effet[0].play();
+                        effetui.hover.volume = 0.1;
+                        effetui.hover.play();
                     }}
                     on:mouseout={(event) => {
                         infobulleouvert = false;
@@ -96,6 +112,8 @@
                         id="vendre"
                         on:click={(event) => {
                             if (cat.type === "Personnel") {
+                                effetui.error.volume = 0.1;
+                                effetui.error.play();
                                 return;
                             } else {
                                 let data = {
@@ -121,12 +139,15 @@
                                 joueur.relique
                             ); */
                                 sauvegarde(joueur);
-                                ildaa[0].play();
+                                effetui.vendre.volume = 0.1;
+                                effetui.vendre.play();
                                 /* menucacher = true; */
                                 placeinventaire = joueur.inventaire.length;
                             }
                         }}
                         on:mouseover={(e) => {
+                            effetui.hover.volume = 0.1;
+                            effetui.hover.play();
                             e.target.src = "img/vendre2.png";
                         }}
                         on:mouseout={(e) => {
@@ -140,6 +161,8 @@
                         src="img/recycler.png"
                         on:click={(event) => {
                             if (cat.materiauxchimique === 0 && cat.materiauxonix === 0) {
+                                effetui.error.volume = 0.1;
+                                effetui.error.play();
                                 return;
                             } else {
                                 joueur.materiauxchimique += cat.materiauxchimique;
@@ -147,12 +170,17 @@
                                 joueur.inventaire.splice(i, 1);
 
                                 sauvegarde(joueur);
-                                ildaa[0].play();
+                                effetui.retroconfection.volume = 0.1;
+                                effetui.retroconfection.play();
+
                                 /* menucacher = true; */
                                 placeinventaire = joueur.inventaire.length;
                             }
                         }}
                         on:mouseover={(e) => {
+                            effetui.hover.volume = 0.1;
+                            effetui.hover.play();
+
                             e.target.src = "img/recycler2.png";
                         }}
                         on:mouseout={(e) => {
@@ -167,10 +195,17 @@
         <p id="placeinventaire">{placeinventaire} /35</p>
         <p id="cyberz">{cyberz}</p>
         <p id="nomcyberz">Crédits :</p>
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <span
             id="fermer"
             on:click={() => {
+                effetui.fermer.volume = 0.1;
+                effetui.fermer.play();
                 menucacher = true;
+            }}
+            on:mouseover={() => {
+                effetui.hover.volume = 0.1;
+                effetui.hover.play();
             }}>X</span
         >
     </div>
@@ -191,16 +226,25 @@
         />
     {/if}
 {/if}
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <img
     src="img/inventairelogo.png"
     alt=""
     id="bouttoninventaire"
     on:click={() => {
         if (menucacher) {
+            effetui.selection.volume = 0.1;
+            effetui.selection.play();
             menucacher = false;
         } else {
+            effetui.fermer.volume = 0.1;
+            effetui.fermer.play();
             menucacher = true;
         }
+    }}
+    on:mouseover={() => {
+        effetui.hover.volume = 0.1;
+        effetui.hover.play();
     }}
 />
 >
@@ -257,8 +301,7 @@
         border-radius: 9%;
         box-shadow: 0px 0px 5px rgb(0, 0, 0), 0px 0px 5px #000000 inset;
     }
-    #blockobjets:hover {
-    }
+
     #blockobjets p {
         bottom: 0%;
         margin: 0%;
