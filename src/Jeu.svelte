@@ -1,4 +1,5 @@
 <script>
+    import Cybershop from "./Cybershop.svelte";
     import {
         Allier,
         Personnage,
@@ -22,6 +23,7 @@
     import Hud from "./Hud.svelte";
     import Inventairejeu from "./Inventairejeu.svelte";
     import Social from "./Social.svelte";
+
     import Options from "./Options.svelte";
     import Contact from "./Contact.svelte";
     import { getContext, setContext } from "svelte";
@@ -130,6 +132,13 @@
     });
     socket.on("chatmaj", (data) => {
         console.log("mess chat");
+    });
+    socket.on("ventecybershop", (data) => {
+        if (data.pseudovendeur === joueur.pseudo) {
+            effetui.ventecybershop.volume = 0.1;
+            effetui.ventecybershop.play();
+            joueur.cyberz = data.argent;
+        }
     });
     // console.log("connection établie avec ildaa"); // true
 
@@ -1334,6 +1343,7 @@
             bind:materiauxchimique={joueur.materiauxchimique}
         />
         <Social />
+        <Cybershop />
     </div>{/if}
 
 <div id="jeu" />

@@ -159,6 +159,7 @@ export let effetui =
     retroconfection: new Audio("son/effet/ui/retroconfection.mp3"),
     vendre: new Audio("son/effet/ui/vendre.mp3"),
     error: new Audio("son/effet/ui/error.mp3"),
+    ventecybershop: new Audio("son/effet/ui/nouveau2.mp3"),
 
 
 
