@@ -21,7 +21,7 @@
 			"fullScreen": false,
 			"alwaysOnTop": false,
 			"icon": "/www/img/glitter3.png",
-			"enableInspector": true,
+			"enableInspector": false,
 			"borderless": true,
 			"maximize": false,
 			"hidden": false,

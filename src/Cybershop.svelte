@@ -380,8 +380,8 @@
         height: fit-content;
         border-radius: 12px;
         position: absolute;
-        top: 10%;
-        left: 50%;
+        top: 15%;
+        left: 80%;
         transform: translate(-50%, -50%);
         display: flex;
         justify-self: center;

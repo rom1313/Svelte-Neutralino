@@ -1,5 +1,6 @@
 <script>
     import Cybershop from "./Cybershop.svelte";
+    import { onMount } from "svelte";
     import {
         Allier,
         Personnage,
@@ -42,6 +43,7 @@
     let menucache = false;
     let titrecache = false;
     let hudcache = true;
+    let input;
 
     let joueur = new Personnage("invité", 0, 1);
     setContext("joueur", joueur);
@@ -75,6 +77,9 @@
     let pseudoingame;
     let projectile;
     //---------------------------------------------------------------------
+    /*  onMount(() => {
+        input.focus();  // input dom selector ( input pass -bind:this etc- )
+    }); */
     let message = [
         "Onixyum v 1.0 ",
         "Nouveau sur Onixyum ?",
@@ -333,7 +338,7 @@
             });
             this.load.spritesheet("ildaa", "/img/ildaa.png", {
                 frameWidth: 528,
-                frameHeight: 842
+                frameHeight: 757
             });
             this.load.spritesheet("sonde", "/img/sonde.png", {
                 frameWidth: 120,
@@ -343,10 +348,10 @@
 
         //------------------------------------------------------ CREATE
         create() {
-            spritesonde = this.physics.add.sprite(windowwidth - 250, windowheight - 450, "sonde");
+            spritesonde = this.physics.add.sprite(1150, 300, "sonde");
             spritesonde.setSize(89, 92, true);
             spritesonde.setDepth(2);
-            spriteildaa = this.physics.add.sprite(windowwidth - 350, windowheight - 100, "ildaa");
+            spriteildaa = this.physics.add.sprite(1000, 650, "ildaa");
             spriteildaa.setSize(30, 80, true);
             spriteildaa.setDepth(2);
             camera = this.cameras.main;
@@ -482,18 +487,18 @@
         create() {
             let scenebureau = this;
             //------------------------------------------------------
-            spriteildaa = this.physics.add.sprite(windowwidth - 900, windowheight - 380, "ildaa2");
+            spriteildaa = this.physics.add.sprite(900, 380, "ildaa2");
             spriteildaa.setSize(228, 757, true);
             spriteildaa.setDepth(2);
             spriteildaa.setScale(0.5, 0.5);
 
             //-----------------------------------------
-            spriteennemi = this.physics.add.sprite(windowwidth - 100, windowheight - 380, "dude");
+            spriteennemi = this.physics.add.sprite(100, 380, "dude");
             spriteennemi.setSize(228, 757, true);
             spriteennemi.setDepth(2);
             spriteennemi.setScale(0.5, 0.5);
             //------------------------------------------------
-            spriteennemi2 = this.physics.add.sprite(windowwidth - 400, windowheight - 380, "dude");
+            spriteennemi2 = this.physics.add.sprite(400, 380, "dude");
             spriteennemi2.setSize(228, 757, true);
             spriteennemi2.setDepth(2);
             spriteennemi2.setScale(0.5, 0.5);
@@ -1123,10 +1128,11 @@
     }
     const config = {
         width: 1380,
-        height: windowheight,
+        height: 730,
         pixelArt: false,
         scene: [Acceuil, Menuprincipal, Bureau, Zone],
         type: Phaser.AUTO,
+        resolution: window.devicePixelRatio,
         parent: "jeu",
         physics: {
             default: "arcade",
@@ -1193,6 +1199,7 @@
             effetui.selection.play();
             e.target.value = "";
         }}
+        bind:this={input}
     />
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <button
@@ -1334,7 +1341,7 @@
 </div>
 
 {#if enjeu}
-    <div>
+    <div id="menujeu">
         <Inventairejeu
             bind:inventairejoueur={joueur.inventaire}
             bind:placeinventaire
@@ -1410,6 +1417,12 @@
     .indicateurtourne {
         animation: tourner infinite 0.2s linear;
     }
+    /*   #menujeu {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    } */
     #menu {
         left: 50%;
         top: 75%;

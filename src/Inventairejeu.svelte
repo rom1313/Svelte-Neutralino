@@ -270,7 +270,7 @@
         position: absolute;
         top: 30px;
         cursor: url("/img/mouse2.png"), pointer;
-        left: 10px;
+        left: 15px;
     }
     #bouttoninventaire:hover {
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #6f0000;
