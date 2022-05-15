@@ -1,4 +1,5 @@
 <script>
+    import Inventairejeu from "./Inventairejeu.svelte";
     import { socket, sauvegarde } from "./Variables.js";
     import { getContext, setContext } from "svelte";
 
@@ -189,6 +190,16 @@
             opacity: 1;
         }
     }
+    @keyframes slide {
+        from {
+            opacity: 0;
+            transform: translateX(-709px);
+        }
+        to {
+            transform: translateX(0px);
+            opacity: 1;
+        }
+    }
     #nomobjet {
         font-size: 7px;
     }
@@ -281,6 +292,7 @@
     #blockobjets p {
         bottom: 0%;
         margin: 0%;
+        animation: slide 5s linear alternate forwards infinite;
     }
     #inventaire {
         position: absolute;

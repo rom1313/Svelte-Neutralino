@@ -250,6 +250,18 @@
 >
 
 <style>
+    @keyframes slide {
+        from {
+            opacity: 0;
+
+            transform: translate(-50%, -50%) scale(0.1);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
     #cyberz {
         color: rgb(198, 0, 247);
         font-size: 15px;
@@ -292,6 +304,7 @@
         transform: translate(-50%, -50%);
         background-color: #000000;
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
+        animation: slide 0.1s linear alternate forwards;
     }
     #blockobjets {
         width: 89px;
