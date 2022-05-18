@@ -109,7 +109,7 @@ export class Ennemi {
 
 //TODO ----------------------------------------------- Writable -------------------------
 export let chatouvert = true
-export let focuschat = writable()
+export let focuschat = writable(false)
 export let volume = writable(1)
 export let pause = writable(false)
 export let directionsprite = writable("droite")

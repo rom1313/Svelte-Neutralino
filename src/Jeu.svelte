@@ -590,7 +590,7 @@
 
             //TOUCHE ESPACE
             cursors.space.on("down", function (event) {
-                if ($pause != true) {
+                if ($pause != true && $focuschat != true) {
                     if (joueur.vitesse != 0 && joueur.vitesse === 1) {
                         if (effetarme.tir.paused) {
                             effetarme.tir.volume = 0.1;
@@ -722,23 +722,27 @@
             //TOUCHE BAS
 
             cursors.down.on("up", function (event) {
+                spriteildaa.stop();
                 //  perso.play("walk");
                 spriteildaa.setVelocity(0, 0);
             });
             //TOUCHE HAUT
 
             cursors.up.on("up", function (event) {
+                spriteildaa.stop();
                 //  perso.play("walk");
                 spriteildaa.setVelocity(0, 0);
             });
             //TOUCHE GAUCHE
 
             cursors.left.on("up", function (event) {
+                spriteildaa.stop();
                 //  perso.play("walk");
                 spriteildaa.setVelocity(0, 0);
             });
 
             cursors.right.on("up", function (event) {
+                spriteildaa.stop();
                 //  perso.play("walk");
                 spriteildaa.setVelocity(0, 0);
             });
