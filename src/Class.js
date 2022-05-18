@@ -172,7 +172,7 @@ export let effetarme =
     tir3: new Audio("son/effet/sprite/projectile2.mp3"),
     impact: new Audio("son/effet/sprite/tir2.mp3"),
     impactbis: new Audio("son/effet/sprite/tir2.mp3"),
-    tirlourd: new Audio("son/effet/sprite/tirchargé.mp3"),
+    tirlourd: new Audio("son/effet/sprite/tircharge.mp3"),
     rafale: new Audio("son/effet/sprite/tir5.mp3"),
     projectile: new Audio("son/effet/sprite/projectile.mp3"),
     bomb: new Audio("son/effet/sprite/bombplasma.mp3"),
@@ -196,3 +196,12 @@ export let effetsprite =
 
 
 }
+
+export let connecte = writable();
+export let enjeu = writable(false)
+export let cursors = writable()
+export let windowwidth = writable(window.screen.availWidth)
+export let windowheight = writable(window.screen.availHeight)
+export let spriteildaa = writable()
+
+
