@@ -27,17 +27,20 @@ export class Personnage {
         this.pass = "0000";
         this.score = [0, 0, 0, 0];
         this.kill = [0, 0, 0, 0];
-        this.inventaire = [{ img: 'img/carteagent.png', nom: "Carte d'agent", prix: 0, effet: "Auncun", type: "Personnel", description: "Carte professionelle d'agent d'Onix Corp.", createur: "Onix Corp.", qualite: "Basique", materiauxonix: 0, materiauxchimique: 0 }];
+        this.inventaire = [{ img: 'img/carteagent.png', nom: "Carte d'agent", prix: 0, effet: "Aucun", type: "Personnel", description: "Carte professionelle d'agent d'Onix Corp.", createur: "Onix Corp.", qualite: "Basique", materiauxonix: 0, materiauxchimique: 0 }];
         this.puce = ["", "", ""];
         this.relique = [""];
         this.amelioration = ["", "", ""];
         this.coffres = [""];
-        this.classe = "";
-        this.partenaire = "";
+        this.classe = "aucun";
+        this.partenaire = "aucun";
+        this.partenaire2 = "aucun";
+        this.partenaire3 = "aucun";
         this.skills = ["", "", "", "", "", "", ""];
-        this.progression = "";
-        this.skin = "";
-        this.personnage = "";
+        this.consommables = ["", "", "", "", "", "", ""];
+        this.progression = "début";
+        this.skin = "aucun";
+        this.personnage = "ildaa";
         this.img = "img/inviteface.png";
         this.alignement = 0;
         this.materiauxonix = 0;
@@ -45,8 +48,11 @@ export class Personnage {
         this.ventes = 0;
         this.messages = [""];
         this.gemmes = 0;
-        this.mail = "";
-        this.amis = ""
+        this.mail = "aucun";
+        this.amis = [""];
+        this.pet = "aucun";
+        this.pet2 = "aucun";
+        this.pet3 = "aucun";
 
 
     }
@@ -203,5 +209,5 @@ export let cursors = writable()
 export let windowwidth = writable(window.screen.availWidth)
 export let windowheight = writable(window.screen.availHeight)
 export let spriteildaa = writable()
-
+export let joueur = writable(new Personnage("invité", 0, 1))
 

@@ -21,7 +21,8 @@
         connecte,
         enjeu,
         cursors,
-        spriteildaa
+        spriteildaa,
+        joueur
     } from "./Class.js";
     import { socket, sauvegarde } from "./Variables.js";
     import Chat from "./Chat.svelte";
@@ -48,9 +49,6 @@
     let hudcache = true;
     let input;
 
-    let joueur = new Personnage("invité", 0, 1);
-    setContext("joueur", joueur);
-
     let toucheclavier;
     let classbouttonquitter = "bouttoncaché";
     let classbouttonconnexion = "";
@@ -58,8 +56,8 @@
 
     let effetfond;
     let faceimg = new Image(100, 200);
-    faceimg.src = joueur.img;
-    $: placeinventaire = joueur.inventaire.length;
+    faceimg.src = $joueur.img;
+    $: placeinventaire = $joueur.inventaire.length;
 
     let camera;
 
@@ -78,6 +76,9 @@
     let etat = new Etats();
     let pseudoingame;
     let projectile;
+    onMount(async () => {
+        console.log($joueur);
+    });
     //---------------------------------------------------------------------
     /*  onMount(() => {
         input.focus();  // input dom selector ( input pass -bind:this etc- )
@@ -106,17 +107,41 @@
         0,
         20
     );
+    socket.on("connectionok", (data) => {
+        if (data.pseudo === $joueur.pseudo) {
+            $joueur = data.joueur;
+            $connecte = true;
+            menucache = true;
+            titrecache = true;
+        } else {
+            return;
+        }
+    });
+    socket.on("nouveaucompte", (data) => {
+        if (data.pseudo === $joueur.pseudo) {
+            $joueur = data;
+            $connecte = true;
+            menucache = true;
+            titrecache = true;
+        } else {
+            return;
+        }
+    });
+    socket.on("erreurcompte", (data) => {
+        chargementindicateur = false;
+        connexionerror = true;
+    });
 
     //----------------------------------------------------------------------- Socket
     function testsocket() {
         let infos = {
-            nom: joueur.pseudo,
+            nom: $joueur.pseudo,
             nb: nbjoueursenligne,
             id: joueur.pseudo
         };
         socket.on("disconnect", () => {
             $joueursenligne = data.joueurs;
-            socket.emit("deco", joueur.pseudo);
+            socket.emit("deco", $joueur.pseudo);
         });
 
         socket.emit("connexionenjeu", infos);
@@ -141,10 +166,10 @@
         console.log("mess chat");
     });
     socket.on("ventecybershop", (data) => {
-        if (data.pseudovendeur === joueur.pseudo) {
+        if (data.pseudovendeur === $joueur.pseudo) {
             effetui.ventecybershop.volume = 0.1;
             effetui.ventecybershop.play();
-            joueur.cyberz = data.argent;
+            $joueur.cyberz = data.argent;
         }
     });
     // console.log("connection établie avec ildaa"); // true
@@ -158,6 +183,7 @@
         sante,
         attaque,
         defense,
+        vitesse,
         xp,
         pass,
         inventaire,
@@ -169,10 +195,25 @@
         coffres,
         classe,
         partenaire,
+        partenaire2,
+        partenaire3,
         progression,
         skin,
         personnage,
-        img
+        img,
+        skills,
+        consommables,
+        alignement,
+        materiauxonix,
+        materiauxchimique,
+        ventes,
+        messages,
+        gemmes,
+        mail,
+        amis,
+        pet,
+        pet2,
+        pet3
     ) {
         fetch("https://apiildaa.herokuapp.com/connectionjoueur", {
             method: "post",
@@ -188,6 +229,7 @@
                 sante: sante,
                 attaque: attaque,
                 defense: defense,
+                vitesse: vitesse,
                 xp: xp,
                 pass: pass,
                 inventaire: inventaire,
@@ -199,10 +241,25 @@
                 coffres: coffres,
                 classe: classe,
                 partenaire: partenaire,
+                partenaire2: partenaire2,
+                partenaire3: partenaire3,
                 progression: progression,
                 skin: skin,
                 personnage: personnage,
-                img: img
+                img: img,
+                skills: skills,
+                consommables: consommables,
+                alignement: alignement,
+                materiauxonix: materiauxonix,
+                materiauxchimique: materiauxchimique,
+                ventes: ventes,
+                messages: messages,
+                gemmes: gemmes,
+                mail: mail,
+                amis: amis,
+                pet: pet,
+                pet2: pet2,
+                pet3: pet3
             })
         })
             .then((res) => res.json())
@@ -224,6 +281,7 @@
                     joueur.sante = res.sante;
                     joueur.attaque = res.attaque;
                     joueur.defense = res.defense;
+                    joueur.vitesse = res.vitesse;
                     joueur.xp = res.xp;
                     joueur.pass = res.pass;
                     joueur.inventaire = res.inventaire;
@@ -235,11 +293,25 @@
                     joueur.coffres = res.coffres;
                     joueur.classe = res.classe;
                     joueur.partenaire = res.partenaire;
+                    joueur.partenaire2 = res.partenaire2;
+                    joueur.partenaire3 = res.partenaire3;
                     joueur.progression = res.progresson;
                     joueur.skin = res.skin;
                     joueur.personnage = res.personnage;
                     joueur.img = res.img;
-                    chargementindicateur = false;
+                    joueur.skills = res.skills;
+                    joueur.consommables = res.consommables;
+                    joueur.alignement = res.alignement;
+                    joueur.materiauxonix = res.materiauxonix;
+                    joueur.materiauxchimique = res.materiauxchimique;
+                    joueur.ventes = res.ventes;
+                    joueur.messages = res.messages;
+                    joueur.gemmes = res.gemmes;
+                    joueur.mail = res.mail;
+                    joueur.amis = res.amis;
+                    joueur.pet = res.pet;
+                    joueur.pet2 = res.pet2;
+                    joueur.pet3 = res.pet3;
                     $connecte = true;
                     menucache = true;
                     titrecache = true;
@@ -480,7 +552,7 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/testniveau3.png", {
+            this.load.image("bureau", "img/testniveau5.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });
@@ -492,7 +564,7 @@
             $spriteildaa = this.physics.add.sprite(900, 380, "ildaa2");
             $spriteildaa.setSize(228, 757, true);
             $spriteildaa.setDepth(2);
-            $spriteildaa.setScale(0.5, 0.5);
+            $spriteildaa.setScale(0.25, 0.25);
 
             //-----------------------------------------
             spriteennemi = this.physics.add.sprite(100, 380, "dude");
@@ -513,6 +585,7 @@
                 .setOrigin(0.5, 0.5);
             this.background.displayWidth = this.sys.canvas.width;
             this.background.displayHeight = this.sys.canvas.height;
+            this.trees = this.add.tileSprite(0, 280, 800, 820, "projectile").setOrigin(0, 0);
             // CREATION JOUEUR
             // HITBOX
             /* this.background.setPipeline("Light2D"); */
@@ -532,7 +605,7 @@
                 $spriteildaa,
                 [spriteennemi, spriteennemi2],
                 function colision(persosprite, collisionsprite) {
-                    etat.stun(joueur);
+                    etat.stun($joueur);
 
                     camera.shake(1000, 0.025);
                 }
@@ -541,7 +614,7 @@
                 spriteennemi,
                 [spriteennemi2],
                 function colision(persosprite, collisionsprite) {
-                    etat.stun(joueur);
+                    etat.stun($joueur);
 
                     camera.shake(1000, 0.025);
                 }
@@ -593,7 +666,7 @@
             //TOUCHE ESPACE
             $cursors.space.on("down", function (event) {
                 if ($pause != true && $focuschat != true) {
-                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                    if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         if (effetarme.tir.paused) {
                             effetarme.tir.volume = 0.1;
                             effetarme.tir.play();
@@ -610,7 +683,7 @@
                             );
                             projectile.setSize(406, 50, true);
                             projectile.setDepth(2);
-                            projectile.setScale(0.25, 0.25);
+                            projectile.setScale(0.5, 0.25);
                             projectile.setVelocity(2000, 0);
 
                             scenebureau.physics.add.collider(
@@ -656,7 +729,7 @@
                             );
                             projectile2.setSize(406, 50, true);
                             projectile2.setDepth(2);
-                            projectile2.setScale(0.25, 0.25);
+                            projectile2.setScale(0.5, 0.25);
                             projectile2.setVelocity(2000, 0);
 
                             setTimeout(() => {
@@ -676,7 +749,7 @@
             $cursors.up.on("down", function (event) {
                 /* scenebureau.scene.switch("Menuprincipal"); */
                 if ($pause != true) {
-                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                    if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         $spriteildaa.play("dos");
                         //  perso.play("walk");
                         $spriteildaa.setVelocity(0, -230);
@@ -688,7 +761,7 @@
             // TOUCHE BAS
             $cursors.down.on("down", function (event) {
                 if ($pause != true) {
-                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                    if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         $spriteildaa.setVelocity(0, 230);
                     }
                     $spriteildaa.play("bas");
@@ -699,7 +772,7 @@
             // TOUCHE GAUCHE
             $cursors.left.on("down", function (event) {
                 if ($pause != true) {
-                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                    if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         $spriteildaa.play("gauche");
                         $spriteildaa.setVelocity(-230, 0);
                     }
@@ -710,7 +783,7 @@
             //TOUCHE DROITE
             $cursors.right.on("down", function (event) {
                 if ($pause != true) {
-                    if (joueur.vitesse != 0 && joueur.vitesse === 1) {
+                    if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         $spriteildaa.play("droite");
                         $spriteildaa.setVelocity(230, 0);
                     }
@@ -784,6 +857,7 @@
                     effetsprite.pas.play();
                 }
             }
+            this.trees.tilePositionX -= 6;
         }
     }
 
@@ -821,7 +895,7 @@
                 console.log($focuschat + "est false");
             }
             console.log("touche p !");
-            console.log(joueur);
+            console.log($joueur);
         }
         /* console.log(event); */
     }}
@@ -839,7 +913,7 @@
 
     <input
         placeholder="Pseudo*"
-        bind:value={joueur.pseudo}
+        bind:value={$joueur.pseudo}
         id="input3"
         maxlength="9"
         autocomplete="off"
@@ -851,7 +925,7 @@
     />
     <input
         placeholder="Pass*"
-        bind:value={joueur.pass}
+        bind:value={$joueur.pass}
         id="input"
         maxlength="9"
         autocomplete="off"
@@ -869,13 +943,15 @@
         on:click={() => {
             effetui.valider.volume = 0.1;
             effetui.valider.play();
-            enregistrementjoueur(
+            console.log($joueur);
+            /*  enregistrementjoueur(
                 joueur.pseudo,
                 joueur.cyberz,
                 joueur.niveau,
                 joueur.sante,
                 joueur.attaque,
                 joueur.defense,
+                joueur.vitesse,
                 joueur.xp,
                 joueur.pass,
                 joueur.inventaire,
@@ -887,11 +963,27 @@
                 joueur.coffres,
                 joueur.classe,
                 joueur.partenaire,
+                joueur.partenaire2,
+                joueur.partenaire3,
                 joueur.progression,
                 joueur.skin,
                 joueur.personnage,
-                joueur.img
+                joueur.img,
+                joueur.skills,
+                joueur.consommables,
+                joueur.alignement,
+                joueur.materiauxonix,
+                joueur.materiauxchimique,
+                joueur.ventes,
+                joueur.messages,
+                joueur.gemmes,
+                joueur.mail,
+                joueur.amis,
+                joueur.pet,
+                joueur.pet2,
+                joueur.pet3
             );
+ */ socket.emit("enregistrement", $joueur);
 
             {
                 chargementindicateur = true;
@@ -1004,14 +1096,22 @@
 {#if $enjeu}
     <div id="menujeu">
         <Inventairejeu
-            bind:inventairejoueur={joueur.inventaire}
+            bind:inventairejoueur={$joueur.inventaire}
             bind:placeinventaire
-            bind:cyberz={joueur.cyberz}
-            bind:materiauxonix={joueur.materiauxonix}
-            bind:materiauxchimique={joueur.materiauxchimique}
+            bind:cyberz={$joueur.cyberz}
+            bind:materiauxonix={$joueur.materiauxonix}
+            bind:materiauxchimique={$joueur.materiauxchimique}
         />
         <Social />
         <Cybershop />
+        <button
+            on:click={() => {
+                $joueur.inventaire.push(dopant);
+                console.log($joueur.inventaire[1]);
+            }}
+        >
+            TESSST</button
+        >
     </div>{/if}
 
 <div id="jeu" />

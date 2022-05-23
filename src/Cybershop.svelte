@@ -2,6 +2,7 @@
     import { element } from "svelte/internal";
     import Cybershop from "./Cybershop.svelte";
     import { getContext, setContext } from "svelte";
+    import { fade, fly } from "svelte/transition";
     import { onMount } from "svelte";
     import { socket } from "./Variables.js";
     import {
@@ -20,12 +21,18 @@
         directionsprite,
         nbjoueursenligne,
         joueursenligne,
-        contenuchat
+        contenuchat,
+        joueur
     } from "./Class.js";
-
+    let notifnom;
+    let notifobjet;
+    let notifprix;
+    let notifargentactuel;
+    let notifcacher = true;
+    let timer;
     let detailobjetouvert = false;
     let cybershopouvert = false;
-    let joueur = getContext("joueur");
+
     let faucher = false;
 
     let voix = [
@@ -56,7 +63,45 @@
     onMount(async () => {
         socket.emit("cocybershop");
     });
+    socket.on("ventecybershop", (data) => {
+        if (data.pseudovendeur === $joueur.pseudo) {
+            console.log(data.pseudoacheteur, data.prixproduit, data.produit, data.argent);
+            notifnom = data.pseudoacheteur;
+            notifobjet = data.produit;
+            notifprix = data.prixproduit;
+            notifargentactuel = data.argent;
+            notifcacher = false;
+            timer = setTimeout(() => {
+                if (notifcacher != true) {
+                    notifcacher = true;
+                }
+            }, 12000);
+        }
+    });
 </script>
+
+{#if !notifcacher}
+    <div id="notif" out:fly>
+        <span
+            id="fermernotif"
+            on:click={() => {
+                notifcacher = true;
+                clearTimeout(timer);
+            }}>x</span
+        >
+        <h1 id="titrenotif">Nouvelle Vente !</h1>
+        <p>
+            <span class="notifnom">{notifnom}</span> a acheté :
+            <span class="notifnom">{notifobjet}</span>
+            pour la somme de :
+            <span class="notifnom"
+                >{notifprix}
+                crédits</span
+            >
+        </p>
+        <p>Votre solde est désormais de : <span class="notifnom">{notifargentactuel}</span></p>
+    </div>
+{/if}
 
 <div id="block">
     <img
@@ -136,7 +181,8 @@
                             on:click={() => {
                                 let data = {
                                     pseudovendeur: objet.nom,
-                                    nomproduit: objet.objet.nom
+                                    nomproduit: objet.objet.nom,
+                                    pseudoacheteur: $joueur.pseudo
                                 };
                                 socket.emit("achatcybershop", data);
 
@@ -153,7 +199,7 @@
                                     objet.objet.materiauxchimique
                                 );
 
-                                joueur.inventaire.push(objetacheter);
+                                $joueur.inventaire.push(objetacheter);
                                 socket.emit("cocybershop");
                             }}>Acheter</button
                         >
@@ -161,13 +207,21 @@
                 {/each}
             </div>
         </div>
-        <p id="cyberz"><span id="credits">Crédits :</span> {cyberz}</p>
+        <p id="cyberz"><span id="credits">Crédits :</span> {$joueur.cyberz}</p>
         <p id="nbobjets">Objets en ventes : {cybershop.length}</p>
     </div>
     {#if detailobjetouvert}{/if}
 {/if}
 
 <style>
+    @keyframes briller {
+        from {
+            opacity: 50%;
+        }
+        to {
+            opacity: 100%;
+        }
+    }
     @keyframes clignotement {
         from {
             opacity: 0.5;
@@ -420,6 +474,56 @@
     }
     .menucache {
         display: none;
+    }
+    #notif {
+        position: absolute;
+        bottom: 35px;
+        left: 12px;
+        color: white;
+        font-size: 35px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: rgba(0, 0, 0, 0.49);
+        border-radius: 20px;
+        padding: 10px;
+        animation: briller 1s infinite alternate;
+        z-index: 10;
+        box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
+    }
+    #notif p {
+        font-size: 13px;
+        margin: 5px;
+        text-shadow: 1px 1px 16px rgb(0, 0, 0);
+        font-weight: 1200;
+    }
+    .notifnom {
+        color: rgb(198, 0, 247);
+
+        text-shadow: 1px 1px 16px rgb(85, 0, 102);
+
+        border-radius: 15px;
+        padding: 4px;
+    }
+    #fermernotif {
+        position: absolute;
+        left: 505px;
+        bottom: 85px;
+        font-size: 15px;
+        z-index: 11;
+        color: white;
+        text-shadow: 1px 1px 16px rgb(0, 0, 0);
+    }
+    #fermernotif:hover {
+        color: red;
+        cursor: url("/img/mouse2.png"), pointer;
+    }
+    #titrenotif {
+        margin-top: 2px;
+        margin-left: 5px;
+        margin-bottom: 15px;
+        font-size: 16px;
     }
     @media only screen and (min-width: 1920px) {
         /*  #block {

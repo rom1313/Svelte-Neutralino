@@ -2,6 +2,7 @@
     import Infobulleinventaire from "./Infobulleinventaire.svelte";
     import { socket, sauvegarde } from "./Variables.js";
     import { getContext, setContext } from "svelte";
+    import { fade, fly } from "svelte/transition";
 
     import {
         Allier,
@@ -13,7 +14,8 @@
         volume,
         pause,
         effetui,
-        effetarme
+        effetarme,
+        joueur
     } from "./Class.js";
     let infobulleouvert;
     export let inventairejoueur;
@@ -32,9 +34,9 @@
         infomateriauxonix;
     let pointerx, pointery;
     export let materiauxchimique, materiauxonix;
-    $: placeinventaire = joueur.inventaire.length;
-    $: inventairejoueur = joueur.inventaire;
-    let joueur = getContext("joueur");
+    $: placeinventaire = $joueur.inventaire.length;
+    $: inventairejoueur = $joueur.inventaire;
+
     let dopant = new Objet(
         "Stimulant",
         90,
@@ -68,7 +70,7 @@
     on:mousemoove={() => {}}
 />
 {#if !menucacher}
-    <div id="inventaire">
+    <div id="inventaire" out:fly>
         <p id="nomfenetre">Inventaire (i)</p>
         <p id="metal"><img src="img/metal.png" alt="" /> {materiauxonix}</p>
         <p id="chimi"><img src="img/chimi.png" alt="" /> {materiauxchimique}</p>
@@ -117,11 +119,11 @@
                                 return;
                             } else {
                                 let data = {
-                                    pseudo: joueur.pseudo,
+                                    pseudo: $joueur.pseudo,
                                     objet: cat
                                 };
                                 socket.emit("cybershop", data);
-                                joueur.inventaire.splice(i, 1);
+                                $joueur.inventaire.splice(i, 1);
                                 /*   enregistrementjoueur(
                                 joueur.pseudo,
                                 joueur.cyberz,
@@ -138,11 +140,11 @@
                                 joueur.amelioration,
                                 joueur.relique
                             ); */
-                                sauvegarde(joueur);
+                                sauvegarde($joueur);
                                 effetui.vendre.volume = 0.1;
                                 effetui.vendre.play();
                                 /* menucacher = true; */
-                                placeinventaire = joueur.inventaire.length;
+                                placeinventaire = $joueur.inventaire.length;
                             }
                         }}
                         on:mouseover={(e) => {
@@ -165,16 +167,16 @@
                                 effetui.error.play();
                                 return;
                             } else {
-                                joueur.materiauxchimique += cat.materiauxchimique;
-                                joueur.materiauxonix += cat.materiauxonix;
-                                joueur.inventaire.splice(i, 1);
+                                $joueur.materiauxchimique += cat.materiauxchimique;
+                                $joueur.materiauxonix += cat.materiauxonix;
+                                $joueur.inventaire.splice(i, 1);
 
-                                sauvegarde(joueur);
+                                sauvegarde($joueur);
                                 effetui.retroconfection.volume = 0.1;
                                 effetui.retroconfection.play();
 
                                 /* menucacher = true; */
-                                placeinventaire = joueur.inventaire.length;
+                                placeinventaire = $joueur.inventaire.length;
                             }
                         }}
                         on:mouseover={(e) => {

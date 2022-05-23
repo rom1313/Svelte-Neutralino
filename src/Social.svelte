@@ -2,6 +2,7 @@
     //--------------------------------------------------------------------imports
     import { socket } from "./Variables.js";
     import { getContext, setContext, onMount } from "svelte";
+    import { fade, fly } from "svelte/transition";
     import {
         Allier,
         Personnage,
@@ -15,14 +16,15 @@
         effetarme,
         contenuchat,
         nbjoueursenligne,
-        joueursenligne
+        joueursenligne,
+        joueur
     } from "./Class.js";
     $: chatfinal = chat;
     //-------------------------------------------------------------------------------- variables
 
     export let menucacher = true;
     let chat = [];
-    let joueur = getContext("joueur");
+
     let nomjoueursouvert = false;
     let nomamisouvert = false;
     let notifsilence = false;
@@ -33,7 +35,7 @@
         let message = e.target.value;
         let data = {
             text: message,
-            id: joueur.pseudo
+            id: $joueur.pseudo
         };
         socket.emit("message", data);
         e.target.value = "";
@@ -68,7 +70,7 @@
         console.log("un joueur s'est connecté");
     });
     socket.on("chatmaj", (data) => {
-        if (data.id != joueur.pseudo && notifsilence != true) {
+        if (data.id != $joueur.pseudo && notifsilence != true) {
             effetui.chat.volume = 0.1;
             effetui.chat.play();
         }
@@ -121,7 +123,7 @@
     }}
 />
 {#if !menucacher}
-    <div id="chat">
+    <div id="chat" out:fly>
         <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <span
             id="fermer"
@@ -188,7 +190,7 @@
 
         {#if nomamisouvert}
             <div id="blockamis">
-                {#each joueur.amis as item}
+                {#each $joueur.amis as item}
                     <p>{item}</p>
                 {/each}
             </div>
@@ -244,14 +246,14 @@
                 }}
             />
             {#each chatfinal as contenu, i}
-                {#if contenu.pseudo === joueur.pseudo}
+                {#if contenu.pseudo === $joueur.pseudo}
                     <p class="chattext">
                         <span id="pseudojoueur">{contenu.pseudo} : </span>
                         {contenu.text}
-                        {joueur.pseudo}
+                        {$joueur.pseudo}
                     </p>
                 {/if}
-                {#if contenu.pseudo != joueur.pseudo}
+                {#if contenu.pseudo != $joueur.pseudo}
                     <p class="chattext">
                         <span id="pseudoamis">{contenu.pseudo} : </span>
                         {contenu.text}
