@@ -1,7 +1,7 @@
 <script>
     import { socket } from "./Variables.js";
     import { getContext, setContext } from "svelte";
-    let joueur = getContext("joueur");
+
     import {
         Allier,
         Personnage,
@@ -12,7 +12,8 @@
         volume,
         pause,
         effetui,
-        effetarme
+        effetarme,
+        joueur
     } from "./Class.js";
 
     let menucacher = true;
@@ -109,7 +110,7 @@ Pour être contacté, laissez votre e-mail en fin de message. "
                 e.target.style.visibility = "hidden";
 
                 let data = {
-                    pseudo: joueur.pseudo,
+                    pseudo: $joueur.pseudo,
                     mess: message
                 };
                 socket.emit("mail", data);
