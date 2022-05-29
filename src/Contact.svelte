@@ -157,7 +157,7 @@ Pour être contacté, laissez votre e-mail en fin de message. "
         height: 650px;
         width: 500px;
         background-color: rgb(30, 30, 30);
-        border: solid 1px aqua;
+        border: solid 1px rgb(0, 0, 0);
         position: fixed;
         top: 50%;
         left: 50%;
@@ -178,12 +178,13 @@ Pour être contacté, laissez votre e-mail en fin de message. "
         font-size: 25px;
         z-index: 5;
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000 inset;
-        border-radius: 15px;
+        border-radius: 10px;
         outline: none;
+        padding: 15px;
     }
     #button {
         position: absolute;
-        top: 94%;
+        top: 95%;
         left: 50%;
         transform: translate(-50%, -50%);
         cursor: url("/img/mouse2.png"), pointer;
