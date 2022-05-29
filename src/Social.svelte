@@ -182,7 +182,8 @@
             <div id="blocknomjoueurenligne">
                 {#each $joueursenligne as item}
                     <p id="nomjoueurenligne">
-                        {item} <span style="font-size: 15">+</span> <span>?</span>
+                        {item} <span style="font-size: 15" />
+                        <img id="infojoueurs" src="img/infojoueurs.png" alt="" />
                     </p>
                 {/each}
             </div>
@@ -390,27 +391,30 @@
     }
     #blocknomjoueurenligne {
         background-color: rgb(0, 0, 0);
-        width: 100px;
+        width: 130px;
         height: 200px;
         overflow: scroll;
         display: flex;
         flex-direction: column;
         top: 40px;
         position: absolute;
-        left: -90px;
+        left: -120px;
         border-radius: 5px;
         box-shadow: 0px 0px 10px rgb(0, 0, 0);
     }
+    #blocknomjoueurenligne::-webkit-scrollbar {
+        display: none;
+    }
     #blockamis {
         background-color: rgb(0, 0, 0);
-        width: 100px;
+        width: 130px;
         height: 200px;
         overflow: scroll;
         display: flex;
         flex-direction: column;
         top: 40px;
         position: absolute;
-        left: -90px;
+        left: -120px;
         border-radius: 5px;
         box-shadow: 0px 0px 10px rgb(0, 0, 0);
     }
@@ -452,5 +456,14 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #ff0000;
         box-shadow: inset 0 0 9px rgb(0, 0, 0);
+    }
+    #infojoueurs {
+        position: absolute;
+        margin-top: -5px;
+        margin-left: 9px;
+        border-radius: 15px;
+    }
+    #infojoueurs:hover {
+        box-shadow: 0px 0px 10px rgb(217, 0, 152);
     }
 </style>
