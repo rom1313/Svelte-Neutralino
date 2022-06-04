@@ -1,0 +1,87 @@
+[url=https://zupimages.net/viewer.php?id=21/46/bm9z.png][img]https://zupimages.net/up/21/46/bm9z.png[/img][/url]
+
+Hello !!
+j'espère que ça va là dedans :)
+
+[quote]Bon aujourd'hui promis je prends personne pour des Pokémon et je vous présente mon nouveau jeu ![/quote]
+
+
+[spoiler]
+ Pour ceux qui ne le savent pas,  je suis devenu développeur entre-temps. Ok c'est cool et du coup ? 
+ Et bien du coup, le jeu que je vous propose sera codé par mes soins :).
+
+Et qu'est-ce que ça change à nos vies vous allez me dire ? 
+Pas grand chose je vous l'accorde mais de mon coté, ça me donne clairement d'autres limites et horizons à 
+explorer que ceux que j'avais l'habitude d'avoir. 
+
+Je retrouve un peu le même plaisir que j'avais au début quand j'ai commencé avec rpg maker ce plaisir de créer, je l'ai toujours eu mais il s'est un peu endormi car j'ai pas assez évolué et il m'en faut plus pour m'envoyer du rêve qu'un énième jeu rpmakerlike comme j'ai l'habitude d'en faire (et quand je dis ça je parle aussi niveau graphisme, je vous en parle plus bas ^^).
+[/spoiler]
+
+
+Allez on arrête les bêtises et je vous parle un peu du jeu :
+
+[quote][b]Nom   :[/b]  Cyber Clash[/quote]
+
+[b]Type :[/b] 
+[code]Rpg/Beat them all Online 
+
+(Sauvegarde en ligne, Fonctionnalités sociales)  
+*Cyber Clash est un jeu sur navigateur, aucune installation n'est nécessaire !  [/code]
+
+
+Un chat est déjà en ligne et fonctionnel, tous les joueurs de Cyber Clash peuvent discuter ensemble.
+Vous l'avez sûrement compris, je souhaite que le jeu est une réel dimension sociale ! 
+
+[b]Systèmes de jeu : [/b]
+
+Le jeu sera un rpg (évolution, stuff, histoire) mais je prévois également 
+d'implémenter des système d'interaction (Réseau d'échanges d'objets 
+comme on peux le voir dans les mmo par exemple).
+
+Beaucoup de choses possibles ou à créer,  ce jeu est un bonne grosse dose de frais et de passion pour moi 😎.
+
+Screenshot : 
+
+Attention,  projet en développement c'est le chantier, c'est en constante évolution oO
+Accueil
+[url=https://zupimages.net/viewer.php?id=21/46/mpgt.png][img]https://zupimages.net/up/21/46/mpgt.png[/img][/url]
+Interface 
+[url=https://zupimages.net/viewer.php?id=21/46/xrn8.png][img]https://zupimages.net/up/21/46/xrn8.png[/img][/url]
+Je pense que quelques  explications sont nécessaire lol, je vous montre ici l'aperçu de ce que pourra donner l'interface principal.
+Ici vous pouvez gérer votre profil (inventaire, stats), discuter avec les autres joueurs, voir l'aperçu des missions accéder au Cyber-Shop, le réseaux d'échange (à développer ahah) etc.
+
+Tout à l'heure j'ai parlé des graphismes, pas plus tard qu'hier au moment j'écris, j'ai pris un tournant que j'aurais du prendre
+il y a bien longtemps : Changer de graphismes !
+[url=https://zupimages.net/viewer.php?id=21/46/nc7l.png][img]https://zupimages.net/up/21/46/nc7l.png[/img][/url]
+Au début j'étais partis sur du classico, puis j'ai commencer à chercher un changement radicale sur le style j'en suis arrivé au test 2, mais 
+la révélation fût sue le test 3 !
+J'ai toujours aimé les grapismes 2d type dessin animé, j'ai toujours bavé devant des jeu dans ce style.
+J'ai décidé de me sortir les doigts et de faire ces graphismes qui me font rêver !
+Du coup ce sera type manga dessin et non plus pixel pokemon like.
+Elle est pas terminé c'est un peu long mais le résultat est plus impactant.
+
+Les personnages sont plus attachant et agréable, vous trouvez pas ? ^^
+ 
+
+Mais ce n'est pas tout car en plus des graphismes je travail le bruitage et les sons !
+J'ai faits deux trois sons, sont un peu chelou mais n'hésitez pas à donner à votre avis.
+
+Oui d'ailleurs vous pouvez donner votre avis vous même car je vous donne le lien directement ce qui veux dire que j'ouvre le jeu au public pendant le développement.
+
+Lien du jeu :  https://cyber-clash.netlify.app
+
+En plus de ça je prévois du doublages j'ai déjà mis une voix à notre chère Ildaa, oui c'est Ildaa je vous la présente ^^.
+La voix est robotique car elle est rafistolé...Nous sommes dans un époque clairement futuriste pour poser un peu l'ambiance.
+
+Les artistes vous êtes les bienvenus !
+Musique : 
+Si vous êtes compositeur et que ça vous botte de faire un son pour le jeu ou que vous en avez un que vous souhaitez partager n'hésitez pas , j'écouterai ça et peut être que je l'ajouterai au jeu !
+Je compte développer le lecteur en ajoutant les titre et les auteurs, donc si votre son est validé pour le jeu il sera accessible dans la playlist officiel et écouter par tous les joueurs :) !  
+Scénaristes et écrivains :
+Vous avez des histoires à raconter, vous aimez écrire des scénarios, des dialogues ou autre, n'hésitez pas ! 
+Je compte développer le lore, alors je suis preneur si vous avez des idées, prenez juste en compte le thème (Cyberpunk/scifi du style alita pour ceux qui ont vu ce film, les humains à moitié robots c'est normal dans ce contexte :), on est pas en 2030, mais plutôt 2100 pour avoir une idée.
+Dessins : 
+Je compte dessiner moi même mes graphismes cependant mes compétences en dessins son moyenne je me débrouille mais j'ai des lacunes surtout sur l'ombrage alors si vous avez des conseils ou des améliorations auquel vous voulez participez je suis ouvert à la discussion.
+
+Au plaisir de vous lire et d'échanger 😃
+Passez quand vous voulez, possible que vous tombiez sur moi je travail beaucoup sur le jeu en ce moment ahah possible aussi que du jour au lendemain ça bouge et des choses changes, vous avez accès directement au développement du jeu.

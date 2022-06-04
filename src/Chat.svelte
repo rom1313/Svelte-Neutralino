@@ -13,7 +13,8 @@
         pause,
         effetui,
         effetarme,
-        contenuchat
+        contenuchat,
+        genius
     } from "./Class.js";
     //-------------------------------------------------------------------------------- variables
     export let chatcacher = true;
@@ -22,11 +23,14 @@
 
     //------------------------------------------------------------------------------------
 
-    onMount(async () => {});
+    onMount(async () => {
+        console.log("geniuss");
+    });
 
     function envoimessagechat(e) {
         /* console.log(e.target.value); */
-        let message = e.target.value;
+        let message = e.target.value + $genius.heure();
+        console.log($genius.heure());
         let data = {
             text: message,
             id: joueur.pseudo

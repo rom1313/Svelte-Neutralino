@@ -291,7 +291,7 @@
     }
     #inventaire {
         position: absolute;
-        border: solid 0.5px aqua;
+        border: solid 0 rgb(0, 0, 0);
         border-radius: 2%;
         display: grid;
         grid-template-rows: 80px 80px 80px 80px 80px 80px 80px;
@@ -305,7 +305,7 @@
         top: 50%;
         transform: translate(-50%, -50%);
         background-color: #000000;
-        box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
+        box-shadow: 0px 0px 10px rgb(0, 0, 0);
         animation: slide 0.1s linear alternate forwards;
     }
     #blockobjets {

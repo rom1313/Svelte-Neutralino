@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { getContext, setContext } from "svelte";
+export const genius = writable($)
 
 
 export class Allier {

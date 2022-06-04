@@ -1,4 +1,5 @@
 <script>
+    import Equipement from "./Equipement.svelte";
     import Cybershop from "./Cybershop.svelte";
     import { onMount } from "svelte";
     import {
@@ -22,7 +23,8 @@
         enjeu,
         cursors,
         spriteildaa,
-        joueur
+        joueur,
+        genius
     } from "./Class.js";
     import { socket, sauvegarde } from "./Variables.js";
     import Chat from "./Chat.svelte";
@@ -76,9 +78,7 @@
     let etat = new Etats();
     let pseudoingame;
     let projectile;
-    onMount(async () => {
-        console.log($joueur);
-    });
+    onMount(async () => {});
     //---------------------------------------------------------------------
     /*  onMount(() => {
         input.focus();  // input dom selector ( input pass -bind:this etc- )
@@ -153,7 +153,7 @@
 
     socket.on("alerteconnexion", (data) => {
         // console.log(data.nb);
-        console.log(data.joueurs);
+        /*   console.log(data.joueurs); */
 
         $joueursenligne.push(joueur.pseudo);
         $nbjoueursenligne = data.nb--;
@@ -943,7 +943,7 @@
         on:click={() => {
             effetui.valider.volume = 0.1;
             effetui.valider.play();
-            console.log($joueur);
+
             /*  enregistrementjoueur(
                 joueur.pseudo,
                 joueur.cyberz,
@@ -1102,6 +1102,7 @@
             bind:materiauxonix={$joueur.materiauxonix}
             bind:materiauxchimique={$joueur.materiauxchimique}
         />
+        <Equipement />
         <Social />
         <Cybershop />
         <button

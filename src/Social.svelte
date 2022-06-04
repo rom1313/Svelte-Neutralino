@@ -17,7 +17,8 @@
         contenuchat,
         nbjoueursenligne,
         joueursenligne,
-        joueur
+        joueur,
+        genius
     } from "./Class.js";
     $: chatfinal = chat;
     //-------------------------------------------------------------------------------- variables
