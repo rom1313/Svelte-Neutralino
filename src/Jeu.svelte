@@ -606,7 +606,12 @@
                 [spriteennemi, spriteennemi2],
                 function colision(persosprite, collisionsprite) {
                     etat.stun($joueur);
-
+                    $joueur.vitesse = 0;
+                    setTimeout(() => {
+                        $joueur.vitesse = 1;
+                        console.log($joueur.vitesse);
+                        $joueur.sante = 1;
+                    }, 2000);
                     camera.shake(1000, 0.025);
                 }
             );
@@ -1105,14 +1110,6 @@
         <Equipement />
         <Social />
         <Cybershop />
-        <button
-            on:click={() => {
-                $joueur.inventaire.push(dopant);
-                console.log($joueur.inventaire[1]);
-            }}
-        >
-            TESSST</button
-        >
     </div>{/if}
 
 <div id="jeu" />

@@ -170,9 +170,7 @@
         position: absolute;
         border: solid 0 rgb(0, 0, 0);
         border-radius: 2%;
-        display: grid;
-        grid-template-rows: 80px 80px 80px 80px 80px 80px 80px;
-        grid-template-columns: 91px 91px 91px 91px 91px;
+
         padding-left: 1px;
         padding-top: 30px;
         width: 455px;
@@ -224,32 +222,32 @@
     #grade {
         position: absolute;
         top: 34px;
-        left: 34px;
+        left: 24px;
     }
     #karma {
         position: absolute;
-        top: 54px;
-        left: 34px;
+        top: 64px;
+        left: 24px;
     }
     #sante {
         position: absolute;
         top: 34px;
-        left: 290px;
+        left: 300px;
     }
     #atk {
         position: absolute;
-        top: 54px;
-        left: 290px;
+        top: 64px;
+        left: 300px;
     }
     #def {
         position: absolute;
-        top: 74px;
-        left: 290px;
+        top: 94px;
+        left: 300px;
     }
     #agl {
         position: absolute;
-        top: 94px;
-        left: 290px;
+        top: 124px;
+        left: 300px;
     }
     #spangrade {
         color: white;
