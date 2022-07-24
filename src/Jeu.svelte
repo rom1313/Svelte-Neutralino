@@ -552,7 +552,7 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/testniveau5.png", {
+            this.load.image("bureau", "img/niveau1.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });

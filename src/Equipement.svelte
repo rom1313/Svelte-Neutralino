@@ -66,6 +66,12 @@
 />
 {#if !menucacher}
     <div id="inventaire" out:fly>
+        <div id='puce1'></div>
+        <div id='puce2'></div>
+        <div id='puce3'></div>
+        <div id='amelio1'></div>
+        <div id='amelio2'></div>
+        <div id='amelio3'></div>
         <p id="nomfenetre">Equipement (e)</p>
         <p id="grade">Grade : <span id="spangrade"> {gradejoueur}</span></p>
         <p id="karma">
@@ -155,6 +161,19 @@
             transform: scale(1);
             transform: translate(-50%, -50%) scale(1);
         }
+    }
+    #puce1,#puce2,#puce3{
+        width: 40px;
+        background-color: blue;
+        height: 40px;
+        z-index: 2;
+        position: absolute;
+        border:solid 1px black
+        
+    }
+    #puce1{
+        top:160px;
+        left: 48px;
     }
 
     #bouttoninventaire {
