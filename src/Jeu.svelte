@@ -522,6 +522,11 @@
         //--------------------------------------------------------------------------------------- PRELOAD
 
         preload() {
+            this.load.spritesheet("sonde", "/img/sonde.png", {
+                frameWidth: 120,
+                frameHeight: 120
+            });
+        
             this.load.spritesheet("ildaa2", "/img/ildaa.png", {
                 frameWidth: 528,
                 frameHeight: 757
@@ -560,11 +565,15 @@
         //------------------------------------------------------ CREATE
         create() {
             let scenebureau = this;
+           
+            spritesonde = this.physics.add.sprite(1150, 300, "sonde").setInteractive(this.input.makePixelPerfect()).setImmovable();
+            spritesonde.setSize(89, 92, true);
+            spritesonde.setDepth(2);
             //------------------------------------------------------
-            $spriteildaa = this.physics.add.sprite(900, 380, "ildaa2");
-            $spriteildaa.setSize(228, 757, true);
+            $spriteildaa = this.physics.add.sprite(900, 380, "ildaa2").setInteractive(this.input.makePixelPerfect());;
+             $spriteildaa.setSize(228, 757, true); 
             $spriteildaa.setDepth(2);
-            $spriteildaa.setScale(0.25, 0.25);
+            $spriteildaa.setScale(0.5, 0.5);
 
             //-----------------------------------------
             spriteennemi = this.physics.add.sprite(100, 380, "dude");
@@ -601,9 +610,10 @@
             $spriteildaa.body.collideWorldBounds = true;
             spriteennemi.body.collideWorldBounds = true;
             spriteennemi2.body.collideWorldBounds = true;
+            spritesonde.body.collideWorldBounds = true;
             this.physics.add.collider(
                 $spriteildaa,
-                [spriteennemi, spriteennemi2],
+                [spriteennemi, spriteennemi2,spritesonde],
                 function colision(persosprite, collisionsprite) {
                     etat.stun($joueur);
                     $joueur.vitesse = 0;
@@ -779,7 +789,7 @@
                 if ($pause != true) {
                     if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         $spriteildaa.play("gauche");
-                        $spriteildaa.setVelocity(-230, 0);
+                        $spriteildaa.setVelocity(-330, 0);
                     }
                 } else {
                     return;
@@ -790,7 +800,7 @@
                 if ($pause != true) {
                     if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         $spriteildaa.play("droite");
-                        $spriteildaa.setVelocity(230, 0);
+                        $spriteildaa.setVelocity(330, 0);
                     }
                 } else {
                     return;
