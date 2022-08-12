@@ -66,12 +66,13 @@
 />
 {#if !menucacher}
     <div id="inventaire" out:fly>
-        <div id='puce1'></div>
-        <div id='puce2'></div>
-        <div id='puce3'></div>
-        <div id='amelio1'></div>
-        <div id='amelio2'></div>
-        <div id='amelio3'></div>
+        <div id="puce1" />
+        <div id="puce2" />
+        <div id="puce3" />
+        <div id="amelio1" />
+        <div id="amelio2" />
+        <div id="amelio3" />
+        <div id="relique" />
         <p id="nomfenetre">Equipement (e)</p>
         <p id="grade">Grade : <span id="spangrade"> {gradejoueur}</span></p>
         <p id="karma">
@@ -162,18 +163,57 @@
             transform: translate(-50%, -50%) scale(1);
         }
     }
-    #puce1,#puce2,#puce3{
+    #puce1,
+    #puce2,
+    #puce3,
+    #amelio1,
+    #amelio2,
+    #amelio3,
+    #relique {
         width: 40px;
-        background-color: blue;
+        background-color: rgb(108, 108, 108);
         height: 40px;
         z-index: 2;
         position: absolute;
-        border:solid 1px black
-        
+        border: solid 1px black;
     }
-    #puce1{
-        top:160px;
+    #puce1 {
+        top: 160px;
         left: 48px;
+    }
+    #puce2 {
+        top: 220px;
+        left: 48px;
+    }
+    #puce3 {
+        top: 280px;
+        left: 48px;
+    }
+    #amelio1 {
+        top: 250px;
+        left: 380px;
+    }
+    #amelio2 {
+        top: 310px;
+        left: 380px;
+    }
+    #amelio3 {
+        top: 370px;
+        left: 380px;
+    }
+    #relique {
+        top: 530px;
+        left: 48px;
+    }
+    #puce1:hover,
+    #puce2:hover,
+    #puce3:hover,
+    #amelio1:hover,
+    #amelio2:hover,
+    #amelio3:hover,
+    #relique:hover {
+        border: solid 1px greenyellow;
+        cursor: url("/img/mouse2.png"), pointer;
     }
 
     #bouttoninventaire {
