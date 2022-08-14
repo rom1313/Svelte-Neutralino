@@ -573,7 +573,7 @@
             $spriteildaa = this.physics.add.sprite(900, 380, "ildaa2").setInteractive(this.input.makePixelPerfect());;
              $spriteildaa.setSize(228, 757, true); 
             $spriteildaa.setDepth(2);
-            $spriteildaa.setScale(0.7, 0.7);
+            $spriteildaa.setScale(0.5, 0.5);
 
             //-----------------------------------------
             spriteennemi = this.physics.add.sprite(100, 380, "dude");
@@ -639,9 +639,9 @@
             this.anims.create({
                 key: "dos",
                 frames: this.anims.generateFrameNumbers("ildaa2", {
-                    frames: [3, 6, 3, 7]
+                    frames: [3, 6, 7]
                 }),
-                frameRate: 4,
+                frameRate: 6,
                 repeat: -1
             });
             this.anims.create({
@@ -649,7 +649,7 @@
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [4, 12, 4, 13]
                 }),
-                frameRate: 4,
+                frameRate: 6,
                 repeat: -1
             });
             this.anims.create({
@@ -657,7 +657,7 @@
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [5, 10, 5, 11]
                 }),
-                frameRate: 4,
+                frameRate: 6,
                 repeat: -1
             });
             this.anims.create({
@@ -665,7 +665,7 @@
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [0, 0, 0, 14]
                 }),
-                frameRate: 4,
+                frameRate: 6,
                 repeat: -1
             });
             // TEXT EN JEU ---------------------------------------------------------------
@@ -767,7 +767,7 @@
                     if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
                         $spriteildaa.play("dos");
                         //  perso.play("walk");
-                        $spriteildaa.setVelocity(0, -230);
+                        $spriteildaa.setVelocity(0, -200);
                     }
                 } else {
                     return;
@@ -777,7 +777,7 @@
             $cursors.down.on("down", function (event) {
                 if ($pause != true) {
                     if ($joueur.vitesse != 0 && $joueur.vitesse === 1) {
-                        $spriteildaa.setVelocity(0, 230);
+                        $spriteildaa.setVelocity(0, 200);
                     }
                     $spriteildaa.play("bas");
                 } else {
@@ -840,7 +840,7 @@
                 if ($pause != true) {
                     effetsprite.pas.volume = 0.1;
 
-                    effetsprite.pas.playbackRate = 2.3;
+                    effetsprite.pas.playbackRate = 4.5;
                     if (effetsprite.pas.paused) {
                         effetsprite.pas.play();
                     }
@@ -851,7 +851,7 @@
             if ($cursors.down.isDown) {
                 effetsprite.pas.volume = 0.1;
 
-                effetsprite.pas.playbackRate = 2.3;
+                effetsprite.pas.playbackRate = 4.5;
                 if (effetsprite.pas.paused) {
                     effetsprite.pas.play();
                 }
@@ -859,7 +859,7 @@
             if ($cursors.left.isDown) {
                 effetsprite.pas.volume = 0.1;
 
-                effetsprite.pas.playbackRate = 2.3;
+                effetsprite.pas.playbackRate = 4.5;
                 if (effetsprite.pas.paused) {
                     effetsprite.pas.play();
                 }
@@ -867,7 +867,7 @@
             if ($cursors.right.isDown) {
                 effetsprite.pas.volume = 0.1;
 
-                effetsprite.pas.playbackRate = 2.3;
+                effetsprite.pas.playbackRate = 4.5;
                 if (effetsprite.pas.paused) {
                     effetsprite.pas.play();
                 }
