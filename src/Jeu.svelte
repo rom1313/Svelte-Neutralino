@@ -50,7 +50,7 @@
     let titrecache = false;
     let hudcache = true;
     let input;
-
+    
     let toucheclavier;
     let classbouttonquitter = "bouttoncaché";
     let classbouttonconnexion = "";

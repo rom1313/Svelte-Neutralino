@@ -135,7 +135,7 @@ export class Etats {
         personnage.vitesse = 0
         setTimeout(() => {
             personnage.vitesse = 1
-            console.log(personnage.vitesse);
+            
             personnage.sante = 1
 
         }, 2000);
