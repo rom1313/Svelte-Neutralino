@@ -557,7 +557,7 @@
                 frameHeight: 21
             }); */
             // MAP
-            this.load.image("bureau", "img/niveau1.png", {
+            this.load.image("bureau", "img/Bureau.png", {
                 frameWidth: 1000,
                 frameHeight: 500
             });
@@ -573,7 +573,7 @@
             $spriteildaa = this.physics.add.sprite(900, 380, "ildaa2").setInteractive(this.input.makePixelPerfect());;
              $spriteildaa.setSize(228, 757, true); 
             $spriteildaa.setDepth(2);
-            $spriteildaa.setScale(0.5, 0.5);
+            $spriteildaa.setScale(0.75, 0.75);
 
             //-----------------------------------------
             spriteennemi = this.physics.add.sprite(100, 380, "dude");
@@ -663,7 +663,7 @@
             this.anims.create({
                 key: "bas",
                 frames: this.anims.generateFrameNumbers("ildaa2", {
-                    frames: [0, 0, 0, 14]
+                    frames: [0, 14, 0, 15]
                 }),
                 frameRate: 6,
                 repeat: -1
