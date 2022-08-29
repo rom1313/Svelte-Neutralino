@@ -210,7 +210,6 @@
         <p id="cyberz"><span id="credits">Crédits :</span> {$joueur.cyberz}</p>
         <p id="nbobjets">Objets en ventes : {cybershop.length}</p>
     </div>
-    {#if detailobjetouvert}{/if}
 {/if}
 
 <style>
@@ -232,23 +231,18 @@
     }
     @keyframes animprix {
         from {
-            color: rgb(189, 0, 206);
+            color: rgb(52, 0, 58);
         }
         to {
-            color: rgb(247, 0, 255);
+            color: rgb(255, 0, 238);
         }
     }
-    #detailsobjets {
-        background-color: brown;
-        position: absolute;
-        width: 50px;
-        height: 45px;
-    }
+ 
     #credits {
         color: white;
     }
     #prixobjet {
-        color: rgb(198, 0, 247);
+        color: rgb(204, 0, 255);
         border: solid 1px black;
         text-shadow: 1px 1px 16px rgb(0, 0, 0);
         border-radius: 15px;
@@ -280,17 +274,11 @@
     #objet:hover {
         box-shadow: 0px 0px 5px rgb(255, 187, 0), 0px 0px 10px #000000 inset;
     }
-    #objetdescription {
-        font-size: 8px;
-        margin: 0%;
-        margin-bottom: 8px;
-        z-index: 2;
-        line-height: 11px;
-    }
+    
     #acheter {
         cursor: url("/img/mouse2.png"), pointer;
         background-color: black;
-        color: rgb(0, 204, 240);
+        color: rgb(198, 198, 198);
         border-radius: 45px;
         border: none;
         margin-top: 7px;
@@ -302,16 +290,17 @@
     }
     #nbobjets {
         position: absolute;
-        bottom: 4px;
+        bottom: 18px;
         font-size: 15px;
         color: chartreuse;
         left: 15px;
     }
     #cybershoptitre {
         position: absolute;
-        top: -7px;
+        top: 20px;
         left: 50%;
         transform: translateX(-50%);
+        width : 20%
     }
     #blockcybershopobjet {
         position: absolute;
@@ -327,11 +316,13 @@
         column-gap: 4px;
         border-radius: 10px;
     }
+    
     /* width */
     ::-webkit-scrollbar {
         width: 20px;
         border: solid 1px black;
         background: rgb(0, 0, 0);
+     
     }
     /* Track */
     ::-webkit-scrollbar-track {
@@ -344,6 +335,7 @@
         border-radius: 5px;
         box-shadow: inset 0 0 9px rgb(0, 0, 0);
         cursor: url("/img/mouse2.png"), pointer;
+        
     }
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
@@ -361,13 +353,13 @@
         margin: auto;
     }
     #nomproduit {
-        margin-top: 5px;
+        margin-top: 9px;
         z-index: 5;
         cursor: url("/img/mouse2.png"), pointer;
         background-color: black;
         color: rgb(255, 255, 255);
-        font-size: 10px;
-        padding: 3px;
+        font-size: 12px;
+        padding: 5px;
         border-radius: 45px;
         box-shadow: 0px 0px 7px rgb(0, 247, 255), 0px 0px 10px #000000;
     }
@@ -376,25 +368,22 @@
         cursor: url("/img/mouse2.png"), pointer;
         position: absolute;
         top: 17px;
-        color: yellow;
+        color: rgb(95, 95, 95);
         left: 9px;
         font-size: 16px;
     }
     #listemarchenoir:hover {
-        text-shadow: 1px 1px rgb(241, 76, 0);
+      color: darkorange;
     }
-    #choixmarchand {
-        top: 168px;
-        z-index: 5;
-    }
+
     #cyberz {
         position: absolute;
-        bottom: -23px;
-        left: 580px;
+        bottom: 10px;
+        left: 790px;
         color: rgb(198, 0, 247);
-        font-size: larger;
+        font-size: 25px;
         text-shadow: 1px 1px 16px rgb(85, 0, 102);
-        font-size: 30px;
+        font-size: 20px;
     }
     #marchenoir {
         background-color: rgb(0, 0, 0);
@@ -415,19 +404,22 @@
         transform: translate(-50%, -50%);
     }
     #span {
+        background-color: rgb(0, 0, 0);
         text-shadow: 1px 1px 9px rgb(0, 0, 0);
-        color: rgb(248, 0, 0);
-        font-size: 22px;
-        line-height: 10px;
+        color: rgb(64, 64, 64);
+
         cursor: url("/img/mouse2.png"), pointer;
-        position: absolute;
+        position: fixed;
         right: 25px;
-        top: 9px;
-        width: 45px;
-        height: 30px;
+        top: 5px;
+        width: 20px;
+
+        border-radius: 5px;
     }
     #span:hover {
-        text-shadow: 1px 1px rgb(202, 0, 0);
+        box-shadow: 0px 0px 6px rgb(255, 0, 0), 0px 0px 10px #000000;
+        cursor: url("/img/mouse2.png"), pointer;
+        color: red;
     }
     #block {
         width: fit-content;
@@ -468,7 +460,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        border: solid 1px rgb(0, 167, 179);
+        border: solid 1px rgb(0, 0, 0);
         box-shadow: 0px 0px 10px rgb(0, 0, 0), 0px 0px 10px #000000;
         border-radius: 3px;
     }

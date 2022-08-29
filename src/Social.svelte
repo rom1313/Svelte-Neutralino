@@ -419,6 +419,9 @@
         border-radius: 5px;
         box-shadow: 0px 0px 10px rgb(0, 0, 0);
     }
+    #blockamis::-webkit-scrollbar {
+        display: none;
+    }
     #fondsocial {
         position: absolute;
         z-index: -1;

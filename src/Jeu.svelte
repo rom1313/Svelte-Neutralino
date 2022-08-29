@@ -50,7 +50,7 @@
     let titrecache = false;
     let hudcache = true;
     let input;
-    
+
     let toucheclavier;
     let classbouttonquitter = "bouttoncaché";
     let classbouttonconnexion = "";
@@ -107,6 +107,13 @@
         0,
         20
     );
+// Fonctions annexes
+    function ajouteobjet() {
+        $joueur.inventaire.push(dopant);
+    }
+
+    
+    //----------------------------------------------------------------------- Socket
     socket.on("connectionok", (data) => {
         if (data.pseudo === $joueur.pseudo) {
             $joueur = data.joueur;
@@ -132,7 +139,6 @@
         connexionerror = true;
     });
 
-    //----------------------------------------------------------------------- Socket
     function testsocket() {
         let infos = {
             nom: $joueur.pseudo,
@@ -316,7 +322,7 @@
                     menucache = true;
                     titrecache = true;
 
-                    joueur.inventaire.push(dopant);
+                    $joueur.inventaire.push(dopant);
                 }
                 /* console.log(res); */
 
@@ -526,7 +532,7 @@
                 frameWidth: 120,
                 frameHeight: 120
             });
-        
+
             this.load.spritesheet("ildaa2", "/img/ildaa.png", {
                 frameWidth: 528,
                 frameHeight: 757
@@ -565,13 +571,19 @@
         //------------------------------------------------------ CREATE
         create() {
             let scenebureau = this;
-           
-            spritesonde = this.physics.add.sprite(1150, 300, "sonde").setInteractive(this.input.makePixelPerfect()).setImmovable();
+
+            spritesonde = this.physics.add
+                .sprite(1150, 300, "sonde")
+                .setInteractive(this.input.makePixelPerfect())
+                .setImmovable();
             spritesonde.setSize(89, 92, true);
             spritesonde.setDepth(2);
+            spritesonde.setScale(0.5, 0.5);
             //------------------------------------------------------
-            $spriteildaa = this.physics.add.sprite(900, 380, "ildaa2").setInteractive(this.input.makePixelPerfect());;
-             $spriteildaa.setSize(228, 757, true); 
+            $spriteildaa = this.physics.add
+                .sprite(900, 380, "ildaa2")
+                .setInteractive(this.input.makePixelPerfect());
+            $spriteildaa.setSize(228, 757, true);
             $spriteildaa.setDepth(2);
             $spriteildaa.setScale(0.5, 0.5);
 
@@ -613,7 +625,7 @@
             spritesonde.body.collideWorldBounds = true;
             this.physics.add.collider(
                 $spriteildaa,
-                [spriteennemi, spriteennemi2,spritesonde],
+                [spriteennemi, spriteennemi2, spritesonde],
                 function colision(persosprite, collisionsprite) {
                     etat.stun($joueur);
                     $joueur.vitesse = 0;
@@ -623,17 +635,10 @@
                         $joueur.sante = 1;
                     }, 2000);
                     camera.shake(1000, 0.025);
+                    ajouteobjet()
                 }
             );
-            this.physics.add.collider(
-                spriteennemi,
-                [spriteennemi2],
-                function colision(persosprite, collisionsprite) {
-                    etat.stun($joueur);
-
-                    camera.shake(1000, 0.025);
-                }
-            );
+       
             //ANIMATIONS --------------------------------------------------------------
 
             this.anims.create({
@@ -641,7 +646,7 @@
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [3, 6, 7]
                 }),
-                frameRate: 6,
+                frameRate: 5,
                 repeat: -1
             });
             this.anims.create({
@@ -649,7 +654,7 @@
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [4, 12, 4, 13]
                 }),
-                frameRate: 6,
+                frameRate: 5,
                 repeat: -1
             });
             this.anims.create({
@@ -657,7 +662,7 @@
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [5, 10, 5, 11]
                 }),
-                frameRate: 6,
+                frameRate: 5,
                 repeat: -1
             });
             this.anims.create({
@@ -665,7 +670,7 @@
                 frames: this.anims.generateFrameNumbers("ildaa2", {
                     frames: [0, 14, 0, 15]
                 }),
-                frameRate: 6,
+                frameRate: 5,
                 repeat: -1
             });
             // TEXT EN JEU ---------------------------------------------------------------
@@ -840,7 +845,7 @@
                 if ($pause != true) {
                     effetsprite.pas.volume = 0.1;
 
-                    effetsprite.pas.playbackRate = 4.5;
+                    effetsprite.pas.playbackRate = 3.5;
                     if (effetsprite.pas.paused) {
                         effetsprite.pas.play();
                     }
@@ -851,7 +856,7 @@
             if ($cursors.down.isDown) {
                 effetsprite.pas.volume = 0.1;
 
-                effetsprite.pas.playbackRate = 4.5;
+                effetsprite.pas.playbackRate = 3.5;
                 if (effetsprite.pas.paused) {
                     effetsprite.pas.play();
                 }
@@ -859,7 +864,7 @@
             if ($cursors.left.isDown) {
                 effetsprite.pas.volume = 0.1;
 
-                effetsprite.pas.playbackRate = 4.5;
+                effetsprite.pas.playbackRate = 3.5;
                 if (effetsprite.pas.paused) {
                     effetsprite.pas.play();
                 }
@@ -867,7 +872,7 @@
             if ($cursors.right.isDown) {
                 effetsprite.pas.volume = 0.1;
 
-                effetsprite.pas.playbackRate = 4.5;
+                effetsprite.pas.playbackRate = 3.5;
                 if (effetsprite.pas.paused) {
                     effetsprite.pas.play();
                 }
