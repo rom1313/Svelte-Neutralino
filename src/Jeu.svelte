@@ -585,7 +585,7 @@
                 .setInteractive(this.input.makePixelPerfect());
             $spriteildaa.setSize(228, 757, true);
             $spriteildaa.setDepth(2);
-            $spriteildaa.setScale(0.5, 0.5);
+            $spriteildaa.setScale(0.7, 0.7);
 
             //-----------------------------------------
             spriteennemi = this.physics.add.sprite(100, 380, "dude");
